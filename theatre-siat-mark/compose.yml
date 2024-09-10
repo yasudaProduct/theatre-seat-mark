@@ -3,7 +3,7 @@ services:
     build:
       context: .
     ports:
-      - "12000:3000"
+      - "3000:3000"
       - "5555:5556"
     tty: true
     volumes:
