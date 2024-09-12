@@ -8,6 +8,8 @@ async function main() {
   await prisma.article.createMany({
     data: articles,
   });
+
+  
   await prisma.theater.createMany({
     data: theaters,
   });

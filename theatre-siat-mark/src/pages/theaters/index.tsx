@@ -19,7 +19,7 @@ const Theaters = (props: Props) => {
               className="w-full cursor-pointer px-2 lg:w-4/12"
               onClick={() => Router.push(`/theaters/${theater.id}`)}
             >
-              <div className="relative mt-4 flex flex-col">
+              <div className="relative mt-4 flex flex-col border">
                 <div className="flex-auto px-4 py-5">
                   <h6 className="mb-1 text-xl font-semibold">{theater.name}</h6>
                   <p className="text-blueGray-500 mb-4 truncate hover:text-clip">
