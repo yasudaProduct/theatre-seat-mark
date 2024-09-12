@@ -79,7 +79,7 @@ model Article {
 }
 
 model Theater {
-  id        Int     @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   name      String
   address   String
   createdAt DateTime  @default(now()) @map(name: "created_at") @unique
@@ -90,12 +90,26 @@ model Theater {
 }
 
 model Screen {
-  id        Int     @id @default(autoincrement())
+  id         Int       @id @default(autoincrement())
   theater_id Int
-  name      String
-  createdAt DateTime  @default(now()) @map(name: "created_at") @unique
-  updatedAt DateTime  @updatedAt @map(name: "updated_at") @unique
-  theaters　Theater @relation(fields: [theater_id], references: [id])
+  name       String
+  createdAt  DateTime  @default(now()) @map(name: "created_at") @unique
+  updatedAt  DateTime  @updatedAt @map(name: "updated_at") @unique
+  theaters   Theater   @relation(fields: [theater_id], references: [id])
+  SeatReview SeatReview[]
 
   @@map("screens")
+}
+
+model SeatReview {
+  id        Int       @id @default(autoincrement())
+  user_id   Int
+  screen_id Int
+  seat_name String
+  review    String    @unique
+  createdAt DateTime  @default(now()) @map(name: "created_at") @unique
+  updatedAt DateTime  @updatedAt @map(name: "updated_at") @unique
+  screens   Screen    @relation(fields: [screen_id], references: [id])
+
+  @@map("seat_reviews")
 }
