@@ -80,8 +80,10 @@ model Article {
 
 model Theater {
   id        Int     @id @default(autoincrement())
-  name     String
+  name      String
   address   String
+  createdAt DateTime  @default(now()) @map(name: "created_at") @unique
+  updatedAt DateTime  @updatedAt @map(name: "updated_at") @unique
 
   @@map("theaters")
 }

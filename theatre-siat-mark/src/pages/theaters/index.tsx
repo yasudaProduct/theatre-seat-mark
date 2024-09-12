@@ -39,7 +39,6 @@ export default Theaters;
 
 export const getStaticProps: GetStaticProps = async () => {
   const theaters = await prisma.theater.findMany();
-  console.log(theaters);
   return {
     props: { theaters: theaters },
   };
