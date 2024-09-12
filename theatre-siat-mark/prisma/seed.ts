@@ -9,10 +9,20 @@ async function main() {
     data: articles,
   });
 
-  
-  await prisma.theater.createMany({
-    data: theaters,
-  });
+  for (const theater of theaters) {
+    await prisma.theater.upsert({
+      where: { id: theater.id },
+      update: {
+        name: theater.name,
+        address: theater.address,
+      },
+      create: {
+        id: theater.id,
+        name: theater.name,
+        address: theater.address,
+      },
+    });
+  }
 }
 
 main()
