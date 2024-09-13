@@ -3,7 +3,6 @@ import prisma from '../../../../lib/prisma';
 import { authOptions } from '../../auth/[...nextauth]';
 import { getServerSession } from 'next-auth';
 
-// リクエストとレスポンスの型を指定しています
 export default async function (req: NextApiRequest, res: NextApiResponse) {
   // ここで、req のオブジェクトから認証情報を取得しています
   const session = await getServerSession(req, res, authOptions);

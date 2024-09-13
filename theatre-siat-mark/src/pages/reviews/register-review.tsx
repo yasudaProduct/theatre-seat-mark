@@ -1,5 +1,4 @@
 import { Screen, Theater } from "@prisma/client"
-import router from "next/router"
 import { useEffect, useState } from "react"
 
 export default function RegisterReview() {
@@ -11,9 +10,9 @@ export default function RegisterReview() {
     const [seatNumber, setSeatNumber] = useState('')
     const [review, setReview] = useState('')
     const [rating, setRating] = useState(0)
-    // const router = useRouter()
 
     useEffect(() => {
+        
         // 映画館のデータを取得
         fetch('/api/theaters')
           .then(res => res.json())
