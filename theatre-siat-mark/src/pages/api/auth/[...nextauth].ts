@@ -1,4 +1,5 @@
-import NextAuth from 'next-auth';
+import NextAuth, { Session } from 'next-auth';
+import { AdapterUser } from 'next-auth/adapters';
 import GitHubProvider from 'next-auth/providers/github';
 
 export const authOptions = {
@@ -8,6 +9,15 @@ export const authOptions = {
       clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
+  callbacks: {
+    session: ({ session, user }: { session: Session, user: AdapterUser }) => ({
+      ...session,
+      user: {
+        ...user,
+        id: user.id,
+      }
+    }),
+  },
   secret: process.env.SECRET,
 }
 
