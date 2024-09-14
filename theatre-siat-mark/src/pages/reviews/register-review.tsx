@@ -1,136 +1,193 @@
-import { Screen, Theater } from "@prisma/client"
-import { useEffect, useState } from "react"
-import React from "react";
+import React from 'react'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/router'
+import { Theater, Screen } from '@prisma/client'
+import { Button } from "@/components/ui/button"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Label } from '@/components/ui/label'
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
 
 export default function RegisterReview() {
+  const [theaters, setTheaters] = useState<Theater[]>([])
+  const [screens, setScreens] = useState<Screen[]>([])
+  const [selectedTheater, setSelectedTheater] = useState('')
+  const [selectedScreen, setSelectedScreen] = useState('')
+  const [newScreenName, setNewScreenName] = useState('')
+  const [seatNumber, setSeatNumber] = useState('')
+  const [review, setReview] = useState('')
+  const [rating, setRating] = useState(0)
+  const [screenOption, setScreenOption] = useState('existing')
+  const router = useRouter()
 
-    const [theaters, setTheaters] = useState<Theater[]>([])
-    const [screens, setScreens] = useState<Screen[]>([])
-    const [selectedTheater, setSelectedTheater] = useState('')
-    const [selectedScreen, setSelectedScreen] = useState('')
-    const [seatNumber, setSeatNumber] = useState('')
-    const [review, setReview] = useState('')
-    const [rating, setRating] = useState(0)
+  useEffect(() => {
+    // 映画館のデータを取得
+    fetch('/api/theaters')
+      .then(res => res.json())
+      .then(data => setTheaters(data))
+  }, [])
 
-    useEffect(() => {
-        
-        // 映画館のデータを取得
-        fetch('/api/theaters')
-          .then(res => res.json())
-          .then(data => setTheaters(data))
-      }, [])
-
-    useEffect(() => {
-        // 選択された映画館のスクリーンを取得
-        if (selectedTheater) {
-          fetch(`/api/screens?theaterId=${selectedTheater}`)
-            .then(res => res.json())
-            .then(data => setScreens(data))
-        }
-      }, [selectedTheater])
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault()
-
-        // seat-reviews登録API
-        const response = await fetch('/api/seat-reviews', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                screenId: selectedScreen,
-                seatNumber,
-                review,
-                rating
-            })
-        })
-
-        if (response.ok) {
-            // router.push('/thank-you')
-            alert('レビューの登録に成功しました。')
-        } else {
-            alert('レビューの登録に失敗しました。')
-        }
+  useEffect(() => {
+    // 選択された映画館のスクリーンを取得
+    if (selectedTheater) {
+      fetch(`/api/screens?theaterId=${selectedTheater}`)
+        .then(res => res.json())
+        .then(data => setScreens(data))
     }
+  }, [selectedTheater])
 
-    return (
-        <div className="min-h-screen bg-gray-100 flex items-center justify-center">
-            <div className="bg-white p-8 rounded-lg shadow-md w-96">
-                <h1 className="text-2xl font-bold mb-6 text-center">座席レビュー登録</h1>
-                <form onSubmit={handleSubmit} className="space-y-4">
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen()
+    
+    const response = await fetch('/api/seat-reviews', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        screenId,
+        seatNumber,
+        review,
+        rating
+      })
+    })
 
-                    <div>
-                        <label htmlFor="theater" className="block text-sm font-medium text-gray-700">映画館</label>
-                        <select
-                            id="theater"
-                            value={selectedTheater}
-                            onChange={(e) => setSelectedTheater(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        >
-                            <option value="">選択してください</option>
-                            {theaters.map(theater => (
-                                <option key={theater.id} value={theater.id}>{theater.name}</option>
-                            ))}
-                        </select>
-                    </div>
+    if (response.ok) {
+        alert('レビューを登録しました。')
+        router.push('/reviews/my-reviews')
+    } else {
+      alert('レビューの登録に失敗しました。')
+    }
+  }
 
-                    <div>
-                        <label htmlFor="screen" className="block text-sm font-medium text-gray-700">スクリーン</label>
-                        <select
-                            id="screen"
-                            value={selectedScreen}
-                            onChange={(e) => setSelectedScreen(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        >
-                            <option value="">選択してください</option>
-                            {screens.map(screen => (
-                                <option key={screen.id} value={screen.id}>{screen.name}</option>
-                            ))}
-                        </select>
-                    </div>
+  const createNewScreen = async () => {
+    const response = await fetch('/api/screens', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        theaterId: selectedTheater,
+        name: newScreenName
+      })
+    })
 
-                    <div>
-                        <label htmlFor="seatNumber" className="block text-sm font-medium text-gray-700">座席番号</label>
-                        <input
-                            type="text"
-                            id="seatNumber"
-                            value={seatNumber}
-                            onChange={(e) => setSeatNumber(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        />
-                    </div>
+    if (response.ok) {
+      const newScreen = await response.json()
+      return newScreen.id
+    } else {
+      throw new Error('新しいスクリーンの作成に失敗しました。')
+    }
+  }
 
-                    <div>
-                        <label htmlFor="review" className="block text-sm font-medium text-gray-700">レビュー</label>
-                        <textarea
-                            id="review"
-                            value={review}
-                            onChange={(e) => setReview(e.target.value)}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                            rows={3}
-                        ></textarea>
-                    </div>
-
-                    <div>
-                        <label htmlFor="rating" className="block text-sm font-medium text-gray-700">評価（1-5）</label>
-                        <input
-                            type="number"
-                            id="rating"
-                            min="1"
-                            max="5"
-                            value={rating}
-                            onChange={(e) => setRating(Number(e.target.value))}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
-                        />
-                    </div>
-
-                    <button
-                        type="submit"
-                        className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        レビューを登録
-                    </button>
-                </form>
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+      <Card className="w-full max-w-lg">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-center">座席レビュー登録</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="theater">映画館</Label>
+              <Select value={selectedTheater} onValueChange={setSelectedTheater}>
+                <SelectTrigger id="theater">
+                  <SelectValue placeholder="映画館を選択" />
+                </SelectTrigger>
+                <SelectContent>
+                  {theaters.map(theater => (
+                    <SelectItem key={theater.id} value={theater.id.toString()}>
+                      {theater.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
-        </div>
-    )
+
+            <div className="space-y-2">
+              <Label>スクリーン</Label>
+              <RadioGroup value={screenOption} onValueChange={setScreenOption} className="flex space-x-4">
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="existing" id="existing" />
+                  <Label htmlFor="existing">既存のスクリーン</Label>
+                </div>
+                <div className="flex items-center space-x-2">
+                  <RadioGroupItem value="new" id="new" />
+                  <Label htmlFor="new">新規スクリーン</Label>
+                </div>
+              </RadioGroup>
+            </div>
+
+            {screenOption === 'existing' ? (
+              <div className="space-y-2">
+                <Label htmlFor="screen">スクリーン選択</Label>
+                <Select value={selectedScreen} onValueChange={setSelectedScreen}>
+                  <SelectTrigger id="screen">
+                    <SelectValue placeholder="スクリーンを選択" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {screens.map(screen => (
+                      <SelectItem key={screen.id} value={screen.id.toString()}>
+                        {screen.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            ) : (
+              <div className="space-y-2">
+                <Label htmlFor="newScreen">新規スクリーン名</Label>
+                <Input
+                  id="newScreen"
+                  value={newScreenName}
+                  onChange={(e) => setNewScreenName(e.target.value)}
+                  placeholder="新しいスクリーン名を入力"
+                />
+              </div>
+            )}
+
+            <div className="space-y-2">
+              <Label htmlFor="seatNumber">座席番号</Label>
+              <Input
+                id="seatNumber"
+                value={seatNumber}
+                onChange={(e) => setSeatNumber(e.target.value)}
+                placeholder="例: A-12"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="review">レビュー</Label>
+              <Textarea
+                id="review"
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+                placeholder="レビューを入力してください"
+                rows={3}
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="rating">評価（1-5）</Label>
+              <Select value={rating.toString()} onValueChange={(value) => setRating(Number(value))}>
+                <SelectTrigger id="rating">
+                  <SelectValue placeholder="評価を選択" />
+                </SelectTrigger>
+                <SelectContent>
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <SelectItem key={value} value={value.toString()}>
+                      {value}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <Button type="submit" className="w-full">
+              レビューを登録
+            </Button>
+          </form>
+        </CardContent>
+      </Card>
+    </div>
+  )
 }
