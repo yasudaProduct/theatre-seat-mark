@@ -36,7 +36,39 @@ export default async function handler(
             res.setHeader('Allow', ['POST'])
             res.status(405).end(`Method ${req.method} Not Allowed`)
         }
-    }else{
+    } else if (req.method === 'GET') {
+
+        try {
+            const { screenId } = req.query
+      
+            if (!screenId || typeof screenId !== 'string') {
+              return res.status(400).json({ message: 'スクリーンIDが必要です' })
+            }
+      
+            const reviews = await prisma.seatReview.findMany({
+              where: {
+                screen_id: parseInt(screenId, 10)
+              },
+              include: {
+                users: {
+                  select: {
+                    name: true
+                  }
+                }
+              },
+              orderBy: {
+                createdAt: 'desc'
+              }
+            })
+
+            console.log(reviews)
+            res.status(200).json(reviews)
+          } catch (error) {
+            console.error('レビュー取得エラー:', error)
+            res.status(500).json({ message: 'レビューの取得中にエラーが発生しました。' })
+          }
+
+    } else{
         res.status(401).send({ message: 'Unauthorized' });
     }
 }
