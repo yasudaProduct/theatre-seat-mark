@@ -8,12 +8,13 @@ export default async function handler(
     res: NextApiResponse
 ) {
     if (req.method === 'POST') {
-        const { screenId, seatNumber, review, rating, userId } = req.body
+        const { screenId, seatNumber, review, rating} = req.body
 
         const session = await getServerSession(req, res, authOptions);
+        const userId = session?.user?.id;
         if (session?.user?.email) {
 
-            if (!screenId || !seatNumber || !review || !rating || !session?.user?.id) {
+            if (!screenId || !seatNumber || !review || !rating || !userId) {
                 return res.status(400).json({ message: '必要な情報が不足しています' })
             }
 
@@ -24,7 +25,7 @@ export default async function handler(
                         seat_name: seatNumber,
                         review: review,
                         //   rating: parseInt(rating, 10),
-                        user_id: parseInt(userId, 10)
+                        user_id: parseInt(userId!, 10)
                     }
                 })
                 res.status(201).json(newReview)

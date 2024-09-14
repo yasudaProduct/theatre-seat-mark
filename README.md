@@ -9,8 +9,11 @@ docker compose up -d
 
 .envファイル作成
 
+## 
+npx prisma generate
 
 ## migration
+npx prisma migrate dev --create-only --name init
 npx prisma migrate dev
 
 ## seed追加
