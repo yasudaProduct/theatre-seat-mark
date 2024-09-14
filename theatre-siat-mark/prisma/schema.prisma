@@ -56,6 +56,7 @@ model User {
   bookmarks     Article[]
   accounts      Account[]
   sessions      Session[]
+  seat_reviews  SeatReview[]
 
   @@map(name: "users")
 }
@@ -82,8 +83,8 @@ model Theater {
   id        Int       @id @default(autoincrement())
   name      String
   address   String
-  createdAt DateTime  @default(now()) @map(name: "created_at") @unique
-  updatedAt DateTime  @updatedAt @map(name: "updated_at") @unique
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  updatedAt DateTime  @updatedAt @map(name: "updated_at")
   screens   Screen[]
 
   @@map("theaters")
@@ -92,9 +93,9 @@ model Theater {
 model Screen {
   id         Int       @id @default(autoincrement())
   theater_id Int
-  name       String
-  createdAt  DateTime  @default(now()) @map(name: "created_at") @unique
-  updatedAt  DateTime  @updatedAt @map(name: "updated_at") @unique
+  name       String    @unique
+  createdAt  DateTime  @default(now()) @map(name: "created_at")
+  updatedAt  DateTime  @updatedAt @map(name: "updated_at")
   theaters   Theater   @relation(fields: [theater_id], references: [id])
   SeatReview SeatReview[]
 
@@ -105,11 +106,12 @@ model SeatReview {
   id        Int       @id @default(autoincrement())
   user_id   Int
   screen_id Int
-  seat_name String
-  review    String    @unique
-  createdAt DateTime  @default(now()) @map(name: "created_at") @unique
-  updatedAt DateTime  @updatedAt @map(name: "updated_at") @unique
+  seat_name String    @unique
+  review    String
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  updatedAt DateTime  @updatedAt @map(name: "updated_at")
   screens   Screen    @relation(fields: [screen_id], references: [id])
+  users     User      @relation(fields: [user_id], references: [id])
 
   @@map("seat_reviews")
 }
