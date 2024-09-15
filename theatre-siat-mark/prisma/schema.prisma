@@ -53,10 +53,10 @@ model User {
   image         String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
-  bookmarks     Article[]
   accounts      Account[]
   sessions      Session[]
   seat_reviews  SeatReview[]
+  bookmarks     Bookmark[]
 
   @@map(name: "users")
 }
@@ -74,7 +74,6 @@ model Article {
   id        Int     @id @default(autoincrement())
   title     String
   content   String
-  users     User[]
 
   @@map("articles")
 }
@@ -113,6 +112,20 @@ model SeatReview {
   updatedAt DateTime  @updatedAt @map(name: "updated_at")
   screens   Screen    @relation(fields: [screen_id], references: [id])
   users     User      @relation(fields: [user_id], references: [id])
+  bookmarks Bookmark[]
 
   @@map("seat_reviews")
+}
+
+model Bookmark {
+  id        Int      @id @default(autoincrement())
+  user_id   Int
+  review_id Int
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  updatedAt DateTime  @updatedAt @map(name: "updated_at")
+  user      User     @relation(fields: [user_id], references: [id])
+  review    SeatReview @relation(fields: [review_id], references: [id])
+
+  @@map("bookmarks")
+  @@unique([user_id, review_id])
 }
