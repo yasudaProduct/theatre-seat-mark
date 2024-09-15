@@ -9,7 +9,7 @@ docker compose up -d
 
 .envファイル作成
 
-## 
+##
 npx prisma generate
 
 ## migration
