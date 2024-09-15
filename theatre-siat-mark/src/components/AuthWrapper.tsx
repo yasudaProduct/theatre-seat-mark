@@ -3,13 +3,16 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 import ProtectedRoute from "./ProtectedRoute";
 
-// 認証が必要なページのリスト
-const authRoutes = ['/mypage', '/articles/[id]'];
+const authRoutes = [
+  '/mypage',
+  '/reviews/my-reviews',
+  '/reviews/register-review',
+  '/articles/[id]'
+];
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
   const router = useRouter();
-
 
   // 認証中は表示しない
   if (session.status === 'loading') return null;

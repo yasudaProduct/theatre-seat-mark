@@ -2,8 +2,6 @@ import React ,{ useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
-
-
 const ProtectedRoute = ({ children }: {children: React.ReactNode}) => {
 
     const router = useRouter();
@@ -12,9 +10,9 @@ const ProtectedRoute = ({ children }: {children: React.ReactNode}) => {
 
     useEffect(() => {
         if (status === 'unauthenticated') {
-          router.push('/auth/login');
+          router.push('/api/auth/signin' + '?callbackUrl=' + router.asPath);
         }
-      }, [router, status]); //実行タイミング ページもしくはstatusが変更された時
+      }, [router, status]);
 
       if(status === 'unauthenticated') return null;
 
