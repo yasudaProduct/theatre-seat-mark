@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import { GetServerSideProps } from "next";
+import { withAuth } from '@/lib/withAuth'
 
 export default function RegisterReview() {
   const [theaters, setTheaters] = useState<Theater[]>([])
@@ -190,4 +192,8 @@ export default function RegisterReview() {
       </Card>
     </div>
   )
+}
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return withAuth(context);
 }
