@@ -7,6 +7,9 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
+  const session = await getServerSession(req, res, authOptions);
+  const userId = session?.user?.id;
+
     if (req.method === 'POST') {
         const { screenId, seatNumber, review, rating} = req.body
 
@@ -55,6 +58,11 @@ export default async function handler(
                   select: {
                     name: true
                   }
+                },
+                bookmarks: {
+                  where: {
+                    user_id: userId ? parseInt(userId!,10) : undefined
+                  }
                 }
               },
               orderBy: {
@@ -62,7 +70,16 @@ export default async function handler(
               }
             })
 
-            res.status(200).json(reviews)
+            // ブックマークされているかどうかを判定
+            const formattedReviews = reviews.map(review => {
+              const isBookmarked = review.bookmarks.length > 0
+              return {
+                ...review,
+                isBookmarked
+              }
+            });
+
+            res.status(200).json(formattedReviews)
           } catch (error) {
             console.error('レビュー取得エラー:', error)
             res.status(500).json({ message: 'レビューの取得中にエラーが発生しました。' })
