@@ -24,12 +24,13 @@ export default async function handler(
                         screen_id: parseInt(screenId, 10),
                         seat_name: seatNumber,
                         review: review,
-                        //   rating: parseInt(rating, 10),
+                        rating: parseInt(rating, 10),
                         user_id: parseInt(userId!, 10)
                     }
                 })
                 res.status(201).json(newReview)
             } catch (error) {
+              console.log(error)
                 res.status(500).json({ message: 'エラーが発生しました', error })
             }
         } else {
@@ -61,7 +62,6 @@ export default async function handler(
               }
             })
 
-            console.log(reviews)
             res.status(200).json(reviews)
           } catch (error) {
             console.error('レビュー取得エラー:', error)

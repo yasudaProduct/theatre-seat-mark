@@ -27,7 +27,7 @@ export default async function handler(
         theaterName: review.screens.theaters.name,
         screenName: review.screens.name,
         seatNumber: review.seat_name,
-        // rating: review.rating,
+        rating: review.rating,
         review: review.review,
         createdAt: review.createdAt.toISOString()
       }))
