@@ -2,7 +2,6 @@ import prisma from "@/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
-// import { getServerSession } from 'next-auth';
 
 export default async function handler(
   req: NextApiRequest,
@@ -10,18 +9,28 @@ export default async function handler(
 ) {
   if (req.method === "GET") {
     const session = await getServerSession(req, res, authOptions);
-    const userId = session?.user?.id;
+    if (!session || !session.user) {
+      return res.status(401).json({ message: '認証が必要です' })
+    }
+
+    const userId: number = parseInt(session!.user!.id!, 10)
 
     if (session?.user?.email) {
       try {
         const reviews = await prisma.seatReview.findMany({
-          where: { user_id: parseInt(userId!, 10) },
+          where: { user_id: userId },
           include: {
             screens: {
               include: {
                 theaters: true,
               },
             },
+            bookmarks: {
+              where: {
+                user_id: userId
+              }
+            },
+            users: true,
           },
           orderBy: { createdAt: "desc" },
         });
@@ -33,7 +42,9 @@ export default async function handler(
           seatNumber: review.seat_name,
           rating: review.rating,
           review: review.review,
+          user: {username: review.users.name},
           createdAt: review.createdAt.toISOString(),
+          isBookmarked: review.bookmarks.length > 0,
         }));
 
         res.status(200).json(formattedReviews);

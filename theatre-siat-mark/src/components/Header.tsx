@@ -31,7 +31,7 @@ const Header = () => {
                 {status !== "loading" && session && (
                   <>
                     <li className="py-1 px-4 text-white no-underline">
-                      <Link legacyBehavior href="/reviews/my-reviews">
+                      <Link legacyBehavior href="/mypage">
                         <a>MyPage</a>
                       </Link>
                     </li>

@@ -3,17 +3,6 @@ import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth";
 import prisma from "@/lib/prisma";
 
-interface BookmarkResponse {
-  id: number;
-  seatNumber: string;
-  review: string;
-  rating: number;
-  user: {
-    name: string;
-  };
-  isBookmarked: boolean;
-}
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -33,27 +22,28 @@ export default async function handler(
           include: {
             review: {
               include: {
-                users: {
-                  select: { name: true },
-                },
-              },
+                screens: {
+                  include: {
+                    theaters: true
+                  }
+                }
+              }
             },
+            user: true
           },
           orderBy: { createdAt: "desc" },
         });
 
-        const formattedReviews: BookmarkResponse[] = bookmarkedReviews.map(
-          (bookmark) => ({
-            id: bookmark.review.id,
-            seatNumber: bookmark.review.seat_name,
-            review: bookmark.review.review,
-            rating: bookmark.review.rating,
-            user: {
-              name: bookmark.review.users.name ?? "匿名",
-            },
-            isBookmarked: true,
-          })
-        );
+        const formattedReviews = bookmarkedReviews.map(bookmark => ({
+          id: bookmark.review.id,
+          seatNumber: bookmark.review.seat_name,
+          review: bookmark.review.review,
+          rating: bookmark.review.rating,
+          theaterName: bookmark.review.screens.theaters.name,
+          screenName: bookmark.review.screens.name,
+          user: { name: bookmark.user.name },
+          isBookmarked: true
+        }))
 
         res.status(200).json(formattedReviews);
       } catch (error) {
