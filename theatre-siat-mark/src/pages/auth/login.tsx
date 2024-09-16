@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { getProviders, signIn } from "next-auth/react";
-import { InferGetServerSidePropsType } from "next";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
@@ -11,27 +9,29 @@ import router from "next/router";
 import { Separator } from "@/components/ui/separator";
 import { Github, Mail } from "lucide-react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import * as zod from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-
+import * as zod from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signIn } from "next-auth/react";
 
 const schema = zod.object({
-  email: zod.string()
-  .min(1, { message: 'メールアドレスを入力してください' })
-  .max(50, { message: 'メールアドレスは50文字以内で入力してください' })
-  .email({ message: '有効なメールアドレスを入力してください' }),
-  password: zod.string()
-    .min(1, { message: 'パスワードを入力してください' }),
-})
+  email: zod
+    .string()
+    .min(1, { message: "メールアドレスを入力してください" })
+    .max(50, { message: "メールアドレスは50文字以内で入力してください" })
+    .email({ message: "有効なメールアドレスを入力してください" }),
+  password: zod.string().min(1, { message: "パスワードを入力してください" }),
+});
 
-type FormData = zod.infer<typeof schema>
+type FormData = zod.infer<typeof schema>;
 
-const login = ({
-  providers,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>({
-    resolver: zodResolver(schema)
-  })
+export default function login() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
   const [error, setError] = useState("");
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
@@ -65,19 +65,18 @@ const login = ({
           </CardTitle>
         </CardHeader>
         <CardContent>
-          <form
-            onSubmit={handleSubmit(onSubmit)}
-            className="space-y-4"
-          >
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">メールアドレス</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="メールアドレス"
-                {...register('email')}
+                {...register("email")}
               />
-              {errors.email && <p className="text-sm text-red-500">{errors.email.message}</p>}
+              {errors.email && (
+                <p className="text-sm text-red-500">{errors.email.message}</p>
+              )}
             </div>
             <div className="space-y-2">
               <Label htmlFor="password">パスワード</Label>
@@ -87,7 +86,11 @@ const login = ({
                 placeholder="パスワード"
                 {...register("password")}
               />
-              {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
+              {errors.password && (
+                <p className="text-sm text-red-500">
+                  {errors.password.message}
+                </p>
+              )}
             </div>
             {error && (
               <Alert variant="destructive">
@@ -127,14 +130,4 @@ const login = ({
       </Card>
     </div>
   );
-};
-
-export default login;
-
-export const getServerSideProps = async () => {
-  // 認証方法を取得
-  const providers = await getProviders();
-  return {
-    props: { providers },
-  };
-};
+}
