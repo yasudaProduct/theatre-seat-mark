@@ -19,11 +19,6 @@ const Header = () => {
             <div className="flex w-full content-center justify-between pt-2 lg:w-1/2 lg:justify-end lg:pt-0">
               <ul className="list-reset flex flex-1 items-center justify-center lg:flex-none">
                 <li className="py-1 px-4 text-white no-underline">
-                  <Link legacyBehavior href="/articles">
-                    <a>Articles</a>
-                  </Link>
-                </li>
-                <li className="py-1 px-4 text-white no-underline">
                   <Link legacyBehavior href="/reviews/register-review">
                     <a>Register</a>
                   </Link>

@@ -1,46 +1,112 @@
-import { getProviders, signIn } from 'next-auth/react';
-import { InferGetServerSidePropsType } from 'next';
-import Image from 'next/image';
-import React from 'react';
+import { getProviders, signIn } from "next-auth/react";
+import { InferGetServerSidePropsType } from "next";
+import React, { useState } from "react";
+import Link from "next/link";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import router from "next/router";
+import { Separator } from "@/components/ui/separator";
+import { Github, Mail } from "lucide-react";
 
 const login = ({
   providers,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
+
+    if (result?.error) {
+      setError(
+        "ログインに失敗しました。メールアドレスとパスワードを確認してください。"
+      );
+    } else {
+      router.push("/");
+    }
+  };
+
+  const handleOAuthSignIn = (provider: string) => {
+    signIn(provider, { callbackUrl: "/" });
+  };
+
   return (
-    <div className='flex flex-col items-center space-y-20 pt-40'>
-      <Image
-        src='/images/icon-github.png'
-        alt='GitHub Icon'
-        width={150}
-        height={150}
-        objectFit='contain'
-      />
-      <div className='text-center '>
-        <div className='mx-auto max-w-3xl'>
-          <div className='flexjustify-center'>
-            {providers &&
-              Object.values(providers).map((provider) => {
-                return (
-                  <div key={provider.name}>
-                    <button
-                      className='group relative inline-flex items-center justify-start overflow-hidden rounded bg-white px-6 py-3 font-medium transition-all hover:bg-white'
-                      onClick={() =>
-                        signIn(provider.id, {
-                          callbackUrl: '/',
-                        })
-                      }
-                    >
-                      <span className='absolute bottom-0 left-0 mb-9 ml-9 h-48 w-48 -translate-x-full translate-y-full rotate-[-40deg] rounded bg-slate-800 transition-all duration-500 ease-out group-hover:ml-0 group-hover:mb-32 group-hover:translate-x-0'></span>
-                      <span className='relative w-full text-left text-black transition-colors duration-300 ease-in-out group-hover:text-white'>
-                        Sign in with {provider.name}
-                      </span>
-                    </button>
-                  </div>
-                );
-              })}
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <Card className="w-full max-w-md">
+        <CardHeader>
+          <CardTitle className="text-2xl font-bold text-center">
+            ログイン
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">メールアドレス</Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">パスワード</Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            {error && (
+              <Alert variant="destructive">
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+            <Button type="submit" className="w-full">
+              ログイン
+            </Button>
+          </form>
+          <Separator className="my-4" />
+
+          <div className="space-y-2">
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => handleOAuthSignIn("google")}
+            >
+              <Mail className="mr-2 h-4 w-4" />
+              Googleでログイン
+            </Button>
+            <Button
+              variant="outline"
+              className="w-full"
+              onClick={() => handleOAuthSignIn("github")}
+            >
+              <Github className="mr-2 h-4 w-4" />
+              GitHubでログイン
+            </Button>
           </div>
+        </CardContent>
+        <div className="text-center text-gray-500 text-sm mb-3">
+          <Link href="/auth/signup" className="mt-2">
+            新規登録はこちら
+          </Link>
         </div>
-      </div>
+      </Card>
     </div>
   );
 };

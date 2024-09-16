@@ -42,7 +42,7 @@ export default function RegisterReview() {
     e.preventDefault()
     const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen()
     
-    const response = await fetch('/api/seat-reviews', {
+    const response = await fetch('/api/reviews', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -55,7 +55,7 @@ export default function RegisterReview() {
 
     if (response.ok) {
         alert('レビューを登録しました。')
-        router.push('/reviews/my-reviews')
+        router.push('/mypage')
     } else {
       alert('レビューの登録に失敗しました。')
     }
