@@ -4,7 +4,7 @@ import { Card, CardContent } from "./ui/card"
 import { Bookmark, Star } from "lucide-react"
 import { Button } from "./ui/button"
 
-interface ReviewCardProps {
+export interface ReviewCardProps {
     review: {
       id: number
       user: { name: string }
@@ -42,7 +42,7 @@ export function ReviewCard({ review }: ReviewCardProps) {
       }
 
     return (
-        <Card>
+        <Card data-testid="review-card">
           <CardContent className="p-4">
             <div className="flex justify-between items-start">
               <div>
