@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import router from 'next/router'
 import { Theater, Screen } from '@prisma/client'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
@@ -9,19 +9,42 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import * as zod from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { SubmitHandler, useForm } from "react-hook-form";
+
+const schema = zod.object({
+  newScreenName: zod
+    .string()
+    .min(1, { message: "スクリーン名を入力してください。" })
+    .max(20, { message: "スクリーン名は20文字以内で入力してください" }),
+  seatNumber: zod
+    .string()
+    .min(1, { message: "座席番号を入力してください。" })
+    .max(20, { message: "座席番号は10文字以内で入力してください" }),
+  review: zod
+    .string()
+    .min(1, { message: "レビューを入力してください。" })
+    .max(50, { message: "レビューは50文字以内で入力してください" }),
+});
+
+type FormData = zod.infer<typeof schema>;
 
 export default function RegisterReview() {
   const [theaters, setTheaters] = useState<Theater[]>([])
   const [screens, setScreens] = useState<Screen[]>([])
   const [selectedTheater, setSelectedTheater] = useState('')
   const [selectedScreen, setSelectedScreen] = useState('')
-  const [newScreenName, setNewScreenName] = useState('')
-  const [seatNumber, setSeatNumber] = useState('')
-  const [review, setReview] = useState('')
   const [rating, setRating] = useState(0)
   const [screenOption, setScreenOption] = useState('existing')
-  const router = useRouter()
-
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<FormData>({
+    resolver: zodResolver(schema),
+  });
+  
   useEffect(() => {
     // 映画館のデータを取得
     fetch('/api/theaters')
@@ -38,18 +61,17 @@ export default function RegisterReview() {
     }
   }, [selectedTheater])
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen()
+  const onSubmit: SubmitHandler<FormData> = async (data) => {
+    const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen(data.newScreenName)
     
     const response = await fetch('/api/reviews', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        screenId,
-        seatNumber,
-        review,
-        rating
+        screenId: screenId,
+        seatNumber: data.newScreenName,
+        review: data.review,
+        rating: rating
       })
     })
 
@@ -61,13 +83,13 @@ export default function RegisterReview() {
     }
   }
 
-  const createNewScreen = async () => {
+  const createNewScreen = async (name: string) => {
     const response = await fetch('/api/screens', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         theaterId: selectedTheater,
-        name: newScreenName
+        name: name
       })
     })
 
@@ -83,18 +105,23 @@ export default function RegisterReview() {
     <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
       <Card className="w-full max-w-lg">
         <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">座席レビュー登録</CardTitle>
+          <CardTitle className="text-2xl font-bold text-center">
+            座席レビュー登録
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="theater">映画館</Label>
-              <Select value={selectedTheater} onValueChange={setSelectedTheater}>
+              <Select
+                value={selectedTheater}
+                onValueChange={setSelectedTheater}
+              >
                 <SelectTrigger id="theater">
                   <SelectValue placeholder="映画館を選択" />
                 </SelectTrigger>
                 <SelectContent>
-                  {theaters.map(theater => (
+                  {theaters.map((theater) => (
                     <SelectItem key={theater.id} value={theater.id.toString()}>
                       {theater.name}
                     </SelectItem>
@@ -105,7 +132,11 @@ export default function RegisterReview() {
 
             <div className="space-y-2">
               <Label>スクリーン</Label>
-              <RadioGroup value={screenOption} onValueChange={setScreenOption} className="flex space-x-4">
+              <RadioGroup
+                value={screenOption}
+                onValueChange={setScreenOption}
+                className="flex space-x-4"
+              >
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="existing" id="existing" />
                   <Label htmlFor="existing">既存のスクリーン</Label>
@@ -117,15 +148,18 @@ export default function RegisterReview() {
               </RadioGroup>
             </div>
 
-            {screenOption === 'existing' ? (
+            {screenOption === "existing" ? (
               <div className="space-y-2">
                 <Label htmlFor="screen">スクリーン選択</Label>
-                <Select value={selectedScreen} onValueChange={setSelectedScreen}>
+                <Select
+                  value={selectedScreen}
+                  onValueChange={setSelectedScreen}
+                >
                   <SelectTrigger id="screen">
                     <SelectValue placeholder="スクリーンを選択" />
                   </SelectTrigger>
                   <SelectContent>
-                    {screens.map(screen => (
+                    {screens.map((screen) => (
                       <SelectItem key={screen.id} value={screen.id.toString()}>
                         {screen.name}
                       </SelectItem>
@@ -137,11 +171,15 @@ export default function RegisterReview() {
               <div className="space-y-2">
                 <Label htmlFor="newScreen">新規スクリーン名</Label>
                 <Input
-                  id="newScreen"
-                  value={newScreenName}
-                  onChange={(e) => setNewScreenName(e.target.value)}
+                  id="newScreenName"
+                  {...register("newScreenName")}
                   placeholder="新しいスクリーン名を入力"
                 />
+                {errors.newScreenName && (
+                  <p className="text-sm text-red-500">
+                    {errors.newScreenName.message}
+                  </p>
+                )}
               </div>
             )}
 
@@ -149,26 +187,37 @@ export default function RegisterReview() {
               <Label htmlFor="seatNumber">座席番号</Label>
               <Input
                 id="seatNumber"
-                value={seatNumber}
-                onChange={(e) => setSeatNumber(e.target.value)}
+                {...register("seatNumber")}
                 placeholder="例: A-12"
               />
+              {errors.seatNumber && (
+                  <p className="text-sm text-red-500">
+                    {errors.seatNumber.message}
+                  </p>
+                )}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="review">レビュー</Label>
               <Textarea
                 id="review"
-                value={review}
-                onChange={(e) => setReview(e.target.value)}
+                {...register("review")}
                 placeholder="レビューを入力してください"
                 rows={3}
               />
+              {errors.review && (
+                  <p className="text-sm text-red-500">
+                    {errors.review.message}
+                  </p>
+                )}
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="rating">評価（1-5）</Label>
-              <Select value={rating.toString()} onValueChange={(value) => setRating(Number(value))}>
+              <Select
+                value={rating.toString()}
+                onValueChange={(value) => setRating(Number(value))}
+              >
                 <SelectTrigger id="rating">
                   <SelectValue placeholder="評価を選択" />
                 </SelectTrigger>
@@ -189,5 +238,5 @@ export default function RegisterReview() {
         </CardContent>
       </Card>
     </div>
-  )
+  );
 }
