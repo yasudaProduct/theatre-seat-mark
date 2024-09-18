@@ -99,7 +99,7 @@ export default function SearchReviews() {
   )
 
   return (
-    <div className="min-h-screen bg-gray-100 p-4">
+    <div className="min-h-[calc(100vh-88px)] bg-gray-100 p-4">
       <Card className="max-w-4xl mx-auto">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">映画館・スクリーン検索とレビュー</CardTitle>

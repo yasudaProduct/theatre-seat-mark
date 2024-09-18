@@ -102,7 +102,7 @@ export default function RegisterReview() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-4">
+    <div className="bg-gray-100 flex items-center justify-center p-4">
       <Card className="w-full max-w-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">

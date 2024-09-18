@@ -8,10 +8,12 @@ import AuthWrapper from "@/components/AuthWrapper";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
-        <AuthWrapper>
-          <Header />
+      <AuthWrapper>
+      <div className="h-screen bg-gray-100">
+        <Header />
           <Component {...pageProps} />
-        </AuthWrapper>
+        </div>
+      </AuthWrapper>
     </SessionProvider>
   );
 }
