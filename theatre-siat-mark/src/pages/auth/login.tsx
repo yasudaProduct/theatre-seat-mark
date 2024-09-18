@@ -6,7 +6,7 @@ import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
-export default function login() {
+export default function Login() {
   const [error, setError] = useState("");
   const searchParams = useSearchParams();
 

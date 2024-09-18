@@ -1,8 +1,7 @@
 import pino, { Bindings, Logger, LoggerOptions } from "pino";
 
 const formatters = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  level(label: string, number: number) {
+  level(label: string) {
     return { level: label };
   },
   bindings(bindings: Bindings) {
