@@ -38,7 +38,14 @@ const Theaters = (props: Props) => {
 export default Theaters;
 
 export const getStaticProps: GetStaticProps = async () => {
-  const theaters = await prisma.theater.findMany();
+  const theaters = await prisma.theater.findMany({
+    select: {
+      id: true,
+      name: true,
+      address: true,
+    }
+  });
+  console.log(theaters);
   return {
     props: { theaters: theaters },
   };
