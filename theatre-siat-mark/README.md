@@ -12,7 +12,7 @@ npm run dev
 ## secret env
 ```
 # Postgres
-DATABASE_URL=
+POSTGRES_PRISMA_URL=postgresql://postgres:postgres@postgres:5432/postgres?schema=public
 
 # NextAuth
 NEXTAUTH_URL=
@@ -27,16 +27,16 @@ GITHUB_SECRET=
 ```
 
 ## prisma
-```
+```bash
 npx prisma migrate dev --create-only --name init
 npx prisma migrate dev
 ```
 
-```
+```bash
 npx prisma generate
 ```
 
 ### seed追加
-```
+```bash
 npx prisma db seed
 ```
