@@ -1,7 +1,10 @@
 import { ReviewCard } from "@/components/ReviewCard";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import getLogger from "@/lib/logger";
 import React, { useEffect, useState } from "react";
+import { toast, Toaster } from "sonner";
+const logger = getLogger("MyPage");
 
 interface Review {
   id: number;
@@ -39,7 +42,8 @@ export default function MyPage() {
           setMyReviews(data);
         }
       } catch (error) {
-        console.error("自分のレビューの取得に失敗しました", error);
+        logger.error(error)
+        toast.error("自分のレビューの取得に失敗しました");
       }
     };
 
@@ -51,12 +55,14 @@ export default function MyPage() {
             setBookmarkedReviews(data)
           }
         } catch (error) {
-          console.error('ブックマークしたレビューの取得に失敗しました', error)
+          logger.error(error)
+          toast.error('ブックマークしたレビューの取得に失敗しました')
         }
       }
 
   return (
     <div className="container mx-auto px-4 py-8">
+      <Toaster richColors />
       <h1 className="text-3xl font-bold mb-6">マイページ</h1>
       <Tabs defaultValue="my-reviews">
         <TabsList className="grid w-full grid-cols-2">

@@ -3,6 +3,10 @@ import { useState } from "react"
 import { Card, CardContent } from "./ui/card"
 import { Bookmark, Star } from "lucide-react"
 import { Button } from "./ui/button"
+import { Toaster } from "./ui/sonner"
+import { toast } from "sonner"
+import getLogger from "@/lib/logger"
+const logger = getLogger("ReviewCard")
 
 export interface ReviewCardProps {
     review: {
@@ -35,14 +39,17 @@ export function ReviewCard({ review }: ReviewCardProps) {
     
           if (response.ok) {
             setIsBookmarked(!isBookmarked)
+            toast.success(isBookmarked ? 'ブックマークを解除しました' : 'ブックマークしました')
           }
         } catch (error) {
-          console.error('ブックマークの更新に失敗しました', error)
+          logger.error(error)
+          toast.error('ブックマークの更新に失敗しました')
         }
       }
 
     return (
         <Card data-testid="review-card">
+          <Toaster richColors />
           <CardContent className="p-4">
             <div className="flex justify-between items-start">
               <div>

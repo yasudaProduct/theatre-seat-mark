@@ -9,8 +9,8 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <AuthWrapper>
-      <div className="h-screen bg-gray-100">
-        <Header />
+        <div className="h-screen bg-gray-100">
+          <Header />
           <Component {...pageProps} />
         </div>
       </AuthWrapper>

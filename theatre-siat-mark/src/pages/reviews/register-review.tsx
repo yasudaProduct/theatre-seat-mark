@@ -12,6 +12,8 @@ import { Textarea } from '@/components/ui/textarea'
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
+import { toast } from 'sonner'
+import { Toaster } from '@/components/ui/sonner'
 
 const schema = zod.object({
   newScreenName: zod
@@ -65,7 +67,7 @@ export default function RegisterReview() {
     const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen(data.newScreenName)
 
     if(!screenId) {
-      alert('新しいスクリーンの作成に失敗しました。');
+      toast.error('新しいスクリーンの作成に失敗しました。')
       return
     }
     
@@ -81,10 +83,10 @@ export default function RegisterReview() {
     })
 
     if (response.ok) {
-        alert('レビューを登録しました。')
+      toast.success('レビューを登録しました。')
         router.push('/mypage')
     } else {
-      alert('レビューの登録に失敗しました。')
+      toast.error('レビューの登録に失敗しました。')
     }
   }
 
@@ -108,6 +110,7 @@ export default function RegisterReview() {
 
   return (
     <div className="bg-gray-100 flex items-center justify-center p-4">
+      <Toaster richColors position='top-center'/>
       <Card className="w-full max-w-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">
