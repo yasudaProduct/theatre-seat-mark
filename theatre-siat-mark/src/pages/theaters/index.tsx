@@ -1,11 +1,11 @@
 import prisma from "@/lib/prisma";
-import { TheaterProps } from "@/types/Theater";
+import { Theater } from "@prisma/client";
 import { GetStaticProps } from "next";
 import Router from "next/router";
 import React from "react";
 
 type Props = {
-  theaters: TheaterProps[];
+  theaters: Theater[];
 };
 
 const Theaters = (props: Props) => {
