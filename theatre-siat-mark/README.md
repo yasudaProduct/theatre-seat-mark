@@ -25,3 +25,18 @@ GOOGLE_CLIENT_SECRET=
 GITHUB_ID=
 GITHUB_SECRET=
 ```
+
+## prisma
+```
+npx prisma migrate dev --create-only --name init
+npx prisma migrate dev
+```
+
+```
+npx prisma generate
+```
+
+### seed追加
+```
+npx prisma db seed
+```
