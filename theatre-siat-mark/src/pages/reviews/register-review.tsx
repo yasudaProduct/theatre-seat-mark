@@ -63,13 +63,18 @@ export default function RegisterReview() {
 
   const onSubmit: SubmitHandler<FormData> = async (data) => {
     const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen(data.newScreenName)
+
+    if(!screenId) {
+      alert('新しいスクリーンの作成に失敗しました。');
+      return
+    }
     
     const response = await fetch('/api/reviews', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         screenId: screenId,
-        seatNumber: data.newScreenName,
+        seatNumber: data.seatNumber,
         review: data.review,
         rating: rating
       })
@@ -97,7 +102,7 @@ export default function RegisterReview() {
       const newScreen = await response.json()
       return newScreen.id
     } else {
-      throw new Error('新しいスクリーンの作成に失敗しました。')
+      return null
     }
   }
 
