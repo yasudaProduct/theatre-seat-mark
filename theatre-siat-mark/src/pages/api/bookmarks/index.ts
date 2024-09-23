@@ -26,10 +26,14 @@ export default async function handler(
                   include: {
                     theaters: true
                   }
-                }
-              }
+                },
+                users: {
+                  select: {
+                    name: true
+                  },
+                },
+              },
             },
-            user: true
           },
           orderBy: { createdAt: "desc" },
         });
@@ -41,7 +45,7 @@ export default async function handler(
           rating: bookmark.review.rating,
           theaterName: bookmark.review.screens.theaters.name,
           screenName: bookmark.review.screens.name,
-          user: { name: bookmark.user.name },
+          user: { name: bookmark.review.users.name },
           isBookmarked: true
         }))
 
