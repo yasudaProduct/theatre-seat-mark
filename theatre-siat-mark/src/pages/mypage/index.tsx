@@ -18,47 +18,53 @@ interface Review {
 }
 
 export default function MyPage() {
-    const [myReviews, setMyReviews] = useState<Review[]>([]);
-    const [bookmarkedReviews, setBookmarkedReviews] = useState<Review[]>([])
+  const [myReviews, setMyReviews] = useState<Review[]>([]);
+  const [bookmarkedReviews, setBookmarkedReviews] = useState<Review[]>([]);
 
-    const ReviewList = ({ reviews }: { reviews: Review[] }) => (
-      <div className="space-y-4">
-        {reviews.map((review) => (
-          <ReviewCard key={review.id} review={review} />
-        ))}
-      </div>
-    );
+  const ReviewList = ({
+    reviews,
+    isEdit,
+  }: {
+    reviews: Review[];
+    isEdit: boolean;
+  }) => (
+    <div className="space-y-4">
+      {reviews.map((review) => (
+        <ReviewCard key={review.id} review={review} isEdit={isEdit} />
+      ))}
+    </div>
+  );
 
-    useEffect(() => {
-        fetchMyReviews();
-        fetchBookmarkedReviews();
-    }, []);
+  useEffect(() => {
+    fetchMyReviews();
+    fetchBookmarkedReviews();
+  }, []);
 
-    const fetchMyReviews = async () => {
-      try {
-        const response = await fetch("/api/reviews/my-reviews");
-        if (response.ok) {
-          const data: Review[] = await response.json();
-          setMyReviews(data);
-        }
-      } catch (error) {
-        logger.error(error)
-        toast.error("自分のレビューの取得に失敗しました");
+  const fetchMyReviews = async () => {
+    try {
+      const response = await fetch("/api/reviews/my-reviews");
+      if (response.ok) {
+        const data: Review[] = await response.json();
+        setMyReviews(data);
       }
-    };
+    } catch (error) {
+      logger.error(error);
+      toast.error("自分のレビューの取得に失敗しました");
+    }
+  };
 
-    const fetchBookmarkedReviews = async () => {
-        try {
-          const response = await fetch('/api/bookmarks')
-          if (response.ok) {
-            const data: Review[] = await response.json()
-            setBookmarkedReviews(data)
-          }
-        } catch (error) {
-          logger.error(error)
-          toast.error('ブックマークしたレビューの取得に失敗しました')
-        }
+  const fetchBookmarkedReviews = async () => {
+    try {
+      const response = await fetch("/api/bookmarks");
+      if (response.ok) {
+        const data: Review[] = await response.json();
+        setBookmarkedReviews(data);
       }
+    } catch (error) {
+      logger.error(error);
+      toast.error("ブックマークしたレビューの取得に失敗しました");
+    }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -76,7 +82,7 @@ export default function MyPage() {
             </CardHeader>
             <CardContent>
               {myReviews.length > 0 ? (
-                <ReviewList reviews={myReviews} />
+                <ReviewList reviews={myReviews} isEdit={true} />
               ) : (
                 <p className="text-center text-gray-500">
                   まだレビューを投稿していません。
@@ -92,9 +98,11 @@ export default function MyPage() {
             </CardHeader>
             <CardContent>
               {bookmarkedReviews.length > 0 ? (
-                <ReviewList reviews={bookmarkedReviews} />
+                <ReviewList reviews={bookmarkedReviews} isEdit={false} />
               ) : (
-                <p className="text-center text-gray-500">ブックマークしたレビューはありません。</p>
+                <p className="text-center text-gray-500">
+                  ブックマークしたレビューはありません。
+                </p>
               )}
             </CardContent>
           </Card>
