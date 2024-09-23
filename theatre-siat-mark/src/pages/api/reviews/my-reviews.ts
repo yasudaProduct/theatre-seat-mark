@@ -2,6 +2,8 @@ import prisma from "@/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
 import { authOptions } from "../auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
+import getLogger from "@/lib/logger";
+const logger = getLogger("my-reviews");
 
 export default async function handler(
   req: NextApiRequest,
@@ -49,6 +51,7 @@ export default async function handler(
 
         res.status(200).json(formattedReviews);
       } catch (error) {
+        logger.error(error);
         res.status(500).json({ message: "エラーが発生しました", error });
       }
     } else {
