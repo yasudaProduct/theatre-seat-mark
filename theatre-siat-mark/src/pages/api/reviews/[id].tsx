@@ -29,7 +29,7 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       try {
-        const reviews = await prisma.seatReview.findUnique({
+        const review = await prisma.seatReview.findUnique({
           where: {
             id: parseInt(req.query.id as string, 10),
             user_id: parseInt(userId!, 10),
@@ -40,10 +40,15 @@ export default async function handler(
                 name: true,
               },
             },
+            screens: {
+              include: {
+                theaters: true,
+              },
+            },
           },
         });
 
-        if (!reviews) {
+        if (!review) {
           return res
             .status(404)
             .json({
@@ -52,7 +57,19 @@ export default async function handler(
             } as ApiErrorResponse);
         }
 
-        res.json(reviews);
+        const formattedReviews = {
+          id: review.id,
+          seatNumber: review.seat_name,
+          review: review.review,
+          rating: review.rating,
+          theaterName: review.screens.theaters.name,
+          screenName: review.screens.name,
+          user: { name: review.users.name },
+          isBookmarked: true
+        };
+
+        res.json(formattedReviews);
+
       } catch (error) {
         logger.error(error);
         res

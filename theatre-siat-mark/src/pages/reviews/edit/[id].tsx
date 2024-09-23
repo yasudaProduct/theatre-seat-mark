@@ -12,7 +12,7 @@ const logger = getLogger("EditReviewPage")
 
 interface Review {
   id: number
-  users: { name: string }
+  user: { name: string }
   seatNumber: string
   rating: number
   review: string
@@ -88,7 +88,7 @@ export default function EditReviewPage() {
       </CardHeader>
       <CardContent>
         <div className="mb-4">
-          <p className="font-semibold">{review.users.name}</p>
+          <p className="font-semibold">{review.user.name}</p>
           <p className="text-sm text-gray-500">{review.theaterName}</p>
           <p className="text-sm text-gray-500">{review.screenName}</p>
           <p className="text-sm text-gray-500">座席: {review.seatNumber}</p>
