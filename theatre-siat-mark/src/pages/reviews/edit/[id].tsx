@@ -42,10 +42,10 @@ export default function EditReviewPage() {
         setEditedReview(data.review)
         setEditedRating(data.rating)
       } else {
-        throw new Error('Failed to fetch review')
+        toast.error('レビューの取得に失敗しました')
       }
     } catch (error) {
-      logger.error(error)
+      logger.debug(error)
       toast.error('レビューの取得に失敗しました')
     }
   }
@@ -61,8 +61,8 @@ export default function EditReviewPage() {
       })
 
       if (response.ok) {
-        toast.success('レビューを更新しました')
-        router.push('/reviews')  // レビュー一覧ページへ遷移
+        toast.success('レビューを更新しました');
+        router.back();
       } else {
         throw new Error('Failed to update review')
       }
