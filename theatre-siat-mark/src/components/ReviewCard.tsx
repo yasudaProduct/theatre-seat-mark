@@ -10,7 +10,6 @@ import router from "next/router";
 const logger = getLogger("ReviewCard");
 
 export interface ReviewCardProps {
-  review: {
     id: number;
     user: { name: string };
     seatNumber: string;
@@ -19,11 +18,9 @@ export interface ReviewCardProps {
     isBookmarked?: boolean;
     theaterName: string;
     screenName: string;
-  };
-  isEdit?: boolean;
 }
 
-export function ReviewCard({ review, isEdit }: ReviewCardProps) {
+export function ReviewCard({ review, isEdit }: {review: ReviewCardProps, isEdit?: boolean}) {
   const [isBookmarked, setIsBookmarked] = useState(review.isBookmarked);
 
   const handleBookmark = async () => {

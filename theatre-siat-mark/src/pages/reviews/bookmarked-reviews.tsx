@@ -8,6 +8,8 @@ interface BookmarkedReview {
   seatNumber: string;
   rating: number;
   review: string;
+  theaterName: string;
+  screenName: string;
   isBookmarked: boolean;
 }
 
