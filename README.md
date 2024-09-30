@@ -1,20 +1,47 @@
-# nextjs-sample
-学習用
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-# 環境構築
-docker compose build
+## Getting Started
 
-docker compose up -d
-※npm installする必要があるので直したい
+First, run the development server:
 
-.envファイル作成
+```bash
+npm run dev
+```
 
-##
-npx prisma generate
 
-## migration
+## secret env
+```
+# Postgres
+POSTGRES_PRISMA_URL=postgresql://postgres:postgres@postgres:5432/postgres?schema=public
+
+# NextAuth
+NEXTAUTH_URL=
+NEXTAUTH_SECRET==
+
+# Auth Providers
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+GITHUB_ID=
+GITHUB_SECRET=
+```
+
+## prisma
+```bash
 npx prisma migrate dev --create-only --name init
 npx prisma migrate dev
+```
 
-## seed追加
+```bash
+npx prisma generate
+```
+
+#### seed追加
+```bash
 npx prisma db seed
+```
+
+### dotenv
+```bash
+./node_modules/.bin/dotenv -e .env.local -- npx prisma db seed
+```
