@@ -86,7 +86,7 @@ model Theater {
 model Screen {
   id         Int       @id @default(autoincrement())
   theater_id Int
-  name       String    @unique
+  name       String
   createdAt  DateTime  @default(now()) @map(name: "created_at")
   updatedAt  DateTime  @updatedAt @map(name: "updated_at")
   theaters   Theater   @relation(fields: [theater_id], references: [id])
