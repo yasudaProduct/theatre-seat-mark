@@ -34,6 +34,15 @@ export default async function handler(
           .json({ message: "映画館IDとスクリーン名は必須です。" });
       }
 
+      // 同一映画館内でのスクリーン名の重複をチェック
+      const screen = await prisma.screen.findFirst({
+        where: {
+          theater_id: parseInt(theaterId, 10),
+          name: name,
+        },
+      });
+      if(screen) return res.status(400).json({ message: "スクリーン名が重複しています" });
+
       const newScreen = await prisma.screen.create({
         data: {
           theater_id: parseInt(theaterId, 10),
