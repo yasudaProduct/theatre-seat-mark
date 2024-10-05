@@ -99,7 +99,7 @@ model SeatReview {
   id        Int       @id @default(autoincrement())
   user_id   Int
   screen_id Int
-  seat_name String    @unique
+  seat_name String
   review    String
   rating    Int       @default(0)
   createdAt DateTime  @default(now()) @map(name: "created_at")
