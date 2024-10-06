@@ -72,7 +72,7 @@ export default function RegisterReview() {
     reset();
   }, [screenOption, reset]);
 
-  const onSubmit: SubmitHandler<BaseFormData> = async (data) => {
+  const onSubmit: SubmitHandler<BaseFormData> = async (data: { newScreenName: string; seatNumber: string; review: string }) => {
 
     const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen(data.newScreenName)
 
