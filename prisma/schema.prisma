@@ -72,6 +72,26 @@ model VerificationToken {
   @@map("verificationtokens")
 }
 
+model Prefecture {
+  id        Int       @id @default(autoincrement())
+  region_id Int
+  name      String
+  name_kana   String
+  createdAt DateTime  @default(now()) @map(name: "created_at")
+  region   Region     @relation(fields: [region_id], references: [id])
+
+  @@map("prefectures")
+}
+
+model Region {
+  id         Int     @id @default(autoincrement())
+  name       String
+  name_kana  String
+  prefecture Prefecture[]
+
+  @@map("region")
+}
+
 model Theater {
   id        Int       @id @default(autoincrement())
   name      String

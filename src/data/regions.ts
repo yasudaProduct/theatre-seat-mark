@@ -1,0 +1,341 @@
+export const regions = [
+  {
+    id: 1,
+    name: "北海道",
+    name_kana: "ほっかいどう",
+    prefecture: [
+      {
+        id: 1,
+        region_id: 1,
+        name: "北海道",
+        name_kana: "ほっかいどう",
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "東北",
+    name_kana: "とうほく",
+    prefecture: [
+      {
+        id: 2,
+        region_id: 2,
+        name: "青森県",
+        name_kana: "あおもりけん",
+      },
+      {
+        id: 3,
+        region_id: 2,
+        name: "岩手県",
+        name_kana: "いわてけん",
+      },
+      {
+        id: 4,
+        region_id: 2,
+        name: "宮城県",
+        name_kana: "みやぎけん",
+      },
+      {
+        id: 5,
+        region_id: 2,
+        name: "秋田県",
+        name_kana: "あきたけん",
+      },
+      {
+        id: 6,
+        region_id: 2,
+        name: "山形県",
+        name_kana: "やまがたけん",
+      },
+      {
+        id: 7,
+        region_id: 2,
+        name: "福島県",
+        name_kana: "ふくしまけん",
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "関東",
+    name_kana: "かんとう",
+    prefecture: [
+      {
+        id: 8,
+        region_id: 3,
+        name: "茨城県",
+        name_kana: "いばらきけん",
+      },
+      {
+        id: 9,
+        region_id: 3,
+        name: "栃木県",
+        name_kana: "とちぎけん",
+      },
+      {
+        id: 10,
+        region_id: 3,
+        name: "群馬県",
+        name_kana: "ぐんまけん",
+      },
+      {
+        id: 11,
+        region_id: 3,
+        name: "埼玉県",
+        name_kana: "さいたまけん",
+      },
+      {
+        id: 12,
+        region_id: 3,
+        name: "千葉県",
+        name_kana: "ちばけん",
+      },
+      {
+        id: 13,
+        region_id: 3,
+        name: "東京都",
+        name_kana: "とうきょうと",
+      },
+      {
+        id: 14,
+        region_id: 3,
+        name: "神奈川県",
+        name_kana: "かながわけん",
+      },
+    ],
+  },
+  {
+    id: 4,
+    name: "中部",
+    name_kana: "ちゅうぶ",
+    prefecture: [
+      {
+        id: 15,
+        region_id: 4,
+        name: "新潟県",
+        name_kana: "にいがたけん",
+      },
+      {
+        id: 16,
+        region_id: 4,
+        name: "富山県",
+        name_kana: "とやまけん",
+      },
+      {
+        id: 17,
+        region_id: 4,
+        name: "石川県",
+        name_kana: "いしかわけん",
+      },
+      {
+        id: 18,
+        region_id: 4,
+        name: "福井県",
+        name_kana: "ふくいけん",
+      },
+      {
+        id: 19,
+        region_id: 4,
+        name: "山梨県",
+        name_kana: "やまなしけん",
+      },
+      {
+        id: 20,
+        region_id: 4,
+        name: "長野県",
+        name_kana: "ながのけん",
+      },
+      {
+        id: 21,
+        region_id: 4,
+        name: "岐阜県",
+        name_kana: "ぎふけん",
+      },
+      {
+        id: 22,
+        region_id: 4,
+        name: "静岡県",
+        name_kana: "しずおかけん",
+      },
+      {
+        id: 23,
+        region_id: 4,
+        name: "愛知県",
+        name_kana: "あいちけん",
+      },
+    ],
+  },
+  {
+    id: 5,
+    name: "近畿",
+    name_kana: "きんき",
+    prefecture: [
+      {
+        id: 24,
+        region_id: 5,
+        name: "三重県",
+        name_kana: "みえけん",
+      },
+      {
+        id: 25,
+        region_id: 5,
+        name: "滋賀県",
+        name_kana: "しがけん",
+      },
+      {
+        id: 26,
+        region_id: 5,
+        name: "京都府",
+        name_kana: "きょうとふ",
+      },
+      {
+        id: 27,
+        region_id: 5,
+        name: "大阪府",
+        name_kana: "おおさかふ",
+      },
+      {
+        id: 28,
+        region_id: 5,
+        name: "兵庫県",
+        name_kana: "ひょうごけん",
+      },
+      {
+        id: 29,
+        region_id: 5,
+        name: "奈良県",
+        name_kana: "ならけん",
+      },
+      {
+        id: 30,
+        region_id: 5,
+        name: "和歌山県",
+        name_kana: "わかやまけん",
+      },
+    ],
+  },
+  {
+    id: 6,
+    name: "中国",
+    name_kana: "ちゅうごく",
+    prefecture: [
+      {
+        id: 31,
+        region_id: 6,
+        name: "鳥取県",
+        name_kana: "とっとりけん",
+      },
+      {
+        id: 32,
+        region_id: 6,
+        name: "島根県",
+        name_kana: "しまねけん",
+      },
+      {
+        id: 33,
+        region_id: 6,
+        name: "岡山県",
+        name_kana: "おかやまけん",
+      },
+      {
+        id: 34,
+        region_id: 6,
+        name: "広島県",
+        name_kana: "ひろしまけん",
+      },
+      {
+        id: 35,
+        region_id: 6,
+        name: "山口県",
+        name_kana: "やまぐちけん",
+      },
+    ],
+  },
+  {
+    id: 7,
+    name: "四国",
+    name_kana: "しこく",
+    prefecture: [
+      {
+        id: 36,
+        region_id: 7,
+        name: "徳島県",
+        name_kana: "とくしまけん",
+      },
+      {
+        id: 37,
+        region_id: 7,
+        name: "香川県",
+        name_kana: "かがわけん",
+      },
+      {
+        id: 38,
+        region_id: 7,
+        name: "愛媛県",
+        name_kana: "えひめけん",
+      },
+      {
+        id: 39,
+        region_id: 7,
+        name: "高知県",
+        name_kana: "こうちけん",
+      },
+    ],
+  },
+  {
+    id: 8,
+    name: "九州・沖縄",
+    name_kana: "きゅうしゅう・おきなわ",
+    prefecture: [
+      {
+        id: 40,
+        region_id: 8,
+        name: "福岡県",
+        name_kana: "ふくおかけん",
+      },
+      {
+        id: 41,
+        region_id: 8,
+        name: "佐賀県",
+        name_kana: "さがけん",
+      },
+      {
+        id: 42,
+        region_id: 8,
+        name: "長崎県",
+        name_kana: "ながさきけん",
+      },
+      {
+        id: 43,
+        region_id: 8,
+        name: "熊本県",
+        name_kana: "くまもとけん",
+      },
+      {
+        id: 44,
+        region_id: 8,
+        name: "大分県",
+        name_kana: "おおいたけん",
+      },
+      {
+        id: 45,
+        region_id: 8,
+        name: "宮崎県",
+        name_kana: "みやざきけん",
+      },
+      {
+        id: 46,
+        region_id: 8,
+        name: "鹿児島県",
+        name_kana: "かごしまけん",
+      },
+      {
+        id: 47,
+        region_id: 8,
+        name: "沖縄県",
+        name_kana: "おきなわ",
+      },
+    ]
+  },
+];
+  
