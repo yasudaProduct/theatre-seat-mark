@@ -88,6 +88,7 @@ model Region {
   name       String
   name_kana  String
   prefecture Prefecture[]
+  theaters Theater[]
 
   @@map("region")
 }
@@ -96,9 +97,13 @@ model Theater {
   id        Int       @id @default(autoincrement())
   name      String
   address   String
+  url       String?
+  region_id Int
   createdAt DateTime  @default(now()) @map(name: "created_at")
   updatedAt DateTime  @updatedAt @map(name: "updated_at")
   screens   Screen[]
+  region   Region     @relation(fields: [region_id], references: [id])
+  
 
   @@map("theaters")
 }
