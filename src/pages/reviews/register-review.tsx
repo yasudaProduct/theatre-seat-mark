@@ -15,11 +15,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from 'sonner'
 import { Toaster } from '@/components/ui/sonner'
 
-const schema = zod.object({
-  newScreenName: zod
-    .string()
-    .min(1, { message: "スクリーン名を入力してください。" })
-    .max(20, { message: "スクリーン名は20文字以内で入力してください" }),
+const baseSchema = zod.object({
   seatNumber: zod
     .string()
     .min(1, { message: "座席番号を入力してください。" })
@@ -30,7 +26,15 @@ const schema = zod.object({
     .max(50, { message: "レビューは50文字以内で入力してください" }),
 });
 
-type FormData = zod.infer<typeof schema>;
+const newScreenSchema = baseSchema.extend({
+  newScreenName: zod
+    .string()
+    .min(1, { message: "スクリーン名を入力してください。" })
+    .max(20, { message: "スクリーン名は20文字以内で入力してください" }),
+});
+
+type BaseFormData = zod.infer<typeof baseSchema>;
+type NewScreenFormData = zod.infer<typeof newScreenSchema>;
 
 export default function RegisterReview() {
   const [theaters, setTheaters] = useState<Theater[]>([])
@@ -43,8 +47,9 @@ export default function RegisterReview() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormData>({
-    resolver: zodResolver(schema),
+    reset,
+  } = useForm<NewScreenFormData>({
+    resolver: zodResolver(screenOption === 'new' ? newScreenSchema : baseSchema),
   });
   
   useEffect(() => {
@@ -63,7 +68,12 @@ export default function RegisterReview() {
     }
   }, [selectedTheater])
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  useEffect(() => {
+    reset();
+  }, [screenOption, reset]);
+
+  const onSubmit: SubmitHandler<BaseFormData> = async (data) => {
+
     const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen(data.newScreenName)
 
     if(!screenId) {
