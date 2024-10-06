@@ -44,11 +44,15 @@ async function main() {
       update: {
         name: theater.name,
         address: theater.address,
+        url: theater.url ? theater.url : null,
+        prefecture_id: theater.prefecture_id,
       },
       create: {
         id: theater.id,
         name: theater.name,
         address: theater.address,
+        url: theater.url ? theater.url : null,
+        prefecture_id: theater.prefecture_id,
       },
     });
   }
