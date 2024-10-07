@@ -14,6 +14,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from 'sonner'
 import { Toaster } from '@/components/ui/sonner'
+import { regions } from '@/data/regions'
 
 const baseSchema = zod.object({
   seatNumber: zod
@@ -36,9 +37,24 @@ const newScreenSchema = baseSchema.extend({
 type BaseFormData = zod.infer<typeof baseSchema>;
 type NewScreenFormData = zod.infer<typeof newScreenSchema>;
 
+const fetchTheaters = async (prefectureId: string) => {
+  try {
+    const response = await fetch(`/api/theaters?prefectureId=${prefectureId}`)
+    if (response.ok) {
+      return await response.json()
+    } else {
+      throw new Error('Failed to fetch theaters')
+    }
+  } catch (error) {
+    console.error('Error fetching theaters:', error)
+    throw error
+  }
+}
+
 export default function RegisterReview() {
   const [theaters, setTheaters] = useState<Theater[]>([])
   const [screens, setScreens] = useState<Screen[]>([])
+  const [selectedPrefecture, setSelectedPrefecture] = useState('')
   const [selectedTheater, setSelectedTheater] = useState('')
   const [selectedScreen, setSelectedScreen] = useState('')
   const [rating, setRating] = useState(0)
@@ -53,19 +69,28 @@ export default function RegisterReview() {
   });
   
   useEffect(() => {
-    // 映画館のデータを取得
-    fetch('/api/theaters')
-      .then(res => res.json())
-      .then(data => setTheaters(data))
-  }, [])
+    if (selectedPrefecture) {
+      fetchTheaters(selectedPrefecture)
+        .then(data => setTheaters(data))
+        .catch(() => toast.error('映画館の取得に失敗しました'))
+    } else {
+      setTheaters([])
+    }
+    setSelectedTheater('')
+    setSelectedScreen('')
+    setScreens([])
+  }, [selectedPrefecture])
 
   useEffect(() => {
-    // 選択された映画館のスクリーンを取得
     if (selectedTheater) {
       fetch(`/api/screens?theaterId=${selectedTheater}`)
         .then(res => res.json())
         .then(data => setScreens(data))
+        .catch(() => toast.error('スクリーンの取得に失敗しました'))
+    } else {
+      setScreens([])
     }
+    setSelectedScreen('')
   }, [selectedTheater])
 
   useEffect(() => {
@@ -73,6 +98,20 @@ export default function RegisterReview() {
   }, [screenOption, reset]);
 
   const onSubmit: SubmitHandler<BaseFormData> = async (data: { newScreenName: string; seatNumber: string; review: string }) => {
+    if (!selectedTheater) {
+      toast.error('映画館を選択してください')
+      return
+    }
+
+    if (screenOption === 'existing' && !selectedScreen) {
+      toast.error('スクリーンを選択してください')
+      return
+    }
+
+    if (rating === 0) {
+      toast.error('評価を選択してください')
+      return
+    }
 
     const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen(data.newScreenName)
 
@@ -120,7 +159,7 @@ export default function RegisterReview() {
 
   return (
     <div className="bg-gray-100 flex items-center justify-center p-4">
-      <Toaster richColors position='top-center'/>
+      <Toaster richColors position="top-center" />
       <Card className="w-full max-w-lg">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">
@@ -131,21 +170,51 @@ export default function RegisterReview() {
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="theater">映画館</Label>
-              <Select
-                value={selectedTheater}
-                onValueChange={setSelectedTheater}
-              >
-                <SelectTrigger id="theater">
-                  <SelectValue placeholder="映画館を選択" />
-                </SelectTrigger>
-                <SelectContent>
-                  {theaters.map((theater) => (
-                    <SelectItem key={theater.id} value={theater.id.toString()}>
-                      {theater.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="flex space-x-2">
+                <div className="w-3/12">
+                  <Select
+                    value={selectedPrefecture}
+                    onValueChange={setSelectedPrefecture}
+                  >
+                    <SelectTrigger id="prefectures">
+                      <SelectValue placeholder="都道府県" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {regions.map((region) =>
+                        region.prefecture.map((prefecture) => (
+                          <SelectItem
+                            key={prefecture.id}
+                            value={prefecture.id.toString()}
+                          >
+                            {prefecture.name}
+                          </SelectItem>
+                        ))
+                      )}
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="w-9/12">
+                  <Select
+                    value={selectedTheater}
+                    onValueChange={setSelectedTheater}
+                    disabled={!selectedPrefecture}
+                  >
+                    <SelectTrigger id="theater">
+                      <SelectValue placeholder="映画館を選択" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {theaters.map((theater) => (
+                        <SelectItem
+                          key={theater.id}
+                          value={theater.id.toString()}
+                        >
+                          {theater.name}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -172,6 +241,7 @@ export default function RegisterReview() {
                 <Select
                   value={selectedScreen}
                   onValueChange={setSelectedScreen}
+                  disabled={!selectedTheater}
                 >
                   <SelectTrigger id="screen">
                     <SelectValue placeholder="スクリーンを選択" />
@@ -209,10 +279,10 @@ export default function RegisterReview() {
                 placeholder="例: A-12"
               />
               {errors.seatNumber && (
-                  <p className="text-sm text-red-500">
-                    {errors.seatNumber.message}
-                  </p>
-                )}
+                <p className="text-sm text-red-500">
+                  {errors.seatNumber.message}
+                </p>
+              )}
             </div>
 
             <div className="space-y-2">
@@ -224,10 +294,8 @@ export default function RegisterReview() {
                 rows={3}
               />
               {errors.review && (
-                  <p className="text-sm text-red-500">
-                    {errors.review.message}
-                  </p>
-                )}
+                <p className="text-sm text-red-500">{errors.review.message}</p>
+              )}
             </div>
 
             <div className="space-y-2">
