@@ -1,7 +1,9 @@
 import { ReviewCard } from "@/components/ReviewCard";
+import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import getLogger from "@/lib/logger";
+import { useSession } from "next-auth/react";
 import React, { useEffect, useState } from "react";
 import { toast, Toaster } from "sonner";
 const logger = getLogger("MyPage");
@@ -18,6 +20,7 @@ interface Review {
 }
 
 export default function MyPage() {
+  const { data: session } = useSession()
   const [myReviews, setMyReviews] = useState<Review[]>([]);
   const [bookmarkedReviews, setBookmarkedReviews] = useState<Review[]>([]);
 
@@ -69,16 +72,32 @@ export default function MyPage() {
   return (
     <div className="container mx-auto px-4 py-8">
       <Toaster richColors />
-      <h1 className="text-3xl font-bold mb-6">マイページ</h1>
+      <div className="w-full bg-white mb-2 px-4 py-8">
+        <div className="flex items-center space-x-3">
+          <img
+            src="/images/image.png"
+            alt="Avatar"
+            width="96"
+            height="96"
+            className="rounded-full"
+            style={{ aspectRatio: "96/96", objectFit: "cover" }}
+          />
+
+          <div className="space-y-4">
+            <h1 className="text-2xl">{session?.user?.name}</h1>
+            <Button size="sm">プロフィール設定</Button>
+          </div>
+        </div>
+      </div>
       <Tabs defaultValue="my-reviews">
         <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="my-reviews">自分のレビュー</TabsTrigger>
-          <TabsTrigger value="bookmarked">ブックマークしたレビュー</TabsTrigger>
+          <TabsTrigger value="my-reviews">投稿</TabsTrigger>
+          <TabsTrigger value="bookmarked">ブックマーク</TabsTrigger>
         </TabsList>
         <TabsContent value="my-reviews">
           <Card>
             <CardHeader>
-              <CardTitle>自分のレビュー</CardTitle>
+              <CardTitle></CardTitle>
             </CardHeader>
             <CardContent>
               {myReviews.length > 0 ? (
@@ -94,7 +113,7 @@ export default function MyPage() {
         <TabsContent value="bookmarked">
           <Card>
             <CardHeader>
-              <CardTitle>ブックマークしたレビュー</CardTitle>
+              <CardTitle></CardTitle>
             </CardHeader>
             <CardContent>
               {bookmarkedReviews.length > 0 ? (
