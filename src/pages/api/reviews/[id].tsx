@@ -49,12 +49,10 @@ export default async function handler(
         });
 
         if (!review) {
-          return res
-            .status(404)
-            .json({
-              code: ApiResponseCode.RESOURCE_NOT_FOUND,
-              message: "レビューが見つかりません",
-            } as ApiErrorResponse);
+          return res.status(404).json({
+            code: ApiResponseCode.RESOURCE_NOT_FOUND,
+            message: "レビューが見つかりません",
+          } as ApiErrorResponse);
         }
 
         const formattedReviews = {
@@ -65,19 +63,16 @@ export default async function handler(
           theaterName: review.screens.theaters.name,
           screenName: review.screens.name,
           user: { name: review.users.name },
-          isBookmarked: true
+          isBookmarked: true,
         };
 
         res.json(formattedReviews);
-
       } catch (error) {
         logger.error(error);
-        res
-          .status(500)
-          .json({
-            code: ApiResponseCode.INTERNAL_SERVER_ERROR,
-            message: "エラーが発生しました",
-          } as ApiErrorResponse);
+        res.status(500).json({
+          code: ApiResponseCode.INTERNAL_SERVER_ERROR,
+          message: "エラーが発生しました",
+        } as ApiErrorResponse);
       }
       break;
 
@@ -90,12 +85,10 @@ export default async function handler(
           rating < 1 ||
           rating > 5
         ) {
-          return res
-            .status(400)
-            .json({
-              code: ApiResponseCode.INVALID_REQUEST_DATA,
-              message: "無効なリクエストデータです",
-            } as ApiErrorResponse);
+          return res.status(400).json({
+            code: ApiResponseCode.INVALID_REQUEST_DATA,
+            message: "無効なリクエストデータです",
+          } as ApiErrorResponse);
         }
 
         const updatedReview = await prisma.seatReview.update({
@@ -108,25 +101,36 @@ export default async function handler(
         });
 
         res.status(200).json(updatedReview);
-        
       } catch (error) {
         logger.error("レビュー更新エラー:", error);
-        res
-          .status(500)
-          .json({
-            code: ApiResponseCode.INTERNAL_SERVER_ERROR,
-            message: "レビューの更新に失敗しました",
-          } as ApiErrorResponse);
+        res.status(500).json({
+          code: ApiResponseCode.INTERNAL_SERVER_ERROR,
+          message: "レビューの更新に失敗しました",
+        } as ApiErrorResponse);
+      }
+      break;
+
+    case "DELETE":
+      try {
+        await prisma.seatReview.delete({
+          where: { id: reviewId },
+        });
+
+        res.status(204).end();
+      } catch (error) {
+        logger.error("レビュー削除エラー:", error);
+        res.status(500).json({
+          code: ApiResponseCode.INTERNAL_SERVER_ERROR,
+          message: "レビューの削除に失敗しました",
+        } as ApiErrorResponse);
       }
       break;
 
     default:
       res.setHeader("Allow", ["GET", "PUT"]);
-      res
-        .status(405)
-        .json({
-          code: ApiResponseCode.METHOD_NOT_ALLOWED,
-          message: `Method ${req.method} Not Allowed`,
-        } as ApiErrorResponse);
+      res.status(405).json({
+        code: ApiResponseCode.METHOD_NOT_ALLOWED,
+        message: `Method ${req.method} Not Allowed`,
+      } as ApiErrorResponse);
   }
 }

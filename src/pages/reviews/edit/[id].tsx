@@ -1,83 +1,105 @@
-import React, { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Star } from "lucide-react"
-import { Toaster } from "@/components/ui/sonner"
-import { toast } from "sonner"
-import getLogger from "@/lib/logger"
+import React, { useState, useEffect } from "react";
+import { useRouter } from "next/router";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Star } from "lucide-react";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
+import getLogger from "@/lib/logger";
 
-const logger = getLogger("EditReviewPage")
+const logger = getLogger("EditReviewPage");
 
 interface Review {
-  id: number
-  user: { name: string }
-  seatNumber: string
-  rating: number
-  review: string
-  theaterName: string
-  screenName: string
+  id: number;
+  user: { name: string };
+  seatNumber: string;
+  rating: number;
+  review: string;
+  theaterName: string;
+  screenName: string;
 }
 
 export default function EditReviewPage() {
-  const router = useRouter()
-  const { id } = router.query
-  const [review, setReview] = useState<Review | null>(null)
-  const [editedReview, setEditedReview] = useState('')
-  const [editedRating, setEditedRating] = useState(0)
+  const router = useRouter();
+  const { id } = router.query;
+  const [review, setReview] = useState<Review | null>(null);
+  const [editedReview, setEditedReview] = useState("");
+  const [editedRating, setEditedRating] = useState(0);
 
   useEffect(() => {
     if (id) {
-      fetchReview()
+      fetchReview();
     }
-  }, [id])
+  }, [id]);
 
   const fetchReview = async () => {
     try {
-      const response = await fetch(`/api/reviews/${id}`)
+      const response = await fetch(`/api/reviews/${id}`);
       if (response.ok) {
-        const data = await response.json()
-        setReview(data)
-        setEditedReview(data.review)
-        setEditedRating(data.rating)
+        const data = await response.json();
+        setReview(data);
+        setEditedReview(data.review);
+        setEditedRating(data.rating);
       } else {
-        toast.error('レビューの取得に失敗しました')
+        toast.error("レビューの取得に失敗しました");
       }
     } catch (error) {
-      logger.debug(error)
-      toast.error('レビューの取得に失敗しました')
+      logger.debug(error);
+      toast.error("レビューの取得に失敗しました");
     }
-  }
+  };
 
   const handleSave = async () => {
     try {
       const response = await fetch(`/api/reviews/${id}`, {
-        method: 'PUT',
+        method: "PUT",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ review: editedReview, rating: editedRating }),
-      })
+      });
 
       if (response.ok) {
-        toast.success('レビューを更新しました');
+        toast.success("レビューを更新しました");
         router.back();
       } else {
-        throw new Error('Failed to update review')
+        throw new Error("Failed to update review");
       }
     } catch (error) {
-      logger.error(error)
-      toast.error('レビューの更新に失敗しました')
+      logger.error(error);
+      toast.error("レビューの更新に失敗しました");
     }
-  }
+  };
+
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`/api/reviews/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ review: editedReview, rating: editedRating }),
+      });
+
+      if (response.ok) {
+        toast.success("レビューを削除しました");
+        router.back();
+      } else {
+        throw new Error("Failed to update review");
+      }
+    } catch (error) {
+      logger.error(error);
+      toast.error("レビューの削除に失敗しました");
+    }
+  };
 
   const handleCancel = () => {
-    router.back()
-  }
+    router.back();
+  };
 
   if (!review) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
@@ -100,7 +122,9 @@ export default function EditReviewPage() {
               <Star
                 key={i}
                 className={`h-6 w-6 cursor-pointer ${
-                  i < editedRating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                  i < editedRating
+                    ? "text-yellow-400 fill-current"
+                    : "text-gray-300"
                 }`}
                 onClick={() => setEditedRating(i + 1)}
               />
@@ -114,10 +138,15 @@ export default function EditReviewPage() {
           rows={6}
         />
         <div className="flex justify-end space-x-2">
-          <Button onClick={handleCancel} variant="outline">キャンセル</Button>
+          <Button onClick={handleDelete} variant="outline">
+            削除
+          </Button>
+          <Button onClick={handleCancel} variant="outline">
+            キャンセル
+          </Button>
           <Button onClick={handleSave}>保存</Button>
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
