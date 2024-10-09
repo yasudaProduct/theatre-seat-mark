@@ -12,6 +12,7 @@ import { toast } from "sonner";
 
 interface UserProfileProps {
   user: {
+    id: number;
     name: string;
     image: string;
     _count: {
@@ -59,6 +60,7 @@ export const getServerSideProps: GetServerSideProps<UserProfileProps> = async (
   return {
     props: {
       user: {
+        id: user.id,
         name: user.name ?? "Unknown",
         image: user.image ?? "/avatar-placeholder.png",
         _count: {
@@ -101,7 +103,7 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
 
   const fetchMyReviews = async () => {
     try {
-      const response = await fetch("/api/reviews/my-reviews");
+      const response = await fetch("/api/reviews/user/" + user.id);
       if (response.ok) {
         const data: Review[] = await response.json();
         setMyReviews(data);

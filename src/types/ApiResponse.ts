@@ -10,4 +10,5 @@ export enum ApiResponseCode {
     METHOD_NOT_ALLOWED = 'Method Not Allowed',
     RESOURCE_NOT_FOUND = 'Resource Not Found',
     INVALID_REQUEST_DATA = 'Invalid Request Data',
+    UNAUTHORIZED = 'Unauthorized',
 }
