@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 interface UserProfileProps {
   user: {
-    aliasId: number;
+    aliasId: string;
     name: string;
     image: string;
     _count: {
@@ -60,7 +60,7 @@ export const getServerSideProps: GetServerSideProps<UserProfileProps> = async (
   return {
     props: {
       user: {
-        aliasId: user.aliasId,
+        aliasId: user.aliasId!,
         name: user.name ?? "Unknown",
         image: user.image ?? "/avatar-placeholder.png",
         _count: {
@@ -115,7 +115,7 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
 
   const fetchBookmarkedReviews = async () => {
     try {
-      const response = await fetch("/api/bookmarks");
+      const response = await fetch("/api/bookmarks/" + user.aliasId);
       if (response.ok) {
         const data: Review[] = await response.json();
         setBookmarkedReviews(data);

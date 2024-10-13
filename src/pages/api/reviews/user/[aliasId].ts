@@ -10,7 +10,7 @@ export default async function handler(
 ) {
   const session = await getServerSession(req, res, authOptions);
 
-  if (!session) {
+  if (!session || !session.user) {
     return res.status(401).json({
       code: ApiResponseCode.UNAUTHORIZED,
       message: "認証されていません",
