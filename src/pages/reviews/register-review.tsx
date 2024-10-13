@@ -15,6 +15,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from 'sonner'
 import { Toaster } from '@/components/ui/sonner'
 import { regions } from '@/data/regions'
+import { useSession } from 'next-auth/react'
 
 const baseSchema = zod.object({
   seatNumber: zod
@@ -52,6 +53,7 @@ const fetchTheaters = async (prefectureId: string) => {
 }
 
 export default function RegisterReview() {
+  const { data: session } = useSession();
   const [theaters, setTheaters] = useState<Theater[]>([])
   const [screens, setScreens] = useState<Screen[]>([])
   const [selectedPrefecture, setSelectedPrefecture] = useState('')
@@ -133,7 +135,7 @@ export default function RegisterReview() {
 
     if (response.ok) {
       toast.success('レビューを登録しました。')
-        router.push('/mypage')
+        router.push('/' + session!.user!.aliasId)
     } else {
       toast.error('レビューの登録に失敗しました。')
     }
