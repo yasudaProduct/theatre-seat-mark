@@ -4,6 +4,11 @@ declare module 'next-auth' {
   interface Session {
     user?: DefaultUser & {
       id: string;
+      aliasId: string;
     };
+  }
+  interface User {
+    id: string;
+    aliasId: string;
   }
 }

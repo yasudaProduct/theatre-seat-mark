@@ -55,6 +55,7 @@ model User {
   image         String?
   createdAt     DateTime  @default(now()) @map(name: "created_at")
   updatedAt     DateTime  @updatedAt @map(name: "updated_at")
+  aliasId       String?   @unique @map(name: "alias_id")
   accounts      Account[]
   sessions      Session[]
   seat_reviews  SeatReview[]

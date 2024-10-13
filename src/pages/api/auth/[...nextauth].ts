@@ -3,6 +3,7 @@ import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import NextAuth, { AuthOptions, DefaultUser, Session } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import GitHubProvider from 'next-auth/providers/github';
+import { generateRandomString } from '@/lib/utils';
 
 
 export const authOptions: AuthOptions = {
@@ -18,12 +19,28 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async session({session, user}: {session: Session, user: DefaultUser}) {
+    async session({session, user}) {
+      console.log('session', session);
+      console.log('user', user);
       if (session?.user) {
         session.user.id = user.id;
+        session.user.aliasId = user.aliasId;
       }
       return session;
     },
+  },
+  events:{
+    createUser: async (message) => {
+      console.log('createUser', message);
+
+      await prisma.user.update({
+        where: { id: Number(message.user.id) },
+        data: {
+          aliasId: generateRandomString(7),
+        }
+      })
+
+    }
   },
   secret: process.env.SECRET,
   session: {
