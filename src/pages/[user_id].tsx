@@ -12,7 +12,7 @@ import { toast } from "sonner";
 
 interface UserProfileProps {
   user: {
-    id: number;
+    aliasId: number;
     name: string;
     image: string;
     _count: {
@@ -38,10 +38,10 @@ export const getServerSideProps: GetServerSideProps<UserProfileProps> = async (
   context
 ) => {
   const session = await getSession(context);
-  const userId = context.params?.user_id as string;
+  const aliasId = context.params?.user_id as string;
 
   const user = await prisma.user.findUnique({
-    where: { id: parseInt(userId, 10) },
+    where: { aliasId: aliasId },
     include: {
       _count: {
         select: { seat_reviews: true, bookmarks: true },
@@ -55,12 +55,12 @@ export const getServerSideProps: GetServerSideProps<UserProfileProps> = async (
     };
   }
 
-  const isOwnProfile: boolean = session?.user?.id == user.id.toString();
+  const isOwnProfile: boolean = session?.user?.aliasId == user.aliasId;
 
   return {
     props: {
       user: {
-        id: user.id,
+        aliasId: user.aliasId,
         name: user.name ?? "Unknown",
         image: user.image ?? "/avatar-placeholder.png",
         _count: {
@@ -103,7 +103,7 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
 
   const fetchMyReviews = async () => {
     try {
-      const response = await fetch("/api/reviews/user/" + user.id);
+      const response = await fetch("/api/reviews/user/" + user.aliasId);
       if (response.ok) {
         const data: Review[] = await response.json();
         setMyReviews(data);

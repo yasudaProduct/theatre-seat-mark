@@ -17,9 +17,9 @@ export default async function handler(
     } as ApiErrorResponse);
   }
 
-  const { userId } = req.query;
+  const { aliasId } = req.query;
 
-  if (!userId || typeof userId !== "string") {
+  if (!aliasId || typeof aliasId !== "string") {
     return res.status(400).json({
       code: ApiResponseCode.ARGUMENT_PARAMETER_ERROR,
       message: "ユーザーIDが必要です",
@@ -29,9 +29,21 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       try {
+
+        // user_idを取得
+        const user = await prisma.user.findUnique({
+          where: {
+            aliasId: aliasId,
+          },
+        });
+
+        if(!user){
+          return res.status(200).json([]);
+        }
+
         const reviews = await prisma.seatReview.findMany({
           where: {
-            user_id: parseInt(userId, 10),
+            user_id: user.id,
           },
           include: {
             screens: {

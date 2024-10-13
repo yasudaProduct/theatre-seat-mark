@@ -26,7 +26,7 @@ const Header = () => {
                 {status !== "loading" && session && (
                   <>
                     <li className="py-1 px-4 text-white no-underline">
-                      <Link legacyBehavior href="/mypage">
+                      <Link legacyBehavior href={"/" + session.user?.aliasId}>
                         <a>MyPage</a>
                       </Link>
                     </li>
