@@ -99,7 +99,7 @@ export default function RegisterReview() {
     reset();
   }, [screenOption, reset]);
 
-  const onSubmit: SubmitHandler<BaseFormData> = async (data: { newScreenName: string; seatNumber: string; review: string }) => {
+  const onSubmit: SubmitHandler<BaseFormData | NewScreenFormData> = async (data: { newScreenName: string; seatNumber: string; review: string }) => {
     if (!selectedTheater) {
       toast.error('映画館を選択してください')
       return
