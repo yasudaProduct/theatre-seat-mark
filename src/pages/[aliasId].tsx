@@ -78,6 +78,11 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
   const [myReviews, setMyReviews] = useState<Review[]>([]);
   const [bookmarkedReviews, setBookmarkedReviews] = useState<Review[]>([]);
 
+  useEffect(() => {
+    fetchMyReviews();
+    fetchBookmarkedReviews();
+  }, []);
+
   if (!user) {
     return <div>ユーザーが見つかりません</div>;
   }
@@ -95,11 +100,6 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
       ))}
     </div>
   );
-
-  useEffect(() => {
-    fetchMyReviews();
-    fetchBookmarkedReviews();
-  }, []);
 
   const fetchMyReviews = async () => {
     try {
