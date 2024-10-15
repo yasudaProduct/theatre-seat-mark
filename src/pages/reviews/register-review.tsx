@@ -18,6 +18,7 @@ import { regions } from '@/data/regions'
 import { useSession } from 'next-auth/react'
 
 const baseSchema = zod.object({
+  type: zod.literal("existing"),
   seatNumber: zod
     .string()
     .min(1, { message: "座席番号を入力してください。" })
@@ -29,14 +30,15 @@ const baseSchema = zod.object({
 });
 
 const newScreenSchema = baseSchema.extend({
+  type: zod.literal("new"),
   newScreenName: zod
     .string()
     .min(1, { message: "スクリーン名を入力してください。" })
     .max(20, { message: "スクリーン名は20文字以内で入力してください" }),
 });
 
-type BaseFormData = zod.infer<typeof baseSchema>;
-type NewScreenFormData = zod.infer<typeof newScreenSchema>;
+const registrationSchema = zod.discriminatedUnion("type",[baseSchema, newScreenSchema]);
+type RegistrationFromData = zod.infer<typeof registrationSchema>;
 
 const fetchTheaters = async (prefectureId: string) => {
   try {
@@ -66,8 +68,8 @@ export default function RegisterReview() {
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<NewScreenFormData>({
-    resolver: zodResolver(screenOption === 'new' ? newScreenSchema : baseSchema),
+  } = useForm<RegistrationFromData>({
+    resolver: zodResolver(registrationSchema),
   });
   
   useEffect(() => {
@@ -99,7 +101,8 @@ export default function RegisterReview() {
     reset();
   }, [screenOption, reset]);
 
-  const onSubmit: SubmitHandler<BaseFormData | NewScreenFormData> = async (data: {seatNumber: string, review: string } | {seatNumber: string, review: string, newScreenName: string }) => {
+  const onSubmit: SubmitHandler<RegistrationFromData> = async (data: RegistrationFromData) => {
+    console.log(data)
     if (!selectedTheater) {
       toast.error('映画館を選択してください')
       return
@@ -115,7 +118,8 @@ export default function RegisterReview() {
       return
     }
 
-    const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen(data.newScreenName)
+    // スクリーンが選択か入力かで処理を分岐
+    const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen((data as { newScreenName: string }).newScreenName)
 
     if(!screenId) {
       toast.error('新しいスクリーンの作成に失敗しました。')
@@ -227,11 +231,11 @@ export default function RegisterReview() {
                 className="flex space-x-4"
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="existing" id="existing" />
+                  <RadioGroupItem {...register("type")} value="existing" id="existing" name="type" />
                   <Label htmlFor="existing">既存のスクリーン</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem value="new" id="new" />
+                  <RadioGroupItem {...register("type")} value="new" id="new" name="type" />
                   <Label htmlFor="new">新規スクリーン</Label>
                 </div>
               </RadioGroup>
@@ -261,8 +265,8 @@ export default function RegisterReview() {
               <div className="space-y-2">
                 <Label htmlFor="newScreen">新規スクリーン名</Label>
                 <Input
-                  id="newScreenName"
                   {...register("newScreenName")}
+                  id="newScreenName"
                   placeholder="新しいスクリーン名を入力"
                 />
                 {errors.newScreenName && (
@@ -276,8 +280,8 @@ export default function RegisterReview() {
             <div className="space-y-2">
               <Label htmlFor="seatNumber">座席番号</Label>
               <Input
-                id="seatNumber"
                 {...register("seatNumber")}
+                id="seatNumber"
                 placeholder="例: A-12"
               />
               {errors.seatNumber && (
@@ -290,8 +294,8 @@ export default function RegisterReview() {
             <div className="space-y-2">
               <Label htmlFor="review">レビュー</Label>
               <Textarea
-                id="review"
                 {...register("review")}
+                id="review"
                 placeholder="レビューを入力してください"
                 rows={3}
               />
