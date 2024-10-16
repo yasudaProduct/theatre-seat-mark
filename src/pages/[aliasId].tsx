@@ -138,8 +138,11 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
             <AvatarFallback>{user.name?.charAt(0) || "U"}</AvatarFallback>
           </Avatar>
 
-          <div className="space-y-4">
-            <h1 className="text-2xl">{session?.user?.name}</h1>
+          <div className="space-y-1">
+          <div>
+            <span className="text-2xl">{user.name}</span>
+            <span className="text-xs text-gray-500 ml-5">{user.aliasId}</span>
+            </div>
             { isOwnProfile && <Button size="sm">プロフィール設定</Button> }
           </div>
         </div>
