@@ -1,6 +1,6 @@
 import React from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import ProtectedRoute from "./ProtectedRoute";
 
 const authRoutes = [
@@ -12,14 +12,14 @@ const authRoutes = [
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
-  const router = useRouter();
+  const pathname = usePathname()
 
   // 認証中は表示しない
   if (session.status === 'loading') return null;
 
   return (
     <>
-      {authRoutes.includes(router.pathname) ? (
+      {authRoutes.includes(pathname) ? (
         // 現在のページが、ログインを要求するページの場合
         <ProtectedRoute>{children}</ProtectedRoute>
       ) : (

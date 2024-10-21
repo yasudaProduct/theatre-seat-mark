@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Loader2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -60,7 +60,7 @@ export default function MyReviews() {
     return (
       <div className="flex flex-col items-center justify-center h-screen">
         <p className="text-red-500 mb-4">{error}</p>
-        <Button onClick={() => router.reload()}>再試行</Button>
+        <Button onClick={() => router.refresh}>再試行</Button>
       </div>
     );
   }

@@ -11,11 +11,11 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from 'sonner'
 import { Toaster } from '@/components/ui/sonner'
 import { regions } from '@/data/regions'
 import { useSession } from 'next-auth/react'
+import { FieldErrors, SubmitHandler, useForm } from 'react-hook-form'
 
 const baseSchema = zod.object({
   type: zod.literal("existing"),
@@ -39,6 +39,19 @@ const newScreenSchema = baseSchema.extend({
 
 const registrationSchema = zod.discriminatedUnion("type",[baseSchema, newScreenSchema]);
 type RegistrationFromData = zod.infer<typeof registrationSchema>;
+
+// type ExistingReviewErrors = {
+//   type: "existing";
+//   review: string;
+//   seatNumber: string;
+// };
+
+type NewReviewErrors = {
+  type: "new";
+  review: string;
+  seatNumber: string;
+  newScreenName: string;
+};
 
 const fetchTheaters = async (prefectureId: string) => {
   try {
@@ -231,11 +244,11 @@ export default function RegisterReview() {
                 className="flex space-x-4"
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem {...register("type")} value="existing" id="existing" name="type" />
+                  <RadioGroupItem {...register("type")} value="existing" id="existing" />
                   <Label htmlFor="existing">既存のスクリーン</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem {...register("type")} value="new" id="new" name="type" />
+                  <RadioGroupItem {...register("type")} value="new" id="new" />
                   <Label htmlFor="new">新規スクリーン</Label>
                 </div>
               </RadioGroup>
@@ -269,9 +282,9 @@ export default function RegisterReview() {
                   id="newScreenName"
                   placeholder="新しいスクリーン名を入力"
                 />
-                {errors.newScreenName && (
+                {screenOption === "new" && "newScreenName" in errors && (
                   <p className="text-sm text-red-500">
-                    {errors.newScreenName.message}
+                    {errors.newScreenName?.message}
                   </p>
                 )}
               </div>

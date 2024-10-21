@@ -2,13 +2,25 @@ import prisma from "@/lib/prisma";
 import { Theater } from "@prisma/client";
 import { GetStaticProps } from "next";
 import Router from "next/router";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 type Props = {
   theaters: Theater[];
 };
 
 const Theaters = (props: Props) => {
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  const handleTheaterClick = (theaterId: number) => {
+    if (isMounted) {
+      Router.push(`/theaters/${theaterId}`);
+    }
+  };
+  
   return (
     <div className="container mx-auto">
       <div className="mt-10 w-full px-8">
@@ -17,7 +29,7 @@ const Theaters = (props: Props) => {
             <div
               key={theater.id}
               className="w-full cursor-pointer px-2 lg:w-4/12"
-              onClick={() => Router.push(`/theaters/${theater.id}`)}
+              onClick={() => handleTheaterClick(theater.id)}
             >
               <div className="relative mt-4 flex flex-col border">
                 <div className="flex-auto px-4 py-5">
@@ -46,6 +58,11 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   });
   console.log(theaters);
+  if(!theaters){
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: { theaters: theaters },
   };

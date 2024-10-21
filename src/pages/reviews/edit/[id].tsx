@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
@@ -22,7 +22,7 @@ interface Review {
 
 export default function EditReviewPage() {
   const router = useRouter();
-  const { id } = router.query;
+  const id = useSearchParams().get('id');
   const [review, setReview] = useState<Review | null>(null);
   const [editedReview, setEditedReview] = useState("");
   const [editedRating, setEditedRating] = useState(0);
