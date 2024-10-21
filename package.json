@@ -9,7 +9,7 @@
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
-    "vercel-build": "prisma generate && next build && npx prisma db seed"
+    "vercel-build": "prisma generate && prisma migrate deploy && next build && npx prisma db seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.0",
