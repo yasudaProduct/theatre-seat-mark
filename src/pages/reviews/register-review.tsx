@@ -1,81 +1,80 @@
-import React from 'react'
-import { useState, useEffect } from 'react'
-import router from 'next/router'
-import { Theater, Screen } from '@prisma/client'
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Label } from '@/components/ui/label'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
-import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import React from "react";
+import { useState, useEffect } from "react";
+import router from "next/router";
+import { Theater, Screen } from "@prisma/client";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 import * as zod from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { toast } from 'sonner'
-import { Toaster } from '@/components/ui/sonner'
-import { regions } from '@/data/regions'
-import { useSession } from 'next-auth/react'
-import { FieldErrors, SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from "sonner";
+import { Toaster } from "@/components/ui/sonner";
+import { regions } from "@/data/regions";
+import { useSession } from "next-auth/react";
+import { SubmitHandler, useForm } from "react-hook-form";
 
-const baseSchema = zod.object({
-  type: zod.literal("existing"),
-  seatNumber: zod
-    .string()
-    .min(1, { message: "座席番号を入力してください。" })
-    .max(20, { message: "座席番号は10文字以内で入力してください" }),
-  review: zod
-    .string()
-    .min(1, { message: "レビューを入力してください。" })
-    .max(50, { message: "レビューは50文字以内で入力してください" }),
-});
+let type: string = "existing";
 
-const newScreenSchema = baseSchema.extend({
-  type: zod.literal("new"),
-  newScreenName: zod
-    .string()
-    .min(1, { message: "スクリーン名を入力してください。" })
-    .max(20, { message: "スクリーン名は20文字以内で入力してください" }),
-});
-
-const registrationSchema = zod.discriminatedUnion("type",[baseSchema, newScreenSchema]);
+const registrationSchema = zod
+  .object({
+    type: zod.enum(["existing", "new"]),
+    screenId: zod.string().optional(),
+    newScreenName: zod.string().optional(),
+    seatNumber: zod
+      .string()
+      .min(1, { message: "座席番号を入力してください。" })
+      .max(20, { message: "座席番号は20文字以内で入力してください" }),
+    review: zod
+      .string()
+      .min(1, { message: "レビューを入力してください。" })
+      .max(500, { message: "レビューは500文字以内で入力してください" }),
+  })
+  .refine(
+    (data) => {
+      if (type === "existing") return true;
+      if (type === "new" && data.newScreenName) return true;
+      return false;
+    },
+    {
+      message: "スクリーン名を入力してください。",
+      path: ["newScreenName"],
+    }
+  );
 type RegistrationFromData = zod.infer<typeof registrationSchema>;
-
-// type ExistingReviewErrors = {
-//   type: "existing";
-//   review: string;
-//   seatNumber: string;
-// };
-
-type NewReviewErrors = {
-  type: "new";
-  review: string;
-  seatNumber: string;
-  newScreenName: string;
-};
 
 const fetchTheaters = async (prefectureId: string) => {
   try {
-    const response = await fetch(`/api/theaters?prefectureId=${prefectureId}`)
+    const response = await fetch(`/api/theaters?prefectureId=${prefectureId}`);
     if (response.ok) {
-      return await response.json()
+      return await response.json();
     } else {
-      throw new Error('Failed to fetch theaters')
+      throw new Error("Failed to fetch theaters");
     }
   } catch (error) {
-    console.error('Error fetching theaters:', error)
-    throw error
+    console.error("Error fetching theaters:", error);
+    throw error;
   }
-}
+};
 
 export default function RegisterReview() {
   const { data: session } = useSession();
-  const [theaters, setTheaters] = useState<Theater[]>([])
-  const [screens, setScreens] = useState<Screen[]>([])
-  const [selectedPrefecture, setSelectedPrefecture] = useState('')
-  const [selectedTheater, setSelectedTheater] = useState('')
-  const [selectedScreen, setSelectedScreen] = useState('')
-  const [rating, setRating] = useState(0)
-  const [screenOption, setScreenOption] = useState('existing')
+  const [theaters, setTheaters] = useState<Theater[]>([]);
+  const [screens, setScreens] = useState<Screen[]>([]);
+  const [selectedPrefecture, setSelectedPrefecture] = useState("");
+  const [selectedTheater, setSelectedTheater] = useState("");
+  const [selectedScreen, setSelectedScreen] = useState("");
+  const [rating, setRating] = useState(0);
+  const [screenOption, setScreenOption] = useState("existing");
   const {
     register,
     handleSubmit,
@@ -83,98 +82,106 @@ export default function RegisterReview() {
     reset,
   } = useForm<RegistrationFromData>({
     resolver: zodResolver(registrationSchema),
+    defaultValues: {
+      type: "existing",
+    },
   });
-  
+
   useEffect(() => {
     if (selectedPrefecture) {
       fetchTheaters(selectedPrefecture)
-        .then(data => setTheaters(data))
-        .catch(() => toast.error('映画館の取得に失敗しました'))
+        .then((data) => setTheaters(data))
+        .catch(() => toast.error("映画館の取得に失敗しました"));
     } else {
-      setTheaters([])
+      setTheaters([]);
     }
-    setSelectedTheater('')
-    setSelectedScreen('')
-    setScreens([])
-  }, [selectedPrefecture])
+    setSelectedTheater("");
+    setSelectedScreen("");
+    setScreens([]);
+  }, [selectedPrefecture]);
 
   useEffect(() => {
     if (selectedTheater) {
       fetch(`/api/screens?theaterId=${selectedTheater}`)
-        .then(res => res.json())
-        .then(data => setScreens(data))
-        .catch(() => toast.error('スクリーンの取得に失敗しました'))
+        .then((res) => res.json())
+        .then((data) => setScreens(data))
+        .catch(() => toast.error("スクリーンの取得に失敗しました"));
     } else {
-      setScreens([])
+      setScreens([]);
     }
-    setSelectedScreen('')
-  }, [selectedTheater])
+    setSelectedScreen("");
+  }, [selectedTheater]);
 
   useEffect(() => {
+    type = screenOption;
     reset();
   }, [screenOption, reset]);
 
-  const onSubmit: SubmitHandler<RegistrationFromData> = async (data: RegistrationFromData) => {
-    console.log(data)
+  const onSubmit: SubmitHandler<RegistrationFromData> = async (data) => {
     if (!selectedTheater) {
-      toast.error('映画館を選択してください')
-      return
+      toast.error("映画館を選択してください");
+      return;
     }
 
-    if (screenOption === 'existing' && !selectedScreen) {
-      toast.error('スクリーンを選択してください')
-      return
+    if (screenOption === "existing" && !selectedScreen) {
+      toast.error("スクリーンを選択してください");
+      return;
     }
 
     if (rating === 0) {
-      toast.error('評価を選択してください')
-      return
+      toast.error("評価を選択してください");
+      return;
     }
 
     // スクリーンが選択か入力かで処理を分岐
-    const screenId = screenOption === 'existing' ? selectedScreen : await createNewScreen((data as { newScreenName: string }).newScreenName)
+    const screenId =
+      type === "existing"
+        ? selectedScreen
+        : await createNewScreen(
+            (data as { newScreenName: string }).newScreenName
+          );
 
-    if(!screenId) {
-      toast.error('新しいスクリーンの作成に失敗しました。')
-      return
+    if (!screenId) {
+      toast.error("新しいスクリーンの作成に失敗しました。");
+      return;
     }
-    
-    const response = await fetch('/api/reviews', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+
+    const response = await fetch("/api/reviews", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         screenId: screenId,
         seatNumber: data.seatNumber,
         review: data.review,
-        rating: rating
-      })
-    })
+        rating: rating,
+      }),
+    });
 
     if (response.ok) {
-      toast.success('レビューを登録しました。')
-        router.push('/' + session!.user!.aliasId)
+      toast.success("レビューを登録しました。");
+      router.push("/" + session!.user!.aliasId);
     } else {
-      toast.error('レビューの登録に失敗しました。')
+      toast.error("レビューの登録に失敗しました。");
     }
-  }
+  };
 
   const createNewScreen = async (name: string) => {
-    const response = await fetch('/api/screens', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+    const response = await fetch("/api/screens", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         theaterId: selectedTheater,
-        name: name
-      })
-    })
+        name: name,
+      }),
+    });
 
     if (response.ok) {
-      const newScreen = await response.json()
-      return newScreen.id
+      const newScreen = await response.json();
+      return newScreen.id;
     } else {
-      return null
+      return null;
     }
-  }
+  };
 
   return (
     <div className="bg-gray-100 flex items-center justify-center p-4">
@@ -239,16 +246,26 @@ export default function RegisterReview() {
             <div className="space-y-2">
               <Label>スクリーン</Label>
               <RadioGroup
+                {...register("type")}
+                id="type"
                 value={screenOption}
                 onValueChange={setScreenOption}
                 className="flex space-x-4"
               >
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem {...register("type")} value="existing" id="existing" />
+                  <RadioGroupItem
+                    // {...register("type")}
+                    value="existing"
+                    id="existing"
+                  />
                   <Label htmlFor="existing">既存のスクリーン</Label>
                 </div>
                 <div className="flex items-center space-x-2">
-                  <RadioGroupItem {...register("type")} value="new" id="new" />
+                  <RadioGroupItem
+                    // {...register("type")}
+                    value="new"
+                    id="new"
+                  />
                   <Label htmlFor="new">新規スクリーン</Label>
                 </div>
               </RadioGroup>
