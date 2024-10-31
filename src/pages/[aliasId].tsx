@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ReviewCard } from "@/components/ReviewCard";
 import { toast } from "sonner";
+import Link from "next/link";
 
 interface UserProfileProps {
   user: {
@@ -139,11 +140,17 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
           </Avatar>
 
           <div className="space-y-1">
-          <div>
-            <span className="text-2xl">{user.name}</span>
-            <span className="text-xs text-gray-500 ml-5">{user.aliasId}</span>
+            <div>
+              <span className="text-2xl">{user.name}</span>
+              <span className="text-xs text-gray-500 ml-5">{user.aliasId}</span>
             </div>
-            { isOwnProfile && <Button size="sm">プロフィール設定</Button> }
+            {isOwnProfile && (
+              <Link legacyBehavior href="/setting">
+                <a className="my-3 display: block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                  プロフィール設定
+                </a>
+              </Link>
+            )}
           </div>
         </div>
         <div className="flex space-x-4">
