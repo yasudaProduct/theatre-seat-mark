@@ -5,7 +5,6 @@ import { getSession, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import prisma from "@/lib/prisma";
 import { Toaster } from "@/components/ui/sonner";
-import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ReviewCard } from "@/components/ReviewCard";
 import { toast } from "sonner";
@@ -75,7 +74,6 @@ export const getServerSideProps: GetServerSideProps<UserProfileProps> = async (
 };
 
 export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
-  const { data: session } = useSession();
   const [myReviews, setMyReviews] = useState<Review[]>([]);
   const [bookmarkedReviews, setBookmarkedReviews] = useState<Review[]>([]);
 

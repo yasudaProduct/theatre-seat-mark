@@ -1,22 +1,11 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 import { ApiErrorResponse, ApiResponseCode } from "@/types/ApiResponse";
-import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const session = await getServerSession(req, res, authOptions);
-
-  if (!session || !session.user) {
-    return res.status(401).json({
-      code: ApiResponseCode.UNAUTHORIZED,
-      message: "認証されていません",
-    } as ApiErrorResponse);
-  }
-
   const { aliasId } = req.query;
 
   if (!aliasId || typeof aliasId !== "string") {
@@ -29,7 +18,6 @@ export default async function handler(
   switch (req.method) {
     case "GET":
       try {
-
         // user_idを取得
         const user = await prisma.user.findUnique({
           where: {
@@ -37,7 +25,7 @@ export default async function handler(
           },
         });
 
-        if(!user){
+        if (!user) {
           return res.status(200).json([]);
         }
 
@@ -53,7 +41,7 @@ export default async function handler(
             },
             bookmarks: {
               where: {
-                user_id: parseInt(session!.user!.id, 10),
+                user_id: user.id,
               },
             },
             users: true,
@@ -70,7 +58,7 @@ export default async function handler(
           seatNumber: review.seat_name,
           rating: review.rating,
           review: review.review,
-          user: {username: review.users.name},
+          user: { username: review.users.name },
           createdAt: review.createdAt.toISOString(),
           isBookmarked: review.bookmarks.length > 0,
         }));

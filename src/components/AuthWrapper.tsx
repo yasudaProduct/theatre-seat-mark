@@ -4,18 +4,17 @@ import { usePathname } from "next/navigation";
 import ProtectedRoute from "./ProtectedRoute";
 
 const authRoutes = [
-  '/mypage',
-  '/reviews/my-reviews',
-  '/reviews/register-review',
-  '/articles/[id]'
+  "/mypage",
+  "/reviews/my-reviews",
+  "/reviews/register-review",
 ];
 
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
-  const pathname = usePathname()
+  const pathname = usePathname();
 
   // 認証中は表示しない
-  if (session.status === 'loading') return null;
+  if (session.status === "loading") return null;
 
   return (
     <>
@@ -28,7 +27,6 @@ const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
       )}
     </>
   );
-
 };
 
 export default AuthWrapper;
