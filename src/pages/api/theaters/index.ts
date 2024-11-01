@@ -1,7 +1,6 @@
 import getLogger from "@/lib/logger";
 import prisma from "@/lib/prisma";
 import { ApiErrorResponse, ApiResponseCode } from "@/types/ApiResponse";
-import { Theater } from "@prisma/client";
 import { NextApiRequest, NextApiResponse } from "next";
 const logger = getLogger("theaters");
 
@@ -16,8 +15,8 @@ export default async function handler(
       try {
         let theaters;
 
-        if (prefectureId && typeof prefectureId === 'string') {
-          console.log(prefectureId)
+        if (prefectureId && typeof prefectureId === "string") {
+          console.log(prefectureId);
           theaters = await prisma.theater.findMany({
             where: {
               prefecture_id: parseInt(prefectureId, 10),
@@ -30,7 +29,7 @@ export default async function handler(
           theaters = await prisma.theater.findMany({
             orderBy: {
               name: "asc",
-            }
+            },
           });
         }
         res.status(200).json(theaters);
