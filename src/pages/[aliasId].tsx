@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import prisma from "@/lib/prisma";
@@ -129,14 +128,13 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
       <Toaster richColors />
       <div className="w-full bg-white mb-2 px-4 py-8">
         <div className="flex items-center space-x-3">
-          <Avatar className="w-24 h-24">
+          {/* <Avatar className="w-24 h-24">
             <AvatarImage
               src={user.image || undefined}
               alt={user.name || "User"}
             />
             <AvatarFallback>{user.name?.charAt(0) || "U"}</AvatarFallback>
-          </Avatar>
-
+          </Avatar> */}
           <div className="space-y-1">
             <div>
               <span className="text-2xl">{user.name}</span>

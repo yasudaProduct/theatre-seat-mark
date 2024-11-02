@@ -12,15 +12,21 @@ const Header = () => {
             <div className="flex w-full justify-center font-extrabold text-white lg:w-1/2 lg:justify-start">
               <Link legacyBehavior href="/">
                 <a className="text-2xl text-gray-900 no-underline hover:text-gray-900 hover:no-underline">
-                  🛋️ &nbsp; <span className=" text-gray-200">THEATER-SEAT-MARK</span>
+                  🛋️ &nbsp;{" "}
+                  <span className=" text-gray-200">THEATER-SEAT-MARK</span>
                 </a>
               </Link>
             </div>
             <div className="flex w-full content-center justify-between pt-2 lg:w-1/2 lg:justify-end lg:pt-0">
               <ul className="list-reset flex flex-1 items-center justify-center lg:flex-none">
                 <li className="py-1 px-4 text-white no-underline">
+                  <Link legacyBehavior href="/reviews/search-reviews">
+                    <a>検索</a>
+                  </Link>
+                </li>
+                <li className="py-1 px-4 text-white no-underline">
                   <Link legacyBehavior href="/reviews/register-review">
-                    <a>Register</a>
+                    <a>登録</a>
                   </Link>
                 </li>
                 {status !== "loading" && session && (

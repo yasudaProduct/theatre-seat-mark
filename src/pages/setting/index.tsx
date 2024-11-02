@@ -1,4 +1,3 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -84,7 +83,7 @@ export default function UserProfileSettings() {
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-            <div className="flex justify-center">
+            {/* <div className="flex justify-center">
               <Avatar className="w-24 h-24">
                 <AvatarImage
                   src={session?.user?.image || undefined}
@@ -94,7 +93,7 @@ export default function UserProfileSettings() {
                   {session?.user?.name?.charAt(0) || "U"}
                 </AvatarFallback>
               </Avatar>
-            </div>
+            </div> */}
             <div className="space-y-2">
               <Label htmlFor="name">名前</Label>
               <Input id="name" {...register("name")} />
