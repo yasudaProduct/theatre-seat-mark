@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -92,9 +92,18 @@ export default function EditReviewPage({ review }: EditReviewPageProps) {
   const [editedReview, setEditedReview] = useState("");
   const [editedRating, setEditedRating] = useState(0);
 
+  if (!review) {
+    return <div>レビューが見つかりません</div>;
+  }
+
+  useEffect(() => {
+    setEditedRating(review.rating);
+    setEditedReview(review.review);
+  }, []);
+
   const handleSave = async () => {
     try {
-      const response = await fetch(`/api/reviews/${id}`, {
+      const response = await fetch(`/api/reviews/${review.id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -116,7 +125,7 @@ export default function EditReviewPage({ review }: EditReviewPageProps) {
 
   const handleDelete = async () => {
     try {
-      const response = await fetch(`/api/reviews/${id}`, {
+      const response = await fetch(`/api/reviews/${review.id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -139,11 +148,6 @@ export default function EditReviewPage({ review }: EditReviewPageProps) {
   const handleCancel = () => {
     router.back();
   };
-
-  console.log(review);
-  if (!review) {
-    return <div>レビューが見つかりません</div>;
-  }
 
   return (
     <Card className="w-full max-w-2xl mx-auto mt-8">
