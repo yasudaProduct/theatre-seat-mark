@@ -18,12 +18,10 @@ export default async function handler(
   const reviewId = Number(id);
 
   if (isNaN(reviewId)) {
-    return res
-      .status(400)
-      .json({
-        code: ApiResponseCode.ARGUMENT_PARAMETER_ERROR,
-        message: "無効なレビューIDです",
-      } as ApiErrorResponse);
+    return res.status(400).json({
+      code: ApiResponseCode.ARGUMENT_PARAMETER_ERROR,
+      message: "無効なレビューIDです",
+    } as ApiErrorResponse);
   }
 
   switch (req.method) {
@@ -112,6 +110,12 @@ export default async function handler(
 
     case "DELETE":
       try {
+        // ブックマークを削除
+        await prisma.bookmark.deleteMany({
+          where: { review_id: reviewId },
+        });
+
+        // レビューを削除
         await prisma.seatReview.delete({
           where: { id: reviewId },
         });
