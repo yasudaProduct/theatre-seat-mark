@@ -8,7 +8,7 @@ import { generateRandomString } from '@/lib/utils';
 
 export const authOptions: AuthOptions = {
   adapter: PrismaAdapter(prisma),
-  providers:[
+  providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID!,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
@@ -19,15 +19,16 @@ export const authOptions: AuthOptions = {
     }),
   ],
   callbacks: {
-    async session({session, user}) {
+    async session({ session, user }) {
       if (session?.user) {
         session.user.id = user.id;
         session.user.aliasId = user.aliasId;
+        session.user.image = user.image;
       }
       return session;
     },
   },
-  events:{
+  events: {
     createUser: async (message) => {
       await prisma.user.update({
         where: { id: Number(message.user.id) },

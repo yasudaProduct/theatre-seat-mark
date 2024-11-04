@@ -5,8 +5,10 @@ declare module 'next-auth' {
     user?: DefaultUser & {
       id: string;
       aliasId: string;
+      image: string | null | undefined;
     };
   }
+
   interface User {
     id: string;
     aliasId: string;

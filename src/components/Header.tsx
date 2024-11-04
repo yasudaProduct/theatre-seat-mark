@@ -1,6 +1,8 @@
 import React from "react";
 import Link from "next/link";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
+import DropdownMenu from "./DropdownMenu";
+import { Film } from "lucide-react";
 
 const Header = () => {
   const { data: session, status } = useSession();
@@ -11,9 +13,9 @@ const Header = () => {
           <div className="mx-auto flex w-full flex-wrap items-center">
             <div className="flex w-full justify-center font-extrabold text-white lg:w-1/2 lg:justify-start">
               <Link legacyBehavior href="/">
-                <a className="text-2xl text-gray-900 no-underline hover:text-gray-900 hover:no-underline">
-                  🛋️ &nbsp;{" "}
-                  <span className=" text-gray-200">THEATER-SEAT-MARK</span>
+                <a className="text-2xl text-gray-900 no-underline hover:text-gray-900 hover:no-underline flex items-center">
+                  <Film className="w-6 h-6 mr-2 text-gray-200" />
+                  <span className=" text-gray-200">シネポジ</span>
                 </a>
               </Link>
             </div>
@@ -30,23 +32,17 @@ const Header = () => {
                   </Link>
                 </li>
                 {status !== "loading" && session && (
-                  <>
-                    <li className="py-1 px-4 text-white no-underline">
-                      <Link legacyBehavior href={"/" + session.user?.aliasId}>
-                        <a>MyPage</a>
-                      </Link>
-                    </li>
-                    <li className="py-1 px-4 text-white no-underline">
-                      <button onClick={() => signOut()}>
-                        <a>Log out</a>
-                      </button>
-                    </li>
-                  </>
+                  <li className="py-1 px-4 text-white no-underline">
+                    <DropdownMenu
+                      userImage={session.user?.image || ""}
+                      aliasId={session.user?.aliasId || ""}
+                    />
+                  </li>
                 )}
                 {status !== "loading" && !session && (
                   <li className="py-1 px-4 text-white no-underline">
                     <button onClick={() => signIn()}>
-                      <a>Log in</a>
+                      <a>ログイン</a>
                     </button>
                   </li>
                 )}
