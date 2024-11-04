@@ -79,6 +79,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ userImage, aliasId }) => {
     document.addEventListener("mousedown", handleClickOutside);
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
+      setIsOpen(false);
     };
   }, []);
 
@@ -88,6 +89,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ userImage, aliasId }) => {
     if (event.key === "Escape") {
       setIsOpen(false);
     }
+  };
+
+  const handleMenuItemClick = () => {
+    setIsOpen(false);
   };
 
   return (
@@ -119,13 +124,17 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ userImage, aliasId }) => {
               <a
                 className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex items-center"
                 role="menuitem"
+                onClick={handleMenuItemClick}
               >
                 <House className="w-6 h-6 mr-2" />
                 マイページ確認
               </a>
             </Link>
             <button
-              onClick={() => signOut()}
+              onClick={() => {
+                signOut();
+                handleMenuItemClick();
+              }}
               className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               role="menuitem"
             >
