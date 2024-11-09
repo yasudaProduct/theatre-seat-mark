@@ -16,7 +16,6 @@ export default async function handler(
         let theaters;
 
         if (prefectureId && typeof prefectureId === "string") {
-          console.log(prefectureId);
           theaters = await prisma.theater.findMany({
             where: {
               prefecture_id: parseInt(prefectureId, 10),
