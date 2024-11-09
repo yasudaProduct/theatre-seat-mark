@@ -4,6 +4,7 @@ import type { AppProps } from "next/app";
 import { SessionProvider } from "next-auth/react";
 import Header from "@/components/Header";
 import AuthWrapper from "@/components/AuthWrapper";
+import Footer from "@/components/Footer";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -12,6 +13,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <div className="h-screen bg-gray-100">
           <Header />
           <Component {...pageProps} />
+          <Footer />
         </div>
       </AuthWrapper>
     </SessionProvider>
