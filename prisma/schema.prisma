@@ -60,6 +60,7 @@ model User {
   sessions      Session[]
   seat_reviews  SeatReview[]
   bookmarks     Bookmark[]
+  favorites     Favorite[]
 
   @@map(name: "users")
 }
@@ -104,6 +105,7 @@ model Theater {
   updatedAt DateTime  @updatedAt @map(name: "updated_at")
   screens   Screen[]
   prefecture Prefecture     @relation(fields: [prefecture_id], references: [id])
+  favorites Favorite[]
 
   @@map("theaters")
 }
@@ -147,4 +149,17 @@ model Bookmark {
 
   @@map("bookmarks")
   @@unique([user_id, review_id])
+}
+
+model Favorite {
+  id         Int        @id @default(autoincrement())
+  user_id    Int
+  theater_id Int
+  createdAt  DateTime   @default(now()) @map(name: "created_at")
+  updatedAt  DateTime   @updatedAt @map(name: "updated_at")
+  user       User       @relation(fields: [user_id], references: [id])
+  theater    Theater    @relation(fields: [theater_id], references: [id])
+
+  @@map("favorites")
+  @@unique([user_id, theater_id])
 }
