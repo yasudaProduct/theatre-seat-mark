@@ -115,7 +115,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <Avatar className="w-24 h-24">
+        <Avatar className="w-8 h-8">
           <AvatarImage src={userImage || undefined} alt={userName || "User"} />
           <AvatarFallback>{userName.charAt(0) || "U"}</AvatarFallback>
         </Avatar>
