@@ -6,7 +6,7 @@ import prisma from "@/lib/prisma";
 import { Prefecture } from "@/types/Prefecture";
 import { Region } from "@/types/Region";
 import { Theater } from "@prisma/client";
-import { MapPin, Search } from "lucide-react";
+import { ChevronDown, ChevronUp, MapPin, Search } from "lucide-react";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/navigation";
 import Router from "next/router";
@@ -22,6 +22,7 @@ const Theaters = (props: TheatersPageProps) => {
   const [selectedPrefecture, setSelectedPrefecture] = useState(0);
   // const [location, setLocation] = useState({ lat: null, lng: null });
   const [searchResults, setSearchResults] = useState<Theater[] | undefined>([]);
+  const [isRegionsExpanded, setIsRegionsExpanded] = useState(true);
   const router = useRouter();
 
   useEffect(() => {}, []);
@@ -67,6 +68,10 @@ const Theaters = (props: TheatersPageProps) => {
     }
   };
 
+  const toggleRegions = () => {
+    setIsRegionsExpanded((prev) => !prev);
+  };
+
   return (
     <div className="container mx-auto">
       <h1 className="text-2xl font-bold mb-4">映画館検索</h1>
@@ -77,25 +82,57 @@ const Theaters = (props: TheatersPageProps) => {
           onChange={(e) => setTheaterName(e.target.value)}
         /> */}
         <div className="space-y-4">
-          {props.regions.map((region) => (
-            <div key={region.id}>
-              <h2 className="text-lg font-semibold mb-2">{region.name}</h2>
-              <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-8">
-                {region.prefectures.map((pref) => (
-                  <Button
-                    key={pref.id}
-                    variant={
-                      selectedPrefecture === pref.id ? "default" : "outline"
-                    }
-                    onClick={() => setSelectedPrefecture(pref.id)}
-                    className="h-10 px-2 py-1 text-xs"
-                  >
-                    {pref.name}
-                  </Button>
-                ))}
+          <button
+            className="w-full duration-200 flex"
+            onClick={toggleRegions}
+            aria-expanded={isRegionsExpanded}
+            aria-controls="regions-list"
+          >
+            {isRegionsExpanded ? (
+              <ChevronUp className="h-5 w-5" />
+            ) : (
+              <ChevronDown className="h-5 w-5" />
+            )}
+            <span className="mx-2 text-lg font-semibold">地域から選択</span>
+          </button>
+          <div
+            id="regions-list"
+            className={`transition-all duration-300 ease-in-out ${
+              isRegionsExpanded
+                ? "max-h-[2000px] opacity-100"
+                : "max-h-0 opacity-0 overflow-hidden"
+            }`}
+          >
+            {props.regions.map((region) => (
+              <div
+                key={region.id}
+                className="grid grid-cols-1 ml-10 md:grid-cols-[100px_1fr] gap-4"
+              >
+                <h3 className="font-semibold mb-2 md:mb-0 md:self-start">
+                  {region.name}
+                </h3>
+                <div
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2"
+                  role="group"
+                  aria-label={`${region.name}の都道府県`}
+                >
+                  {region.prefectures.map((pref) => (
+                    <Button
+                      key={pref.id}
+                      variant={
+                        selectedPrefecture === pref.id ? "default" : "outline"
+                      }
+                      onClick={() => setSelectedPrefecture(pref.id)}
+                      className="h-10 px-2 py-1 text-xs"
+                      aria-pressed={selectedPrefecture === pref.id}
+                    >
+                      {pref.name}
+                    </Button>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
         {/* <Button onClick={handleLocationSearch}>
           <MapPin className="mr-2 h-4 w-4" /> 現在位置から検索
