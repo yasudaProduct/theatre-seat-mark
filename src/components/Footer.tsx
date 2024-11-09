@@ -28,7 +28,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/contact"
                   className="hover:text-gray-900 transition-colors"
                 >
                   お問い合わせ

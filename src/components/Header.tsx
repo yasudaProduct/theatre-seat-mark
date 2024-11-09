@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { Film, House, LogOut } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Header = () => {
   const { data: session, status } = useSession();
@@ -41,6 +41,7 @@ const Header = () => {
                     <DropdownMenu
                       userImage={session.user?.image || ""}
                       aliasId={session.user?.aliasId || ""}
+                      userName={session.user?.name || ""}
                     />
                   </li>
                 )}
@@ -65,9 +66,14 @@ export default Header;
 interface DropdownMenuProps {
   userImage: string;
   aliasId: string;
+  userName: string;
 }
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({ userImage, aliasId }) => {
+const DropdownMenu: React.FC<DropdownMenuProps> = ({
+  userImage,
+  aliasId,
+  userName,
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -109,13 +115,10 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ userImage, aliasId }) => {
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <Image
-          src={userImage || "/placeholder.svg?height=32&width=32"}
-          alt="Profile"
-          width={32}
-          height={32}
-          className="rounded-full"
-        />
+        <Avatar className="w-24 h-24">
+          <AvatarImage src={userImage || undefined} alt={userName || "User"} />
+          <AvatarFallback>{userName.charAt(0) || "U"}</AvatarFallback>
+        </Avatar>
       </button>
       {isOpen && (
         <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">

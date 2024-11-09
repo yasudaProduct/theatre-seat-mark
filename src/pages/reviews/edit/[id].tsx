@@ -92,10 +92,6 @@ export default function EditReviewPage({ review }: EditReviewPageProps) {
   const [editedReview, setEditedReview] = useState("");
   const [editedRating, setEditedRating] = useState(0);
 
-  if (!review) {
-    return <div>レビューが見つかりません</div>;
-  }
-
   useEffect(() => {
     setEditedRating(review.rating);
     setEditedReview(review.review);
@@ -148,6 +144,10 @@ export default function EditReviewPage({ review }: EditReviewPageProps) {
   const handleCancel = () => {
     router.back();
   };
+
+  if (!review) {
+    return <div>レビューが見つかりません</div>;
+  }
 
   return (
     <Card className="w-full max-w-2xl mx-auto mt-8">

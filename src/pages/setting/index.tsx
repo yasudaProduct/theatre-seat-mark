@@ -90,10 +90,10 @@ export default function UserProfileSettings() {
                   src={session?.user?.image || undefined}
                   alt={session?.user?.name || "User"}
                 />
+                <AvatarFallback>
+                  {session?.user?.name?.charAt(0) || "U"}
+                </AvatarFallback>
               </Avatar>
-              <AvatarFallback>
-                {session?.user?.name?.charAt(0) || "U"}
-              </AvatarFallback>
             </div>
             <div className="space-y-2">
               <Label htmlFor="name">名前</Label>
