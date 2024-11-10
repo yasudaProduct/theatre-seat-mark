@@ -3,24 +3,29 @@ import { useState } from "react";
 import { Card, CardContent } from "./ui/card";
 import { Bookmark, Edit2, Star } from "lucide-react";
 import { Button } from "./ui/button";
-import { Toaster } from "./ui/sonner";
 import { toast } from "sonner";
 import getLogger from "@/lib/logger";
 import router from "next/router";
 const logger = getLogger("ReviewCard");
 
 export interface ReviewCardProps {
-    id: number;
-    user: { name: string };
-    seatNumber: string;
-    rating: number;
-    review: string;
-    isBookmarked?: boolean;
-    theaterName: string;
-    screenName: string;
+  id: number;
+  user: { name: string };
+  seatNumber: string;
+  rating: number;
+  review: string;
+  isBookmarked?: boolean;
+  theaterName: string;
+  screenName: string;
 }
 
-export function ReviewCard({ review, isEdit }: {review: ReviewCardProps, isEdit?: boolean}) {
+export function ReviewCard({
+  review,
+  isEdit,
+}: {
+  review: ReviewCardProps;
+  isEdit?: boolean;
+}) {
   const [isBookmarked, setIsBookmarked] = useState(review.isBookmarked);
 
   const handleBookmark = async () => {
@@ -58,7 +63,6 @@ export function ReviewCard({ review, isEdit }: {review: ReviewCardProps, isEdit?
 
   return (
     <Card data-testid="review-card">
-      <Toaster richColors />
       <CardContent className="p-4">
         <div className="flex justify-between items-start">
           <div>
@@ -95,14 +99,14 @@ export function ReviewCard({ review, isEdit }: {review: ReviewCardProps, isEdit?
               />
             </Button>
             {isEdit && (
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={handleEdit}
-              aria-label="レビューを編集"
-            >
-              <Edit2 className="text-gray-500" />
-            </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleEdit}
+                aria-label="レビューを編集"
+              >
+                <Edit2 className="text-gray-500" />
+              </Button>
             )}
           </div>
         </div>

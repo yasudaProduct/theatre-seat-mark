@@ -18,7 +18,7 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function AccountSetting() {
@@ -48,7 +48,6 @@ export default function AccountSetting() {
 
   return (
     <Card>
-      <Toaster richColors />
       <CardHeader>
         <CardTitle>アカウント設定</CardTitle>
         <CardDescription>

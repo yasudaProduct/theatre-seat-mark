@@ -21,7 +21,6 @@ import { z } from "zod";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-import { Toaster } from "../ui/sonner";
 import { useSession } from "next-auth/react";
 
 interface UserProfileProps {
@@ -78,7 +77,6 @@ export default function ProfileSettings({ user }: UserProfileProps) {
 
   return (
     <Card>
-      <Toaster richColors />
       <CardHeader>
         <CardTitle>プロフィール設定</CardTitle>
         <CardDescription></CardDescription>

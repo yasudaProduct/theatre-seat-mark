@@ -3,7 +3,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import prisma from "@/lib/prisma";
-import { Toaster } from "@/components/ui/sonner";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { ReviewCard } from "@/components/ReviewCard";
 import { toast } from "sonner";
@@ -126,7 +125,6 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <Toaster richColors />
       <div className="w-full bg-white mb-2 px-4 py-8">
         <div className="flex items-center space-x-3">
           <Avatar className="w-24 h-24">

@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Star } from "lucide-react";
-import { Toaster } from "@/components/ui/sonner";
 import { toast } from "sonner";
 import getLogger from "@/lib/logger";
 import { GetServerSideProps, GetServerSidePropsContext } from "next";
@@ -151,7 +150,6 @@ export default function EditReviewPage({ review }: EditReviewPageProps) {
 
   return (
     <Card className="w-full max-w-2xl mx-auto mt-8">
-      <Toaster richColors />
       <CardHeader>
         <CardTitle>レビューの編集</CardTitle>
       </CardHeader>
