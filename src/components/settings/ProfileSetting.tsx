@@ -69,8 +69,7 @@ export default function ProfileSettings({ user }: UserProfileProps) {
       } else {
         throw new Error("Failed to update profile");
       }
-    } catch (error) {
-      console.error("Error updating profile:", error);
+    } catch {
       toast.error("プロフィールの更新に失敗しました");
     }
   };

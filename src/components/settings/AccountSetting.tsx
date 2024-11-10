@@ -20,6 +20,7 @@ import {
 import { Button } from "../ui/button";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { signOut } from "next-auth/react";
 
 export default function AccountSetting() {
   const router = useRouter();
@@ -36,11 +37,11 @@ export default function AccountSetting() {
         throw new Error("Failed to delete user");
       }
 
-      setIsDeactivating(false);
-      router.push("/");
       toast.success("アカウントを退会しました");
-    } catch (error) {
-      console.error("Error deleting user:", error);
+      setIsDeactivating(false);
+
+      signOut({ callbackUrl: "/" });
+    } catch {
       setIsDeactivating(false);
       toast.error("アカウントの退会に失敗しました");
     }
@@ -61,7 +62,9 @@ export default function AccountSetting() {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle>本当に退会しますか？</AlertDialogTitle>
+              <AlertDialogTitle>
+                本当に退会してよろしいですか？
+              </AlertDialogTitle>
               <AlertDialogDescription>
                 この操作は取り消せません。すべてのデータが削除され、アカウントは完全に無効化されます。
               </AlertDialogDescription>
