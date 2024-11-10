@@ -25,6 +25,7 @@ import ProfileSetting from "@/components/settings/ProfileSetting";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
 import prisma from "@/lib/prisma";
+import AccountSetting from "@/components/settings/AccountSetting";
 
 interface UserProfileProps {
   user: {
@@ -63,16 +64,6 @@ export const getServerSideProps: GetServerSideProps<UserProfileProps> = async (
 };
 
 export default function SettingsPage({ user }: UserProfileProps) {
-  const [isDeactivating, setIsDeactivating] = useState(false);
-
-  async function onDeactivate() {
-    setIsDeactivating(true);
-    // ここで実際のAPI呼び出しを行います
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // APIリクエストをシミュレート
-    setIsDeactivating(false);
-    toast.success("アカウントを退会しました");
-  }
-
   return (
     <>
       <main className="container mx-auto px-4 py-8">
@@ -86,38 +77,7 @@ export default function SettingsPage({ user }: UserProfileProps) {
             <ProfileSetting user={user} />
           </TabsContent>
           <TabsContent value="account">
-            <Card>
-              <CardHeader>
-                <CardTitle>アカウント設定</CardTitle>
-                <CardDescription>
-                  アカウントの管理や退会手続きを行えます。
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-2">
-                <AlertDialog>
-                  <AlertDialogTrigger asChild>
-                    <Button variant="destructive">アカウントを退会する</Button>
-                  </AlertDialogTrigger>
-                  <AlertDialogContent>
-                    <AlertDialogHeader>
-                      <AlertDialogTitle>本当に退会しますか？</AlertDialogTitle>
-                      <AlertDialogDescription>
-                        この操作は取り消せません。すべてのデータが削除され、アカウントは完全に無効化されます。
-                      </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                      <AlertDialogCancel>キャンセル</AlertDialogCancel>
-                      <AlertDialogAction
-                        onClick={onDeactivate}
-                        disabled={isDeactivating}
-                      >
-                        {isDeactivating ? "処理中..." : "退会する"}
-                      </AlertDialogAction>
-                    </AlertDialogFooter>
-                  </AlertDialogContent>
-                </AlertDialog>
-              </CardContent>
-            </Card>
+            <AccountSetting />
           </TabsContent>
         </Tabs>
       </main>
