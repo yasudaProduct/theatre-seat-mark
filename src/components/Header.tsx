@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Film, House, LogOut } from "lucide-react";
+import { Film, House, LogOut, Wrench } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Header = () => {
@@ -136,6 +136,16 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
               >
                 <House className="w-6 h-6 mr-2" />
                 マイページ確認
+              </a>
+            </Link>
+            <Link legacyBehavior href={"/settings"}>
+              <a
+                className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex items-center"
+                role="menuitem"
+                onClick={handleMenuItemClick}
+              >
+                <Wrench className="w-6 h-6 mr-2" />
+                設定
               </a>
             </Link>
             <button

@@ -5,6 +5,7 @@ import ProtectedRoute from "./ProtectedRoute";
 
 const authRoutes = [
   "/mypage",
+  "/settings",
   "/reviews/my-reviews",
   "/reviews/register-review",
 ];
