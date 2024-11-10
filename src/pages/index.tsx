@@ -1,46 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import SearchReviews from './reviews/search-reviews';
-import { Card, CardContent } from '@/components/ui/card';
-import { Skeleton } from '@/components/ui/skeleton';
-import { Bookmark, Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area';
+import React, { useEffect, useState } from "react";
+import SearchReviews from "./reviews/search-reviews";
+import { Card, CardContent } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Bookmark, Star } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { Toaster } from "sonner";
 
 interface Review {
-  id: number
-  user: { name: string }
-  seatNumber: string
-  rating: number
-  review: string
-  bookmarkCount: number
-  theaterName: string
-  screenName: string
-  isBookmarked: boolean
+  id: number;
+  user: { name: string };
+  seatNumber: string;
+  rating: number;
+  review: string;
+  bookmarkCount: number;
+  theaterName: string;
+  screenName: string;
+  isBookmarked: boolean;
 }
 
 export default function Home() {
-  const [reviews, setReviews] = useState<Review[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    fetchReviews()
-  }, [])
+    fetchReviews();
+  }, []);
 
   const fetchReviews = async () => {
     try {
-      const response = await fetch('/api/reviews/popular')
+      const response = await fetch("/api/reviews/popular");
       if (response.ok) {
-        const data = await response.json()
-        setReviews(data)
+        const data = await response.json();
+        setReviews(data);
       } else {
-        console.error('Failed to fetch reviews')
+        console.error("Failed to fetch reviews");
       }
     } catch (error) {
-      console.error('Error fetching reviews:', error)
+      console.error("Error fetching reviews:", error);
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }
+  };
 
   if (isLoading) {
     return (
@@ -58,7 +59,7 @@ export default function Home() {
           ))}
         </div>
       </div>
-    )
+    );
   }
 
   return (
@@ -71,15 +72,23 @@ export default function Home() {
               <CardContent className="p-4">
                 <div className="flex flex-col justify-between h-full">
                   <div>
-                    <h2 className="font-semibold truncate">{review.theaterName} - {review.screenName}</h2>
-                    <p className="text-sm text-gray-500 truncate">座席: {review.seatNumber}</p>
-                    <p className="text-sm text-gray-500 truncate">投稿者: {review.user.name}</p>
+                    <h2 className="font-semibold truncate">
+                      {review.theaterName} - {review.screenName}
+                    </h2>
+                    <p className="text-sm text-gray-500 truncate">
+                      座席: {review.seatNumber}
+                    </p>
+                    <p className="text-sm text-gray-500 truncate">
+                      投稿者: {review.user.name}
+                    </p>
                     <div className="flex items-center mt-2">
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
                           className={`h-4 w-4 ${
-                            i < review.rating ? 'text-yellow-400 fill-current' : 'text-gray-300'
+                            i < review.rating
+                              ? "text-yellow-400 fill-current"
+                              : "text-gray-300"
                           }`}
                         />
                       ))}
@@ -93,9 +102,17 @@ export default function Home() {
                       // onClick={() => handleBookmark(review.id)}
                       // aria-label={review.isBookmarked ? "ブックマークを解除" : "ブックマークに追加"}
                     >
-                      <Bookmark className={review.isBookmarked ? "text-blue-500 fill-current" : "text-gray-500"} />
+                      <Bookmark
+                        className={
+                          review.isBookmarked
+                            ? "text-blue-500 fill-current"
+                            : "text-gray-500"
+                        }
+                      />
                     </Button>
-                    <span className="text-sm text-gray-500">{review.bookmarkCount} ブックマーク</span>
+                    <span className="text-sm text-gray-500">
+                      {review.bookmarkCount} ブックマーク
+                    </span>
                   </div>
                 </div>
               </CardContent>

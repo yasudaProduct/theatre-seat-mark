@@ -1,26 +1,5 @@
 import React from "react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import {
-  AlertDialog,
-  AlertDialogAction,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { toast } from "sonner";
 import ProfileSetting from "@/components/settings/ProfileSetting";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/react";
@@ -43,8 +22,6 @@ export const getServerSideProps: GetServerSideProps<UserProfileProps> = async (
   const user = await prisma.user.findUnique({
     where: { aliasId: session?.user?.aliasId },
   });
-
-  console.log(user);
 
   if (!user) {
     return {

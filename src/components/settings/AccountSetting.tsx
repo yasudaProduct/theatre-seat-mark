@@ -19,16 +19,31 @@ import {
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
 import { toast, Toaster } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function AccountSetting() {
+  const router = useRouter();
   const [isDeactivating, setIsDeactivating] = useState(false);
 
   async function onDeactivate() {
     setIsDeactivating(true);
-    // ここで実際のAPI呼び出しを行います
-    await new Promise((resolve) => setTimeout(resolve, 2000)); // APIリクエストをシミュレート
-    setIsDeactivating(false);
-    toast.success("アカウントを退会しました");
+    try {
+      const response = await fetch("/api/auth/deleteUser", {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to delete user");
+      }
+
+      setIsDeactivating(false);
+      router.push("/");
+      toast.success("アカウントを退会しました");
+    } catch (error) {
+      console.error("Error deleting user:", error);
+      setIsDeactivating(false);
+      toast.error("アカウントの退会に失敗しました");
+    }
   }
 
   return (

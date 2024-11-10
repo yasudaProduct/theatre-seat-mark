@@ -57,8 +57,6 @@ export default function ProfileSettings({ user }: UserProfileProps) {
 
   const onSubmit: SubmitHandler<ProfileFormData> = async (data) => {
     if (!session?.user?.id) return;
-    console.log("onSubmit");
-    console.log(data);
 
     try {
       const response = await fetch(`/api/users/${session.user.aliasId}`, {
