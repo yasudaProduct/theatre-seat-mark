@@ -1,7 +1,7 @@
-import prisma from "@/lib/prisma";
+import React, { useState } from "react";
+import { Star, ThumbsUp } from "lucide-react";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/react";
-import React from "react";
+import prisma from "@/lib/prisma";
 
 export interface Review {
   id: number;
@@ -17,19 +17,13 @@ export interface Screen {
 
 export interface Theater {
   name: string;
-  screen: Screen;
+  screen: Screen | null;
 }
 
-interface TheaterLayoutProps {
-  theater: Theater;
-  selectedSeat: string | null;
-  //   onSeatSelect: (seat: string) => void;
-}
-
-export const getServerSideProps: GetServerSideProps<
-  TheaterLayoutProps
-> = async (context) => {
-  const session = await getSession(context);
+export const getServerSideProps: GetServerSideProps<Theater> = async (
+  context
+) => {
+  //   const session = await getSession(context);
   const theaterId = context.params?.id as string;
   const screenId = context.query.screen as string;
 
@@ -55,34 +49,82 @@ export const getServerSideProps: GetServerSideProps<
 
   return {
     props: {
-      theater: {
-        name: theater.name,
-        screen: {
-          name: theater.screens[0].name,
-          reviews: theater.screens[0].SeatReview.map((review) => ({
-            id: review.id,
-            seatName: review.seat_name,
-            rating: review.rating,
-            comment: review.review,
-          })),
-        },
+      name: theater.name,
+      screen: {
+        name: theater.screens[0].name,
+        reviews: theater.screens[0].SeatReview.map((review) => ({
+          id: review.id,
+          seatName: review.seat_name,
+          rating: review.rating,
+          comment: review.review,
+        })),
       },
-      selectedSeat: null,
-    } as TheaterLayoutProps,
+    } as Theater,
   };
 };
 
-export default function TheaterLayout({
+export interface TheaterLayoutProps {
+  theater: Theater;
+  selectedSeat: string | null;
+  onSeatSelect: (seat: string) => void;
+}
+export default function TheaterPage(theater: Theater) {
+  const [reviews, setReviews] = useState<Review[]>([]);
+  const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+
+  return (
+    <main className="max-w-7xl mx-auto px-4 py-8">
+      <div className="grid lg:grid-cols-2 gap-8">
+        <div className="space-y-6">
+          <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              {/* <Eye className="w-5 h-5 text-blue-400" /> */}
+              スクリーン座席マップ
+            </h2>
+            <TheaterLayout
+              onSeatSelect={setSelectedSeat}
+              selectedSeat={selectedSeat}
+              theater={theater}
+            />
+          </div>
+
+          {/* {selectedSeat && (
+            <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
+              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+                <Star className="w-5 h-5 text-yellow-400" />
+                座席レビューを投稿
+              </h2>
+              <ReviewForm
+                selectedSeat={selectedSeat}
+                onSubmit={handleReviewSubmit}
+              />
+            </div>
+          )} */}
+        </div>
+
+        <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
+          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <ThumbsUp className="w-5 h-5 text-green-400" />
+            最新レビュー
+          </h2>
+          <ReviewList reviews={theater.screen.reviews} />
+        </div>
+      </div>
+    </main>
+  );
+}
+
+function TheaterLayout({
   theater,
   selectedSeat,
-  //   onSeatSelect,
+  onSeatSelect,
 }: TheaterLayoutProps) {
   const rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
   const seatsPerRow = 12;
 
-  const getSeatRating = (seatId: number) => {
+  const getSeatRating = (seatName: string) => {
     const seatReviews = theater.screen.reviews.filter(
-      (review) => review.id === seatId
+      (review) => review.seatName === seatName
     );
     if (seatReviews.length === 0) return null;
 
@@ -102,10 +144,6 @@ export default function TheaterLayout({
 
   return (
     <div className="space-y-8">
-      <div className="w-full h-8 bg-white/10 flex items-center justify-center text-sm">
-        {theater.name}
-        スクリーン
-      </div>
       <div className="space-y-2">
         {rows.map((row) => (
           <div key={row} className="flex justify-center gap-1">
@@ -113,17 +151,17 @@ export default function TheaterLayout({
               {row}
             </div>
             {[...Array(seatsPerRow)].map((_, index) => {
-              const seatId = `${row}${index + 1}`;
-              const rating = getSeatRating(seatId);
+              const seatName = `${row}${index + 1}`;
+              const rating = getSeatRating(seatName);
               return (
                 <button
-                  key={seatId}
+                  key={seatName}
                   className={`
-                      w-8 h-8 rounded-t-lg text-xs font-medium transition-all
-                      ${getSeatColor(rating)}
-                      ${selectedSeat === seatId ? "ring-2 ring-white" : "hover:ring-2 hover:ring-white/50"}
-                    `}
-                  onClick={() => onSeatSelect(seatId)}
+                          w-8 h-8 rounded-t-lg text-xs font-medium transition-all
+                          ${getSeatColor(rating)}
+                          ${selectedSeat === seatName ? "ring-2 ring-white" : "hover:ring-2 hover:ring-white/50"}
+                        `}
+                  onClick={() => onSeatSelect(seatName)}
                 >
                   {index + 1}
                 </button>
@@ -154,3 +192,60 @@ export default function TheaterLayout({
     </div>
   );
 }
+
+interface ReviewListProps {
+  reviews: Review[];
+}
+
+const ReviewList = ({ reviews }: ReviewListProps) => {
+  //   const formatDate = (dateString: string) => {
+  //     return new Date(dateString).toLocaleDateString("ja-JP", {
+  //       year: "numeric",
+  //       month: "long",
+  //       day: "numeric",
+  //     });
+  //   };
+
+  if (reviews.length === 0) {
+    return (
+      <div className="text-center text-gray-400 py-8">
+        まだレビューがありません。最初のレビューを投稿してください！
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-4">
+      {reviews.map((review) => (
+        <div
+          key={review.id}
+          className="bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-colors"
+        >
+          <div className="flex justify-between items-start mb-2">
+            <div>
+              <div className="font-bold text-lg mb-1">
+                座席 {review.seatName}
+              </div>
+              <div className="flex gap-1">
+                {[...Array(5)].map((_, index) => (
+                  <Star
+                    key={index}
+                    className={`w-4 h-4 ${
+                      index < review.rating
+                        ? "fill-yellow-400 text-yellow-400"
+                        : "text-gray-400"
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+            <div className="text-sm text-gray-400">
+              {/* {formatDate(review.date)} */}
+            </div>
+          </div>
+          <p className="text-gray-300">{review.comment}</p>
+        </div>
+      ))}
+    </div>
+  );
+};
