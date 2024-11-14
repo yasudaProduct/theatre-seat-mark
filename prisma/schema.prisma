@@ -117,21 +117,34 @@ model Screen {
   createdAt  DateTime  @default(now()) @map(name: "created_at")
   updatedAt  DateTime  @updatedAt @map(name: "updated_at")
   theaters   Theater   @relation(fields: [theater_id], references: [id])
-  SeatReview SeatReview[]
+  seats      Seats[]
 
   @@map("screens")
 }
 
+model Seats {
+  id             Int @id @default(autoincrement())
+  screen_id      Int @map(name: "screen_id")
+  row            String @unique
+  column         Int
+  screen         Screen @relation(fields: [screen_id], references: [id])
+  seat_reviews   SeatReview[]
+
+  @@map("seats")
+}
+
+
+
 model SeatReview {
   id        Int       @id @default(autoincrement())
   user_id   Int
-  screen_id Int
+  seat_id   Int
   seat_name String
   review    String
   rating    Int       @default(0)
   createdAt DateTime  @default(now()) @map(name: "created_at")
   updatedAt DateTime  @updatedAt @map(name: "updated_at")
-  screens   Screen    @relation(fields: [screen_id], references: [id])
+  seat      Seats     @relation(fields: [seat_id], references: [id])
   users     User      @relation(fields: [user_id], references: [id])
   bookmarks Bookmark[]
 
