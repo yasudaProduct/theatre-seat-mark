@@ -1,45 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Star, ThumbsUp } from "lucide-react";
 import { GetServerSideProps } from "next";
 import prisma from "@/lib/prisma";
-
-export interface Review {
-  id: number;
-  seatName: string;
-  rating: number;
-  comment: string;
-}
-
-export interface Screen {
-  name: string;
-  reviews: Review[];
-}
+import { useSearchParams } from "next/navigation";
+import { toast } from "sonner";
 
 export interface Theater {
   name: string;
-  screen: Screen | null;
+  screens?: [
+    {
+      id: number;
+      name: string;
+    },
+  ];
 }
 
 export const getServerSideProps: GetServerSideProps<Theater> = async (
   context
 ) => {
-  //   const session = await getSession(context);
   const theaterId = context.params?.id as string;
-  const screenId = context.query.screen as string;
+  // const screenId = context.query.screen as string;
 
   const theater = await prisma.theater.findUnique({
     where: { id: parseInt(theaterId) },
     include: {
-      screens: {
-        where: { id: parseInt(screenId) },
-        include: {
-          SeatReview: true,
-        },
-      },
+      screens: true,
     },
   });
 
-  console.log(theater);
+  // console.log(theater);
 
   if (!theater) {
     return {
@@ -50,26 +39,15 @@ export const getServerSideProps: GetServerSideProps<Theater> = async (
   return {
     props: {
       name: theater.name,
-      screen: {
-        name: theater.screens[0].name,
-        reviews: theater.screens[0].SeatReview.map((review) => ({
-          id: review.id,
-          seatName: review.seat_name,
-          rating: review.rating,
-          comment: review.review,
-        })),
-      },
+      screens: theater.screens.map((screen) => ({
+        name: screen.name,
+      })),
     } as Theater,
   };
 };
 
-export interface TheaterLayoutProps {
-  theater: Theater;
-  selectedSeat: string | null;
-  onSeatSelect: (seat: string) => void;
-}
 export default function TheaterPage(theater: Theater) {
-  const [reviews, setReviews] = useState<Review[]>([]);
+  // const [reviews, setReviews] = useState<Review[]>([]);
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
 
   return (
@@ -107,30 +85,95 @@ export default function TheaterPage(theater: Theater) {
             <ThumbsUp className="w-5 h-5 text-green-400" />
             最新レビュー
           </h2>
-          <ReviewList reviews={theater.screen.reviews} />
+          {/* <ReviewList reviews={theater.screen.reviews} /> */}
         </div>
       </div>
     </main>
   );
 }
 
+interface Review {
+  id: number;
+  seatName: string;
+  rating: number;
+  comment: string;
+}
+
+interface Seat {
+  id: number;
+  row: string;
+  column: number;
+  seat_reviews: Review[] | undefined;
+}
+
+interface Screen {
+  id: number;
+  name: string;
+  seats: Seat[];
+}
+
+interface TheaterLayoutProps {
+  theater: Theater;
+  selectedSeat: string | null;
+  onSeatSelect: (seat: string) => void;
+}
+
 function TheaterLayout({
-  theater,
+  // theater,
   selectedSeat,
   onSeatSelect,
 }: TheaterLayoutProps) {
+  const searchParams = useSearchParams();
   const rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
   const seatsPerRow = 12;
+  const [selectScreen, setSelectScreen] = useState<string | undefined>(
+    undefined
+  );
+  const [screen, setScreen] = useState<Screen | undefined>();
+
+  useEffect(() => {
+    console.log("useEffect");
+    const screenId = searchParams.get("screen");
+    if (screenId) {
+      setSelectScreen(screenId);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("screen");
+    // スクリーンの座席情報・レビューを取得
+    if (selectScreen) {
+      fetchScreenData(parseInt(selectScreen));
+    }
+  }, [selectScreen]);
+
+  useEffect(() => {}, [screen]);
+
+  const fetchScreenData = async (screenId: number) => {
+    try {
+      const response = await fetch("/api/screens/" + screenId);
+      if (response.ok) {
+        const data: Screen = await response.json();
+        setScreen(data);
+      }
+    } catch {
+      toast.error("スクリーン情報の取得に失敗しました。");
+    }
+  };
 
   const getSeatRating = (seatName: string) => {
-    const seatReviews = theater.screen.reviews.filter(
-      (review) => review.seatName === seatName
+    if (!screen || !screen.seats) return null;
+    const seat: Seat | undefined = screen?.seats.find(
+      (seat) =>
+        seat.row === seatName[0] && seat.column === parseInt(seatName[1])
     );
-    if (seatReviews.length === 0) return null;
+
+    if (!seat || seat.seat_reviews?.length == 0) return null;
 
     const avgRating =
-      seatReviews.reduce((acc, curr) => acc + curr.rating, 0) /
-      seatReviews.length;
+      seat.seat_reviews!.reduce((acc, curr) => acc + curr.rating, 0) /
+      seat.seat_reviews!.length;
+    console.log(avgRating);
     return avgRating;
   };
 
