@@ -96,10 +96,10 @@ model Region {
 }
 
 model Theater {
-  id        Int       @id @default(autoincrement())
-  name      String
-  address   String
-  url       String?
+  id            Int       @id @default(autoincrement())
+  name          String
+  address       String
+  url           String?
   prefecture_id Int
   createdAt DateTime  @default(now()) @map(name: "created_at")
   updatedAt DateTime  @updatedAt @map(name: "updated_at")
@@ -125,15 +125,13 @@ model Screen {
 model Seats {
   id             Int @id @default(autoincrement())
   screen_id      Int @map(name: "screen_id")
-  row            String @unique
+  row            String
   column         Int
   screen         Screen @relation(fields: [screen_id], references: [id])
   seat_reviews   SeatReview[]
 
   @@map("seats")
 }
-
-
 
 model SeatReview {
   id        Int       @id @default(autoincrement())

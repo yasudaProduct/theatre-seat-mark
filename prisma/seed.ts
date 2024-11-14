@@ -6,6 +6,7 @@ const prisma = new PrismaClient();
 
 async function main() {
 
+  // 地域データを登録
   for (const region of regions) {
     await prisma.region.upsert({
       where: { id: region.id },
@@ -20,6 +21,7 @@ async function main() {
       },
     })
 
+    // 都道府県データを登録
     for (const prefecture of region.prefecture) {
       await prisma.prefecture.upsert({
         where: { id: prefecture.id },
@@ -38,6 +40,7 @@ async function main() {
     }
   }
 
+  // 映画館データを登録
   for (const theater of theaters) {
     await prisma.theater.upsert({
       where: { id: theater.id },

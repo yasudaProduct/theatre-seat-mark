@@ -8,8 +8,8 @@ First, run the development server:
 npm run dev
 ```
 
-
 ## secret env
+
 ```
 # Postgres
 POSTGRES_PRISMA_URL=postgresql://postgres:postgres@postgres:5432/postgres?schema=public
@@ -27,6 +27,7 @@ GITHUB_SECRET=
 ```
 
 ## prisma
+
 ```bash
 npx prisma migrate dev --create-only --name init
 npx prisma migrate dev
@@ -37,11 +38,18 @@ npx prisma generate
 ```
 
 #### seed追加
+
 ```bash
 npx prisma db seed
 ```
 
+```
+POSTGRES_PRISMA_URL="postgresql://postgres:postgres@postgres:5432/postgres?schema=public" npx ts-node scripts/batch.ts createScrees
+POSTGRES_PRISMA_URL="postgresql://postgres:postgres@postgres:5432/postgres?schema=public" npx ts-node scripts/batch.ts createSeats
+```
+
 ### dotenv
+
 ```bash
 ./node_modules/.bin/dotenv -e .env.local -- npx prisma db seed
 ```

@@ -5,6 +5,7 @@ export const theaters = [
     address: "〒530-0001 大阪府大阪市北区梅田３丁目１−３ ノースゲートビル 11F",
     prefecture_id: 27,
     url: null,
+    screenCnt: 12,
   },
   {
     id: 2,
@@ -12,6 +13,7 @@ export const theaters = [
     address: "〒531-0076 大阪府大阪市北区大淀中１丁目１−８８ ３•４階",
     prefecture_id: 27,
     url: null,
+    screenCnt: 4,
   },
   {
     id: 3,
@@ -19,6 +21,7 @@ export const theaters = [
     address: "〒530-0017 大阪府大阪市北区角田町７−１０ ヘップナビオ 8階",
     prefecture_id: 27,
     url: null,
+    screenCnt: 10,
   },
   {
     id: 4,
@@ -26,6 +29,7 @@ export const theaters = [
     address: "〒530-0001 大阪府大阪市北区梅田１丁目１２−６ E-MAビル 7F",
     prefecture_id: 27,
     url: null,
+    screenCnt: 7,
   },
   {
     id: 5,
@@ -33,5 +37,6 @@ export const theaters = [
     address: "〒530-0052 大阪府大阪市北区南扇町６−２６",
     prefecture_id: 27,
     url: null,
+    screenCnt: 1,
   },
 ];
