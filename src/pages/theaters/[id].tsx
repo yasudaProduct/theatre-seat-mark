@@ -20,7 +20,6 @@ export const getServerSideProps: GetServerSideProps<Theater> = async (
   context
 ) => {
   const theaterId = context.params?.id as string;
-  // const screenId = context.query.screen as string;
 
   const theater = await prisma.theater.findUnique({
     where: { id: parseInt(theaterId) },
@@ -48,8 +47,13 @@ export const getServerSideProps: GetServerSideProps<Theater> = async (
 };
 
 export default function TheaterPage(theater: Theater) {
-  // const [reviews, setReviews] = useState<Review[]>([]);
+  const [reviews, setReviews] = useState<Review[]>([]);
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+
+  const handleReviewSubmit = (review: Review) => {
+    setReviews([...reviews, review]);
+    setSelectedSeat(null);
+  };
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
@@ -58,7 +62,6 @@ export default function TheaterPage(theater: Theater) {
         <div className="space-y-6">
           <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
             <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-              {/* <Eye className="w-5 h-5 text-blue-400" /> */}
               スクリーン座席マップ
             </h2>
             <TheaterLayout
@@ -68,26 +71,30 @@ export default function TheaterPage(theater: Theater) {
             />
           </div>
 
-          {/* {selectedSeat && (
-            <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
-              <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-                <Star className="w-5 h-5 text-yellow-400" />
-                座席レビューを投稿
-              </h2>
-              <ReviewForm
-                selectedSeat={selectedSeat}
-                onSubmit={handleReviewSubmit}
-              />
-            </div>
-          )} */}
+          <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
+            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+              <ThumbsUp className="w-5 h-5 text-green-400" />
+              最新レビュー
+            </h2>
+            {/* <ReviewList reviews={theater.screen.reviews} /> */}
+          </div>
         </div>
 
         <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
           <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <ThumbsUp className="w-5 h-5 text-green-400" />
-            最新レビュー
+            <Star className="w-5 h-5 text-yellow-400" />
+            座席レビューを投稿
           </h2>
-          {/* <ReviewList reviews={theater.screen.reviews} /> */}
+          {!selectedSeat ? (
+            <div className="text-center text-white py-8">
+              座席を選択して下さい。
+            </div>
+          ) : (
+            <ReviewForm
+              selectedSeat={selectedSeat}
+              onSubmit={handleReviewSubmit}
+            />
+          )}
         </div>
       </div>
     </main>
@@ -134,8 +141,6 @@ function TheaterLayout({
     undefined
   );
   const [screen, setScreen] = useState<Screen | undefined>();
-
-  console.log(theater.screens);
 
   useEffect(() => {
     const screenId = searchParams.get("screen");
@@ -196,7 +201,7 @@ function TheaterLayout({
 
   return (
     <div className="space-y-8">
-      <div className="mb-4">
+      <div className="w-full h-8 bg-white/10 flex items-center justify-center text-sm">
         <select
           className="bg-black/30 text-white rounded-md p-2 w-full"
           value={selectScreen || ""}
@@ -313,5 +318,87 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
         </div>
       ))}
     </div>
+  );
+};
+
+interface ReviewFormProps {
+  selectedSeat: string;
+  onSubmit: (review: Review) => void;
+}
+
+const ReviewForm: React.FC<ReviewFormProps> = ({ selectedSeat, onSubmit }) => {
+  const [rating, setRating] = useState(0);
+  const [comment, setComment] = useState("");
+  const [hoveredRating, setHoveredRating] = useState(0);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (rating === 0) return;
+
+    onSubmit({
+      id: Date.now().toString(),
+      seatId: selectedSeat,
+      rating,
+      comment,
+      date: new Date().toISOString(),
+    });
+
+    setRating(0);
+    setComment("");
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium mb-2">座席番号</label>
+        <div className="text-lg font-bold">{selectedSeat}</div>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-2">評価</label>
+        <div className="flex gap-1">
+          {[1, 2, 3, 4, 5].map((value) => (
+            <button
+              key={value}
+              type="button"
+              className="focus:outline-none"
+              onClick={() => setRating(value)}
+              onMouseEnter={() => setHoveredRating(value)}
+              onMouseLeave={() => setHoveredRating(0)}
+            >
+              <Star
+                className={`w-8 h-8 ${
+                  value <= (hoveredRating || rating)
+                    ? "fill-yellow-400 text-yellow-400"
+                    : "text-gray-400"
+                }`}
+              />
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="comment" className="block text-sm font-medium mb-2">
+          コメント
+        </label>
+        <textarea
+          id="comment"
+          rows={3}
+          className="w-full px-3 py-2 bg-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          value={comment}
+          onChange={(e) => setComment(e.target.value)}
+          placeholder="座席の感想を書いてください..."
+        />
+      </div>
+
+      <button
+        type="submit"
+        disabled={rating === 0}
+        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed py-2 px-4 rounded-lg font-medium transition-colors"
+      >
+        レビューを投稿
+      </button>
+    </form>
   );
 };
