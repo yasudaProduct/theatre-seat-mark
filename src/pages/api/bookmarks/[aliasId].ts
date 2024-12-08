@@ -27,14 +27,18 @@ export default async function handler(
           include: {
             review: {
               include: {
-                screens: {
-                  include: {
-                    theaters: true,
-                  },
-                },
                 users: {
                   select: {
                     name: true,
+                  },
+                },
+                seat: {
+                  include: {
+                    screen: {
+                      include: {
+                        theaters: true,
+                      },
+                    },
                   },
                 },
               },
@@ -48,8 +52,8 @@ export default async function handler(
           seatNumber: bookmark.review.seat_name,
           review: bookmark.review.review,
           rating: bookmark.review.rating,
-          theaterName: bookmark.review.screens.theaters.name,
-          screenName: bookmark.review.screens.name,
+          theaterName: bookmark.review.seat.screen.theaters.name,
+          screenName: bookmark.review.seat.screen.name,
           user: { name: bookmark.review.users.name },
           isBookmarked: true,
         }));
