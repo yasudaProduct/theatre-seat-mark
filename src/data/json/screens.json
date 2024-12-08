@@ -1,1531 +1,307 @@
 [
   {
-    "id": 37,
+    "id": 1,
     "theater_id": 1,
     "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:41:27.740Z",
-    "updatedAt": "2024-11-14T14:41:27.740Z",
+    "createdAt": "2024-12-08T10:05:34.092Z",
+    "updatedAt": "2024-12-08T10:05:34.092Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 38,
+    "id": 2,
     "theater_id": 1,
     "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:41:27.750Z",
-    "updatedAt": "2024-11-14T14:41:27.750Z",
+    "createdAt": "2024-12-08T10:05:34.109Z",
+    "updatedAt": "2024-12-08T10:05:34.109Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 39,
+    "id": 3,
     "theater_id": 1,
     "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:41:27.751Z",
-    "updatedAt": "2024-11-14T14:41:27.751Z",
+    "createdAt": "2024-12-08T10:05:34.111Z",
+    "updatedAt": "2024-12-08T10:05:34.111Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 40,
+    "id": 4,
     "theater_id": 1,
     "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:41:27.752Z",
-    "updatedAt": "2024-11-14T14:41:27.752Z",
+    "createdAt": "2024-12-08T10:05:34.112Z",
+    "updatedAt": "2024-12-08T10:05:34.112Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 41,
+    "id": 5,
     "theater_id": 1,
     "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:41:27.753Z",
-    "updatedAt": "2024-11-14T14:41:27.753Z",
+    "createdAt": "2024-12-08T10:05:34.113Z",
+    "updatedAt": "2024-12-08T10:05:34.113Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 42,
+    "id": 6,
     "theater_id": 1,
     "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:41:27.754Z",
-    "updatedAt": "2024-11-14T14:41:27.754Z",
+    "createdAt": "2024-12-08T10:05:34.114Z",
+    "updatedAt": "2024-12-08T10:05:34.114Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 43,
+    "id": 7,
     "theater_id": 1,
     "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:41:27.755Z",
-    "updatedAt": "2024-11-14T14:41:27.755Z",
+    "createdAt": "2024-12-08T10:05:34.115Z",
+    "updatedAt": "2024-12-08T10:05:34.115Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 44,
+    "id": 8,
     "theater_id": 1,
     "name": "スクリーン8",
-    "createdAt": "2024-11-14T14:41:27.756Z",
-    "updatedAt": "2024-11-14T14:41:27.756Z",
+    "createdAt": "2024-12-08T10:05:34.116Z",
+    "updatedAt": "2024-12-08T10:05:34.116Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 45,
+    "id": 9,
     "theater_id": 1,
     "name": "スクリーン9",
-    "createdAt": "2024-11-14T14:41:27.757Z",
-    "updatedAt": "2024-11-14T14:41:27.757Z",
+    "createdAt": "2024-12-08T10:05:34.117Z",
+    "updatedAt": "2024-12-08T10:05:34.117Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 46,
+    "id": 10,
     "theater_id": 1,
     "name": "スクリーン10",
-    "createdAt": "2024-11-14T14:41:27.758Z",
-    "updatedAt": "2024-11-14T14:41:27.758Z",
+    "createdAt": "2024-12-08T10:05:34.118Z",
+    "updatedAt": "2024-12-08T10:05:34.118Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 47,
+    "id": 11,
     "theater_id": 1,
     "name": "スクリーン11",
-    "createdAt": "2024-11-14T14:41:27.759Z",
-    "updatedAt": "2024-11-14T14:41:27.759Z",
+    "createdAt": "2024-12-08T10:05:34.119Z",
+    "updatedAt": "2024-12-08T10:05:34.119Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 48,
+    "id": 12,
     "theater_id": 1,
     "name": "スクリーン12",
-    "createdAt": "2024-11-14T14:41:27.759Z",
-    "updatedAt": "2024-11-14T14:41:27.759Z",
+    "createdAt": "2024-12-08T10:05:34.119Z",
+    "updatedAt": "2024-12-08T10:05:34.119Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 49,
+    "id": 13,
     "theater_id": 2,
     "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:41:27.760Z",
-    "updatedAt": "2024-11-14T14:41:27.760Z",
+    "createdAt": "2024-12-08T10:05:34.120Z",
+    "updatedAt": "2024-12-08T10:05:34.120Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 50,
+    "id": 14,
     "theater_id": 2,
     "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:41:27.761Z",
-    "updatedAt": "2024-11-14T14:41:27.761Z",
+    "createdAt": "2024-12-08T10:05:34.120Z",
+    "updatedAt": "2024-12-08T10:05:34.120Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 51,
+    "id": 15,
     "theater_id": 2,
     "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:41:27.761Z",
-    "updatedAt": "2024-11-14T14:41:27.761Z",
+    "createdAt": "2024-12-08T10:05:34.121Z",
+    "updatedAt": "2024-12-08T10:05:34.121Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 52,
+    "id": 16,
     "theater_id": 2,
     "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:41:27.762Z",
-    "updatedAt": "2024-11-14T14:41:27.762Z",
+    "createdAt": "2024-12-08T10:05:34.122Z",
+    "updatedAt": "2024-12-08T10:05:34.122Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 53,
+    "id": 17,
     "theater_id": 3,
     "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:41:27.762Z",
-    "updatedAt": "2024-11-14T14:41:27.762Z",
+    "createdAt": "2024-12-08T10:05:34.122Z",
+    "updatedAt": "2024-12-08T10:05:34.122Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 54,
+    "id": 18,
     "theater_id": 3,
     "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:41:27.763Z",
-    "updatedAt": "2024-11-14T14:41:27.763Z",
+    "createdAt": "2024-12-08T10:05:34.123Z",
+    "updatedAt": "2024-12-08T10:05:34.123Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 55,
+    "id": 19,
     "theater_id": 3,
     "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:41:27.764Z",
-    "updatedAt": "2024-11-14T14:41:27.764Z",
+    "createdAt": "2024-12-08T10:05:34.123Z",
+    "updatedAt": "2024-12-08T10:05:34.123Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 56,
+    "id": 20,
     "theater_id": 3,
     "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:41:27.765Z",
-    "updatedAt": "2024-11-14T14:41:27.765Z",
+    "createdAt": "2024-12-08T10:05:34.124Z",
+    "updatedAt": "2024-12-08T10:05:34.124Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 57,
+    "id": 21,
     "theater_id": 3,
     "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:41:27.765Z",
-    "updatedAt": "2024-11-14T14:41:27.765Z",
+    "createdAt": "2024-12-08T10:05:34.124Z",
+    "updatedAt": "2024-12-08T10:05:34.124Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 58,
+    "id": 22,
     "theater_id": 3,
     "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:41:27.766Z",
-    "updatedAt": "2024-11-14T14:41:27.766Z",
+    "createdAt": "2024-12-08T10:05:34.125Z",
+    "updatedAt": "2024-12-08T10:05:34.125Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 59,
+    "id": 23,
     "theater_id": 3,
     "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:41:27.768Z",
-    "updatedAt": "2024-11-14T14:41:27.768Z",
+    "createdAt": "2024-12-08T10:05:34.125Z",
+    "updatedAt": "2024-12-08T10:05:34.125Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 60,
+    "id": 24,
     "theater_id": 3,
     "name": "スクリーン8",
-    "createdAt": "2024-11-14T14:41:27.770Z",
-    "updatedAt": "2024-11-14T14:41:27.770Z",
+    "createdAt": "2024-12-08T10:05:34.126Z",
+    "updatedAt": "2024-12-08T10:05:34.126Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 61,
+    "id": 25,
     "theater_id": 3,
     "name": "スクリーン9",
-    "createdAt": "2024-11-14T14:41:27.771Z",
-    "updatedAt": "2024-11-14T14:41:27.771Z",
+    "createdAt": "2024-12-08T10:05:34.127Z",
+    "updatedAt": "2024-12-08T10:05:34.127Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 62,
+    "id": 26,
     "theater_id": 3,
     "name": "スクリーン10",
-    "createdAt": "2024-11-14T14:41:27.772Z",
-    "updatedAt": "2024-11-14T14:41:27.772Z",
+    "createdAt": "2024-12-08T10:05:34.127Z",
+    "updatedAt": "2024-12-08T10:05:34.127Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 63,
+    "id": 27,
     "theater_id": 4,
     "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:41:27.772Z",
-    "updatedAt": "2024-11-14T14:41:27.772Z",
+    "createdAt": "2024-12-08T10:05:34.128Z",
+    "updatedAt": "2024-12-08T10:05:34.128Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 64,
+    "id": 28,
     "theater_id": 4,
     "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:41:27.773Z",
-    "updatedAt": "2024-11-14T14:41:27.773Z",
+    "createdAt": "2024-12-08T10:05:34.128Z",
+    "updatedAt": "2024-12-08T10:05:34.128Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 65,
+    "id": 29,
     "theater_id": 4,
     "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:41:27.773Z",
-    "updatedAt": "2024-11-14T14:41:27.773Z",
+    "createdAt": "2024-12-08T10:05:34.129Z",
+    "updatedAt": "2024-12-08T10:05:34.129Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 66,
+    "id": 30,
     "theater_id": 4,
     "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:41:27.774Z",
-    "updatedAt": "2024-11-14T14:41:27.774Z",
+    "createdAt": "2024-12-08T10:05:34.130Z",
+    "updatedAt": "2024-12-08T10:05:34.130Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 67,
+    "id": 31,
     "theater_id": 4,
     "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:41:27.775Z",
-    "updatedAt": "2024-11-14T14:41:27.775Z",
+    "createdAt": "2024-12-08T10:05:34.130Z",
+    "updatedAt": "2024-12-08T10:05:34.130Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 68,
+    "id": 32,
     "theater_id": 4,
     "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:41:27.775Z",
-    "updatedAt": "2024-11-14T14:41:27.775Z",
+    "createdAt": "2024-12-08T10:05:34.131Z",
+    "updatedAt": "2024-12-08T10:05:34.131Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 69,
+    "id": 33,
     "theater_id": 4,
     "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:41:27.776Z",
-    "updatedAt": "2024-11-14T14:41:27.776Z",
+    "createdAt": "2024-12-08T10:05:34.131Z",
+    "updatedAt": "2024-12-08T10:05:34.131Z",
     "rowCnt": "14",
     "columnCnt": "30"
   },
   {
-    "id": 70,
+    "id": 34,
     "theater_id": 5,
     "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:41:27.776Z",
-    "updatedAt": "2024-11-14T14:41:27.776Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 71,
-    "theater_id": 1,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:41:59.821Z",
-    "updatedAt": "2024-11-14T14:41:59.821Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 72,
-    "theater_id": 1,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:41:59.832Z",
-    "updatedAt": "2024-11-14T14:41:59.832Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 73,
-    "theater_id": 1,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:41:59.834Z",
-    "updatedAt": "2024-11-14T14:41:59.834Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 74,
-    "theater_id": 1,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:41:59.834Z",
-    "updatedAt": "2024-11-14T14:41:59.834Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 75,
-    "theater_id": 1,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:41:59.835Z",
-    "updatedAt": "2024-11-14T14:41:59.835Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 76,
-    "theater_id": 1,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:41:59.836Z",
-    "updatedAt": "2024-11-14T14:41:59.836Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 77,
-    "theater_id": 1,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:41:59.837Z",
-    "updatedAt": "2024-11-14T14:41:59.837Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 78,
-    "theater_id": 1,
-    "name": "スクリーン8",
-    "createdAt": "2024-11-14T14:41:59.838Z",
-    "updatedAt": "2024-11-14T14:41:59.838Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 79,
-    "theater_id": 1,
-    "name": "スクリーン9",
-    "createdAt": "2024-11-14T14:41:59.839Z",
-    "updatedAt": "2024-11-14T14:41:59.839Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 80,
-    "theater_id": 1,
-    "name": "スクリーン10",
-    "createdAt": "2024-11-14T14:41:59.840Z",
-    "updatedAt": "2024-11-14T14:41:59.840Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 81,
-    "theater_id": 1,
-    "name": "スクリーン11",
-    "createdAt": "2024-11-14T14:41:59.841Z",
-    "updatedAt": "2024-11-14T14:41:59.841Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 82,
-    "theater_id": 1,
-    "name": "スクリーン12",
-    "createdAt": "2024-11-14T14:41:59.841Z",
-    "updatedAt": "2024-11-14T14:41:59.841Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 83,
-    "theater_id": 2,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:41:59.842Z",
-    "updatedAt": "2024-11-14T14:41:59.842Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 84,
-    "theater_id": 2,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:41:59.843Z",
-    "updatedAt": "2024-11-14T14:41:59.843Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 85,
-    "theater_id": 2,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:41:59.843Z",
-    "updatedAt": "2024-11-14T14:41:59.843Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 86,
-    "theater_id": 2,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:41:59.844Z",
-    "updatedAt": "2024-11-14T14:41:59.844Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 87,
-    "theater_id": 3,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:41:59.845Z",
-    "updatedAt": "2024-11-14T14:41:59.845Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 88,
-    "theater_id": 3,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:41:59.845Z",
-    "updatedAt": "2024-11-14T14:41:59.845Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 89,
-    "theater_id": 3,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:41:59.846Z",
-    "updatedAt": "2024-11-14T14:41:59.846Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 90,
-    "theater_id": 3,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:41:59.846Z",
-    "updatedAt": "2024-11-14T14:41:59.846Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 91,
-    "theater_id": 3,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:41:59.847Z",
-    "updatedAt": "2024-11-14T14:41:59.847Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 92,
-    "theater_id": 3,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:41:59.848Z",
-    "updatedAt": "2024-11-14T14:41:59.848Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 93,
-    "theater_id": 3,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:41:59.850Z",
-    "updatedAt": "2024-11-14T14:41:59.850Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 94,
-    "theater_id": 3,
-    "name": "スクリーン8",
-    "createdAt": "2024-11-14T14:41:59.851Z",
-    "updatedAt": "2024-11-14T14:41:59.851Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 95,
-    "theater_id": 3,
-    "name": "スクリーン9",
-    "createdAt": "2024-11-14T14:41:59.852Z",
-    "updatedAt": "2024-11-14T14:41:59.852Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 96,
-    "theater_id": 3,
-    "name": "スクリーン10",
-    "createdAt": "2024-11-14T14:41:59.853Z",
-    "updatedAt": "2024-11-14T14:41:59.853Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 97,
-    "theater_id": 4,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:41:59.853Z",
-    "updatedAt": "2024-11-14T14:41:59.853Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 98,
-    "theater_id": 4,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:41:59.854Z",
-    "updatedAt": "2024-11-14T14:41:59.854Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 99,
-    "theater_id": 4,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:41:59.855Z",
-    "updatedAt": "2024-11-14T14:41:59.855Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 100,
-    "theater_id": 4,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:41:59.855Z",
-    "updatedAt": "2024-11-14T14:41:59.855Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 101,
-    "theater_id": 4,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:41:59.856Z",
-    "updatedAt": "2024-11-14T14:41:59.856Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 102,
-    "theater_id": 4,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:41:59.856Z",
-    "updatedAt": "2024-11-14T14:41:59.856Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 103,
-    "theater_id": 4,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:41:59.857Z",
-    "updatedAt": "2024-11-14T14:41:59.857Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 104,
-    "theater_id": 5,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:41:59.858Z",
-    "updatedAt": "2024-11-14T14:41:59.858Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 105,
-    "theater_id": 1,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:42:35.978Z",
-    "updatedAt": "2024-11-14T14:42:35.978Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 106,
-    "theater_id": 1,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:42:35.989Z",
-    "updatedAt": "2024-11-14T14:42:35.989Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 107,
-    "theater_id": 1,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:42:35.991Z",
-    "updatedAt": "2024-11-14T14:42:35.991Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 108,
-    "theater_id": 1,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:42:35.992Z",
-    "updatedAt": "2024-11-14T14:42:35.992Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 109,
-    "theater_id": 1,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:42:35.992Z",
-    "updatedAt": "2024-11-14T14:42:35.992Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 110,
-    "theater_id": 1,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:42:35.993Z",
-    "updatedAt": "2024-11-14T14:42:35.993Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 111,
-    "theater_id": 1,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:42:35.994Z",
-    "updatedAt": "2024-11-14T14:42:35.994Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 112,
-    "theater_id": 1,
-    "name": "スクリーン8",
-    "createdAt": "2024-11-14T14:42:35.995Z",
-    "updatedAt": "2024-11-14T14:42:35.995Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 113,
-    "theater_id": 1,
-    "name": "スクリーン9",
-    "createdAt": "2024-11-14T14:42:35.996Z",
-    "updatedAt": "2024-11-14T14:42:35.996Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 114,
-    "theater_id": 1,
-    "name": "スクリーン10",
-    "createdAt": "2024-11-14T14:42:35.997Z",
-    "updatedAt": "2024-11-14T14:42:35.997Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 115,
-    "theater_id": 1,
-    "name": "スクリーン11",
-    "createdAt": "2024-11-14T14:42:35.998Z",
-    "updatedAt": "2024-11-14T14:42:35.998Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 116,
-    "theater_id": 1,
-    "name": "スクリーン12",
-    "createdAt": "2024-11-14T14:42:35.998Z",
-    "updatedAt": "2024-11-14T14:42:35.998Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 117,
-    "theater_id": 2,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:42:35.999Z",
-    "updatedAt": "2024-11-14T14:42:35.999Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 118,
-    "theater_id": 2,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:42:36.000Z",
-    "updatedAt": "2024-11-14T14:42:36.000Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 119,
-    "theater_id": 2,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:42:36.000Z",
-    "updatedAt": "2024-11-14T14:42:36.000Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 120,
-    "theater_id": 2,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:42:36.001Z",
-    "updatedAt": "2024-11-14T14:42:36.001Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 121,
-    "theater_id": 3,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:42:36.002Z",
-    "updatedAt": "2024-11-14T14:42:36.002Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 122,
-    "theater_id": 3,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:42:36.002Z",
-    "updatedAt": "2024-11-14T14:42:36.002Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 123,
-    "theater_id": 3,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:42:36.003Z",
-    "updatedAt": "2024-11-14T14:42:36.003Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 124,
-    "theater_id": 3,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:42:36.003Z",
-    "updatedAt": "2024-11-14T14:42:36.003Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 125,
-    "theater_id": 3,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:42:36.004Z",
-    "updatedAt": "2024-11-14T14:42:36.004Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 126,
-    "theater_id": 3,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:42:36.004Z",
-    "updatedAt": "2024-11-14T14:42:36.004Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 127,
-    "theater_id": 3,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:42:36.005Z",
-    "updatedAt": "2024-11-14T14:42:36.005Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 128,
-    "theater_id": 3,
-    "name": "スクリーン8",
-    "createdAt": "2024-11-14T14:42:36.006Z",
-    "updatedAt": "2024-11-14T14:42:36.006Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 129,
-    "theater_id": 3,
-    "name": "スクリーン9",
-    "createdAt": "2024-11-14T14:42:36.006Z",
-    "updatedAt": "2024-11-14T14:42:36.006Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 130,
-    "theater_id": 3,
-    "name": "スクリーン10",
-    "createdAt": "2024-11-14T14:42:36.007Z",
-    "updatedAt": "2024-11-14T14:42:36.007Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 131,
-    "theater_id": 4,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:42:36.007Z",
-    "updatedAt": "2024-11-14T14:42:36.007Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 132,
-    "theater_id": 4,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:42:36.008Z",
-    "updatedAt": "2024-11-14T14:42:36.008Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 133,
-    "theater_id": 4,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:42:36.009Z",
-    "updatedAt": "2024-11-14T14:42:36.009Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 134,
-    "theater_id": 4,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:42:36.009Z",
-    "updatedAt": "2024-11-14T14:42:36.009Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 135,
-    "theater_id": 4,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:42:36.010Z",
-    "updatedAt": "2024-11-14T14:42:36.010Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 136,
-    "theater_id": 4,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:42:36.010Z",
-    "updatedAt": "2024-11-14T14:42:36.010Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 137,
-    "theater_id": 4,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:42:36.011Z",
-    "updatedAt": "2024-11-14T14:42:36.011Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 138,
-    "theater_id": 5,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:42:36.011Z",
-    "updatedAt": "2024-11-14T14:42:36.011Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 139,
-    "theater_id": 1,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:42:46.840Z",
-    "updatedAt": "2024-11-14T14:42:46.840Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 140,
-    "theater_id": 1,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:42:46.853Z",
-    "updatedAt": "2024-11-14T14:42:46.853Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 141,
-    "theater_id": 1,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:42:46.854Z",
-    "updatedAt": "2024-11-14T14:42:46.854Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 142,
-    "theater_id": 1,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:42:46.855Z",
-    "updatedAt": "2024-11-14T14:42:46.855Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 143,
-    "theater_id": 1,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:42:46.858Z",
-    "updatedAt": "2024-11-14T14:42:46.858Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 144,
-    "theater_id": 1,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:42:46.860Z",
-    "updatedAt": "2024-11-14T14:42:46.860Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 145,
-    "theater_id": 1,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:42:46.865Z",
-    "updatedAt": "2024-11-14T14:42:46.865Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 146,
-    "theater_id": 1,
-    "name": "スクリーン8",
-    "createdAt": "2024-11-14T14:42:46.866Z",
-    "updatedAt": "2024-11-14T14:42:46.866Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 147,
-    "theater_id": 1,
-    "name": "スクリーン9",
-    "createdAt": "2024-11-14T14:42:46.868Z",
-    "updatedAt": "2024-11-14T14:42:46.868Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 148,
-    "theater_id": 1,
-    "name": "スクリーン10",
-    "createdAt": "2024-11-14T14:42:46.868Z",
-    "updatedAt": "2024-11-14T14:42:46.868Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 149,
-    "theater_id": 1,
-    "name": "スクリーン11",
-    "createdAt": "2024-11-14T14:42:46.869Z",
-    "updatedAt": "2024-11-14T14:42:46.869Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 150,
-    "theater_id": 1,
-    "name": "スクリーン12",
-    "createdAt": "2024-11-14T14:42:46.870Z",
-    "updatedAt": "2024-11-14T14:42:46.870Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 151,
-    "theater_id": 2,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:42:46.870Z",
-    "updatedAt": "2024-11-14T14:42:46.870Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 152,
-    "theater_id": 2,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:42:46.871Z",
-    "updatedAt": "2024-11-14T14:42:46.871Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 153,
-    "theater_id": 2,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:42:46.872Z",
-    "updatedAt": "2024-11-14T14:42:46.872Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 154,
-    "theater_id": 2,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:42:46.872Z",
-    "updatedAt": "2024-11-14T14:42:46.872Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 155,
-    "theater_id": 3,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:42:46.873Z",
-    "updatedAt": "2024-11-14T14:42:46.873Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 156,
-    "theater_id": 3,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:42:46.874Z",
-    "updatedAt": "2024-11-14T14:42:46.874Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 157,
-    "theater_id": 3,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:42:46.874Z",
-    "updatedAt": "2024-11-14T14:42:46.874Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 158,
-    "theater_id": 3,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:42:46.875Z",
-    "updatedAt": "2024-11-14T14:42:46.875Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 159,
-    "theater_id": 3,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:42:46.875Z",
-    "updatedAt": "2024-11-14T14:42:46.875Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 160,
-    "theater_id": 3,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:42:46.876Z",
-    "updatedAt": "2024-11-14T14:42:46.876Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 161,
-    "theater_id": 3,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:42:46.877Z",
-    "updatedAt": "2024-11-14T14:42:46.877Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 162,
-    "theater_id": 3,
-    "name": "スクリーン8",
-    "createdAt": "2024-11-14T14:42:46.877Z",
-    "updatedAt": "2024-11-14T14:42:46.877Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 163,
-    "theater_id": 3,
-    "name": "スクリーン9",
-    "createdAt": "2024-11-14T14:42:46.878Z",
-    "updatedAt": "2024-11-14T14:42:46.878Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 164,
-    "theater_id": 3,
-    "name": "スクリーン10",
-    "createdAt": "2024-11-14T14:42:46.878Z",
-    "updatedAt": "2024-11-14T14:42:46.878Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 165,
-    "theater_id": 4,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:42:46.879Z",
-    "updatedAt": "2024-11-14T14:42:46.879Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 166,
-    "theater_id": 4,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:42:46.879Z",
-    "updatedAt": "2024-11-14T14:42:46.879Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 167,
-    "theater_id": 4,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:42:46.880Z",
-    "updatedAt": "2024-11-14T14:42:46.880Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 168,
-    "theater_id": 4,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:42:46.880Z",
-    "updatedAt": "2024-11-14T14:42:46.880Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 169,
-    "theater_id": 4,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:42:46.881Z",
-    "updatedAt": "2024-11-14T14:42:46.881Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 170,
-    "theater_id": 4,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:42:46.881Z",
-    "updatedAt": "2024-11-14T14:42:46.881Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 171,
-    "theater_id": 4,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:42:46.882Z",
-    "updatedAt": "2024-11-14T14:42:46.882Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 172,
-    "theater_id": 5,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:42:46.882Z",
-    "updatedAt": "2024-11-14T14:42:46.882Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 173,
-    "theater_id": 1,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:45:40.829Z",
-    "updatedAt": "2024-11-14T14:45:40.829Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 174,
-    "theater_id": 1,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:45:40.840Z",
-    "updatedAt": "2024-11-14T14:45:40.840Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 175,
-    "theater_id": 1,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:45:40.842Z",
-    "updatedAt": "2024-11-14T14:45:40.842Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 176,
-    "theater_id": 1,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:45:40.843Z",
-    "updatedAt": "2024-11-14T14:45:40.843Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 177,
-    "theater_id": 1,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:45:40.844Z",
-    "updatedAt": "2024-11-14T14:45:40.844Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 178,
-    "theater_id": 1,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:45:40.845Z",
-    "updatedAt": "2024-11-14T14:45:40.845Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 179,
-    "theater_id": 1,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:45:40.846Z",
-    "updatedAt": "2024-11-14T14:45:40.846Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 180,
-    "theater_id": 1,
-    "name": "スクリーン8",
-    "createdAt": "2024-11-14T14:45:40.847Z",
-    "updatedAt": "2024-11-14T14:45:40.847Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 181,
-    "theater_id": 1,
-    "name": "スクリーン9",
-    "createdAt": "2024-11-14T14:45:40.848Z",
-    "updatedAt": "2024-11-14T14:45:40.848Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 182,
-    "theater_id": 1,
-    "name": "スクリーン10",
-    "createdAt": "2024-11-14T14:45:40.849Z",
-    "updatedAt": "2024-11-14T14:45:40.849Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 183,
-    "theater_id": 1,
-    "name": "スクリーン11",
-    "createdAt": "2024-11-14T14:45:40.850Z",
-    "updatedAt": "2024-11-14T14:45:40.850Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 184,
-    "theater_id": 1,
-    "name": "スクリーン12",
-    "createdAt": "2024-11-14T14:45:40.850Z",
-    "updatedAt": "2024-11-14T14:45:40.850Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 185,
-    "theater_id": 2,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:45:40.851Z",
-    "updatedAt": "2024-11-14T14:45:40.851Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 186,
-    "theater_id": 2,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:45:40.852Z",
-    "updatedAt": "2024-11-14T14:45:40.852Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 187,
-    "theater_id": 2,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:45:40.852Z",
-    "updatedAt": "2024-11-14T14:45:40.852Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 188,
-    "theater_id": 2,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:45:40.853Z",
-    "updatedAt": "2024-11-14T14:45:40.853Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 189,
-    "theater_id": 3,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:45:40.853Z",
-    "updatedAt": "2024-11-14T14:45:40.853Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 190,
-    "theater_id": 3,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:45:40.854Z",
-    "updatedAt": "2024-11-14T14:45:40.854Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 191,
-    "theater_id": 3,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:45:40.855Z",
-    "updatedAt": "2024-11-14T14:45:40.855Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 192,
-    "theater_id": 3,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:45:40.855Z",
-    "updatedAt": "2024-11-14T14:45:40.855Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 193,
-    "theater_id": 3,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:45:40.856Z",
-    "updatedAt": "2024-11-14T14:45:40.856Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 194,
-    "theater_id": 3,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:45:40.856Z",
-    "updatedAt": "2024-11-14T14:45:40.856Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 195,
-    "theater_id": 3,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:45:40.857Z",
-    "updatedAt": "2024-11-14T14:45:40.857Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 196,
-    "theater_id": 3,
-    "name": "スクリーン8",
-    "createdAt": "2024-11-14T14:45:40.857Z",
-    "updatedAt": "2024-11-14T14:45:40.857Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 197,
-    "theater_id": 3,
-    "name": "スクリーン9",
-    "createdAt": "2024-11-14T14:45:40.858Z",
-    "updatedAt": "2024-11-14T14:45:40.858Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 198,
-    "theater_id": 3,
-    "name": "スクリーン10",
-    "createdAt": "2024-11-14T14:45:40.859Z",
-    "updatedAt": "2024-11-14T14:45:40.859Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 199,
-    "theater_id": 4,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:45:40.859Z",
-    "updatedAt": "2024-11-14T14:45:40.859Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 200,
-    "theater_id": 4,
-    "name": "スクリーン2",
-    "createdAt": "2024-11-14T14:45:40.860Z",
-    "updatedAt": "2024-11-14T14:45:40.860Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 201,
-    "theater_id": 4,
-    "name": "スクリーン3",
-    "createdAt": "2024-11-14T14:45:40.860Z",
-    "updatedAt": "2024-11-14T14:45:40.860Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 202,
-    "theater_id": 4,
-    "name": "スクリーン4",
-    "createdAt": "2024-11-14T14:45:40.861Z",
-    "updatedAt": "2024-11-14T14:45:40.861Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 203,
-    "theater_id": 4,
-    "name": "スクリーン5",
-    "createdAt": "2024-11-14T14:45:40.861Z",
-    "updatedAt": "2024-11-14T14:45:40.861Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 204,
-    "theater_id": 4,
-    "name": "スクリーン6",
-    "createdAt": "2024-11-14T14:45:40.862Z",
-    "updatedAt": "2024-11-14T14:45:40.862Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 205,
-    "theater_id": 4,
-    "name": "スクリーン7",
-    "createdAt": "2024-11-14T14:45:40.862Z",
-    "updatedAt": "2024-11-14T14:45:40.862Z",
-    "rowCnt": "14",
-    "columnCnt": "30"
-  },
-  {
-    "id": 206,
-    "theater_id": 5,
-    "name": "スクリーン1",
-    "createdAt": "2024-11-14T14:45:40.863Z",
-    "updatedAt": "2024-11-14T14:45:40.863Z",
+    "createdAt": "2024-12-08T10:05:34.132Z",
+    "updatedAt": "2024-12-08T10:05:34.132Z",
     "rowCnt": "14",
     "columnCnt": "30"
   }
