@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <AuthWrapper>
-        <div className="h-screen bg-gray-100">
+        <div className="min-h-screen bg-gray-100">
           <Header />
           <Toaster richColors />
           <Component {...pageProps} />
