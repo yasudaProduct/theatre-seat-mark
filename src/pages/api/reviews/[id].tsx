@@ -38,9 +38,13 @@ export default async function handler(
                 name: true,
               },
             },
-            screens: {
+            seat: {
               include: {
-                theaters: true,
+                screen: {
+                  include: {
+                    theaters: true,
+                  },
+                },
               },
             },
           },
@@ -58,8 +62,8 @@ export default async function handler(
           seatNumber: review.seat_name,
           review: review.review,
           rating: review.rating,
-          theaterName: review.screens.theaters.name,
-          screenName: review.screens.name,
+          theaterName: review.seat.screen.theaters.name,
+          screenName: review.seat.screen.name,
           user: { name: review.users.name },
           isBookmarked: true,
         };
@@ -94,7 +98,7 @@ export default async function handler(
           data: { review, rating },
           include: {
             users: true,
-            screens: true,
+            // screens: true,
           },
         });
 
