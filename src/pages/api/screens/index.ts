@@ -12,9 +12,9 @@ export default async function handler(
   console.log(req.method);
   switch (req.method) {
     case "GET": {
-      const { screenId } = req.query;
-      if (screenId || typeof screenId === "string") {
-        await getRequest(req, res, screenId as string);
+      const { theaterId } = req.query;
+      if (theaterId || typeof theaterId === "string") {
+        await getRequest(req, res, theaterId as string);
       } else {
         return res.status(400).json({
           code: ApiResponseCode.ARGUMENT_PARAMETER_ERROR,
@@ -51,12 +51,12 @@ export default async function handler(
 async function getRequest(
   req: NextApiRequest,
   res: NextApiResponse,
-  screenId: string
+  theaterId: string
 ) {
   try {
     const screens = await prisma.screen.findMany({
       where: {
-        id: parseInt(screenId, 10),
+        theater_id: parseInt(theaterId, 10),
       },
       include: {
         seats: {
@@ -66,7 +66,6 @@ async function getRequest(
         },
       }
     });
-    console.log(screens);
     res.status(200).json(screens);
   } catch (error) {
     logger.error("スクリーン取得エラー:", error);

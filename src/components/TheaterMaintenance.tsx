@@ -12,6 +12,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 interface Theater {
   id: number;
@@ -22,6 +23,7 @@ interface Theater {
 }
 
 const TheaterMaintenance = () => {
+  const router = useRouter();
   const [theaters, setTheaters] = useState<Theater[]>([]);
   const [editingId, setEditingId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState<Theater>({
@@ -158,7 +160,16 @@ const TheaterMaintenance = () => {
                       </Button>
                     </>
                   ) : (
-                    <Button onClick={() => handleEdit(theater)}>編集</Button>
+                    <div className="flex gap-2">
+                      <Button onClick={() => handleEdit(theater)}>編集</Button>
+                      <Button
+                        onClick={() =>
+                          router.push(`/maintenances/${theater.id}`)
+                        }
+                      >
+                        詳細
+                      </Button>
+                    </div>
                   )}
                 </TableCell>
               </TableRow>

@@ -43,10 +43,10 @@ const Theaters = (props: TheatersPageProps) => {
   //   }
   // };
 
-  const handleSearch = async () => {
+  const handleSearch = async (prefecture: number) => {
     const results = await searchTheaters(
       // theaterName,
-      selectedPrefecture
+      prefecture
       // location.lat,
       // location.lng
     );
@@ -120,7 +120,8 @@ const Theaters = (props: TheatersPageProps) => {
                       variant={
                         selectedPrefecture === pref.id ? "default" : "outline"
                       }
-                      onClick={() => setSelectedPrefecture(pref.id)}
+                      // onClick={() => setSelectedPrefecture(pref.id)}
+                      onClick={() => handleSearch(pref.id)}
                       className="h-10 px-2 py-1 text-xs"
                       aria-pressed={selectedPrefecture === pref.id}
                     >
@@ -135,9 +136,9 @@ const Theaters = (props: TheatersPageProps) => {
         {/* <Button onClick={handleLocationSearch}>
           <MapPin className="mr-2 h-4 w-4" /> 現在位置から検索
         </Button> */}
-        <Button onClick={handleSearch}>
+        {/* <Button onClick={handleSearch}>
           <Search className="mr-2 h-4 w-4" /> 検索
-        </Button>
+        </Button> */}
       </div>
       <div className="grid gap-4">
         {searchResults &&
