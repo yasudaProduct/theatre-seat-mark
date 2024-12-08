@@ -104,7 +104,10 @@ export const ScreenMaintenance = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(newScreen),
+        body: JSON.stringify({
+          theaterId: newScreen.theater_id,
+          name: newScreen.name,
+        }),
       });
 
       if (response.ok) {
