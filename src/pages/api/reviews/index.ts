@@ -39,19 +39,23 @@ async function handlePostRequest(
   res: NextApiResponse,
   userId: string | undefined
 ) {
-  const { screenId, seatNumber, review, rating } = req.body;
+  const { seatId, seatName, review, rating } = req.body;
 
-  if (!screenId || !seatNumber || !review || !rating || !userId) {
+  console.log(seatId, seatName, review, rating, userId);
+
+  if (!seatId || !seatName || !review || !rating || !userId) {
     return res.status(400).json(
       { code: ApiResponseCode.ARGUMENT_PARAMETER_ERROR, message: "引数が不足しています" } as ApiErrorResponse
     );
   }
 
+
+
   try {
     const newReview = await prisma.seatReview.create({
       data: {
-        screen_id: parseInt(screenId, 10),
-        seat_name: seatNumber,
+        seat_id: parseInt(seatId, 10),
+        seat_name: seatName,
         review: review,
         rating: parseInt(rating, 10),
         user_id: parseInt(userId!, 10),
@@ -72,9 +76,9 @@ async function handleGetRequest(
   userId: string | undefined
 ) {
   try {
-    const { screenId } = req.query;
+    const { seatId } = req.query;
 
-    if (!screenId || typeof screenId !== "string") {
+    if (!seatId || typeof seatId !== "string") {
       return res.status(400).json(
         { code: ApiResponseCode.ARGUMENT_PARAMETER_ERROR, message: "引数が不足しています" } as ApiErrorResponse
       );
@@ -82,7 +86,7 @@ async function handleGetRequest(
 
     const reviews = await prisma.seatReview.findMany({
       where: {
-        screen_id: parseInt(screenId, 10),
+        seat_id: parseInt(seatId, 10),
       },
       include: {
         users: {

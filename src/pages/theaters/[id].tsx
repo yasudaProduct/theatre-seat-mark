@@ -49,6 +49,12 @@ export const getServerSideProps: GetServerSideProps<Theater> = async (
 export default function TheaterPage(theater: Theater) {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
+  const [selectedSeatId, setSelectedSeatId] = useState<number | null>(null);
+
+  const handleSeatSelect = (seatName: string, seatId: number) => {
+    setSelectedSeat(seatName);
+    setSelectedSeatId(seatId);
+  };
 
   const handleReviewSubmit = (review: Review) => {
     setReviews([...reviews, review]);
@@ -65,7 +71,7 @@ export default function TheaterPage(theater: Theater) {
               スクリーン座席マップ
             </h2>
             <TheaterLayout
-              onSeatSelect={setSelectedSeat}
+              onSeatSelect={handleSeatSelect}
               selectedSeat={selectedSeat}
               theater={theater}
             />
@@ -92,6 +98,7 @@ export default function TheaterPage(theater: Theater) {
           ) : (
             <ReviewForm
               selectedSeat={selectedSeat}
+              selectedSeatId={selectedSeatId!}
               onSubmit={handleReviewSubmit}
             />
           )}
@@ -124,7 +131,7 @@ interface Screen {
 interface TheaterLayoutProps {
   theater: Theater;
   selectedSeat: string | null;
-  onSeatSelect: (seat: string) => void;
+  onSeatSelect: (seatName: string, seatId: number) => void;
 }
 
 function TheaterLayout({
@@ -135,12 +142,12 @@ function TheaterLayout({
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
-  const seatsPerRow = 12;
   const [selectScreen, setSelectScreen] = useState<string | undefined>(
     undefined
   );
   const [screen, setScreen] = useState<Screen | undefined>();
+  const [rows, setRows] = useState<string[]>([]);
+  const [seatsPerRow, setSeatsPerRow] = useState(0);
 
   useEffect(() => {
     const screenId = searchParams.get("screen");
@@ -156,7 +163,19 @@ function TheaterLayout({
     }
   }, [selectScreen]);
 
-  useEffect(() => {}, [screen]);
+  useEffect(() => {
+    if (screen?.seats) {
+      // seats から一意の row 値を抽出して昇順にソート
+      const uniqueRows = Array.from(
+        new Set(screen.seats.map((seat) => seat.row))
+      ).sort();
+      setRows(uniqueRows);
+
+      // seats から最大の column 値を取得
+      const maxColumn = Math.max(...screen.seats.map((seat) => seat.column));
+      setSeatsPerRow(maxColumn);
+    }
+  }, [screen]);
 
   const handleScreenChange = (screenId: string) => {
     setSelectScreen(screenId);
@@ -223,16 +242,20 @@ function TheaterLayout({
             </div>
             {[...Array(seatsPerRow)].map((_, index) => {
               const seatName = `${row}${index + 1}`;
+              const seat = screen?.seats.find(
+                (s) => s.row === row && s.column === index + 1
+              );
               const rating = getSeatRating(seatName);
+
               return (
                 <button
                   key={seatName}
                   className={`
-                          w-8 h-8 rounded-t-lg text-xs font-medium transition-all
-                          ${getSeatColor(rating)}
-                          ${selectedSeat === seatName ? "ring-2 ring-white" : "hover:ring-2 hover:ring-white/50"}
-                        `}
-                  onClick={() => onSeatSelect(seatName)}
+              w-8 h-8 rounded-t-lg text-xs font-medium transition-all
+              ${getSeatColor(rating)}
+              ${selectedSeat === seatName ? "ring-2 ring-white" : "hover:ring-2 hover:ring-white/50"}
+            `}
+                  onClick={() => seat && onSeatSelect(seatName, seat.id)}
                 >
                   {index + 1}
                 </button>
@@ -322,29 +345,55 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
 };
 
 interface ReviewFormProps {
+  selectedSeatId: number;
   selectedSeat: string;
   onSubmit: (review: Review) => void;
 }
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ selectedSeat, onSubmit }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({
+  selectedSeatId,
+  selectedSeat,
+  onSubmit,
+}) => {
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
   const [hoveredRating, setHoveredRating] = useState(0);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (rating === 0) return;
 
-    onSubmit({
-      id: Date.now().toString(),
-      seatId: selectedSeat,
-      rating,
-      comment,
-      date: new Date().toISOString(),
-    });
+    setIsSubmitting(true);
 
-    setRating(0);
-    setComment("");
+    try {
+      const response = await fetch("/api/reviews", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          seatId: selectedSeatId,
+          seatName: selectedSeat,
+          rating: rating,
+          review: comment,
+        }),
+      });
+
+      if (!response.ok) {
+        toast.error("レビューの投稿に失敗しました");
+      }
+
+      const newReview = await response.json();
+      onSubmit(newReview);
+
+      setRating(0);
+      setComment("");
+    } catch {
+      toast.error("レビューの投稿に失敗しました");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -397,7 +446,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ selectedSeat, onSubmit }) => {
         disabled={rating === 0}
         className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed py-2 px-4 rounded-lg font-medium transition-colors"
       >
-        レビューを投稿
+        {isSubmitting ? "投稿中..." : "レビューを投稿"}
       </button>
     </form>
   );
