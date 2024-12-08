@@ -109,7 +109,10 @@ async function handleGetRequest(
     const formattedReviews = reviews.map((review) => {
       const isBookmarked = review.bookmarks.length > 0;
       return {
-        ...review,
+        id: review.id,
+        seatName: review.seat_name,
+        rating: review.rating,
+        comment: review.review,
         isBookmarked,
       };
     });

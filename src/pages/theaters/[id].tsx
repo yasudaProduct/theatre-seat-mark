@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Star, ThumbsUp } from "lucide-react";
 import { GetServerSideProps } from "next";
 import prisma from "@/lib/prisma";
@@ -74,7 +74,7 @@ export default function TheaterPage(theater: Theater) {
               <ThumbsUp className="w-5 h-5 text-green-400" />
               最新レビュー
             </h2>
-            {/* <ReviewList reviews={theater.screen.reviews} /> */}
+            <ReviewList seatId={selectedSeatId} />
           </div>
         </div>
 
@@ -100,10 +100,11 @@ export default function TheaterPage(theater: Theater) {
   );
 }
 interface ReviewListProps {
-  reviews: Review[];
+  seatId: number | null;
 }
 
-const ReviewList = ({ reviews }: ReviewListProps) => {
+const ReviewList = ({ seatId }: ReviewListProps) => {
+  const [reviews, setReviews] = useState<Review[]>([]);
   //   const formatDate = (dateString: string) => {
   //     return new Date(dateString).toLocaleDateString("ja-JP", {
   //       year: "numeric",
@@ -111,6 +112,25 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
   //       day: "numeric",
   //     });
   //   };
+
+  useEffect(() => {
+    if (!seatId) return;
+    // レビューを取得
+    fetchReviews(seatId);
+  }, [seatId]);
+
+  const fetchReviews = async (seatId: number) => {
+    const response = await fetch(`/api/reviews?seatId=${seatId}`);
+    const data = await response.json();
+    setReviews(data);
+  };
+
+  if (!seatId)
+    return (
+      <div className="text-center text-gray-400 py-8">
+        座席を選択して下さい。
+      </div>
+    );
 
   if (reviews.length === 0) {
     return (
@@ -129,9 +149,7 @@ const ReviewList = ({ reviews }: ReviewListProps) => {
         >
           <div className="flex justify-between items-start mb-2">
             <div>
-              <div className="font-bold text-lg mb-1">
-                座席 {review.seatName}
-              </div>
+              <div className="font-bold text-lg mb-1">{review.seatName}</div>
               <div className="flex gap-1">
                 {[...Array(5)].map((_, index) => (
                   <Star

@@ -100,11 +100,10 @@ export default function TheaterLayout({
     }
   };
 
-  const getSeatRating = (seatName: string) => {
+  const getSeatRating = (seatId: number) => {
     if (!screen || !screen.seats) return null;
     const seat: Seat | undefined = screen?.seats.find(
-      (seat) =>
-        seat.row === seatName[0] && seat.column === parseInt(seatName[1])
+      (seat) => seat.id === seatId
     );
 
     if (!seat || seat.seat_reviews?.length == 0) return null;
@@ -112,7 +111,6 @@ export default function TheaterLayout({
     const avgRating =
       seat.seat_reviews!.reduce((acc, curr) => acc + curr.rating, 0) /
       seat.seat_reviews!.length;
-    console.log(avgRating);
     return avgRating;
   };
 
@@ -151,7 +149,7 @@ export default function TheaterLayout({
               const seat = screen?.seats.find(
                 (s) => s.row === row && s.column === index + 1
               );
-              const rating = getSeatRating(seatName);
+              const rating = getSeatRating(seat.id);
 
               return (
                 <button
