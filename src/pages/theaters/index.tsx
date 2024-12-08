@@ -1,15 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import getLogger from "@/lib/logger";
 import prisma from "@/lib/prisma";
 import { Prefecture } from "@/types/Prefecture";
 import { Region } from "@/types/Region";
 import { Theater } from "@prisma/client";
-import { ChevronDown, ChevronUp, MapPin, Search } from "lucide-react";
+import { ChevronDown, ChevronUp, Search } from "lucide-react";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/navigation";
-import Router from "next/router";
 import React, { useEffect, useState } from "react";
 
 const logger = getLogger("theaters");
