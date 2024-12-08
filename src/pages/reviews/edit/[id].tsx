@@ -50,9 +50,13 @@ export const getServerSideProps: GetServerSideProps<
             name: true,
           },
         },
-        screens: {
+        seat: {
           include: {
-            theaters: true,
+            screen: {
+              include: {
+                theaters: true,
+              },
+            },
           },
         },
       },
@@ -66,11 +70,11 @@ export const getServerSideProps: GetServerSideProps<
     const formattedReviews: Review = {
       id: review.id,
       user: { name: review.users.name! },
-      seatNumber: review.seat_name,
+      seatNumber: review.seat_name ?? "",
       rating: review.rating,
       review: review.review,
-      theaterName: review.screens.theaters.name,
-      screenName: review.screens.name,
+      theaterName: review.seat.screen.theaters.name,
+      screenName: review.seat.screen.name,
     };
 
     return {

@@ -52,8 +52,8 @@ export default async function handler(
 
     const formattedReviews: PopularReview[] = reviews.map((review) => ({
       id: review.id,
-      user: { name: review.users.name! },
-      seatNumber: review.seat_name,
+      user: { name: review.users.name ?? "" },
+      seatNumber: review.seat_name ?? "",
       rating: review.rating,
       review: review.review,
       bookmarkCount: review.bookmarks.length,

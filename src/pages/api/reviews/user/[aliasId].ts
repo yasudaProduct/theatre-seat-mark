@@ -34,9 +34,13 @@ export default async function handler(
             user_id: user.id,
           },
           include: {
-            screens: {
+            seat: {
               include: {
-                theaters: true,
+                screen: {
+                  include: {
+                    theaters: true,
+                  },
+                },
               },
             },
             bookmarks: {
@@ -53,12 +57,12 @@ export default async function handler(
 
         const formattedReviews = reviews.map((review) => ({
           id: review.id,
-          theaterName: review.screens.theaters.name,
-          screenName: review.screens.name,
-          seatNumber: review.seat_name,
+          theaterName: review.seat.screen.theaters.name,
+          screenName: review.seat.screen.name,
+          seatNumber: review.seat_name ?? "",
           rating: review.rating,
           review: review.review,
-          user: { username: review.users.name },
+          user: { username: review.users.name ?? "" },
           createdAt: review.createdAt.toISOString(),
           isBookmarked: review.bookmarks.length > 0,
         }));
