@@ -2,10 +2,11 @@ import React, { useEffect, useState } from "react";
 import { Star, ThumbsUp } from "lucide-react";
 import { GetServerSideProps } from "next";
 import prisma from "@/lib/prisma";
-import { useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { toast } from "sonner";
 
 export interface Theater {
+  id: number;
   name: string;
   screens?: [
     {
@@ -28,8 +29,6 @@ export const getServerSideProps: GetServerSideProps<Theater> = async (
     },
   });
 
-  // console.log(theater);
-
   if (!theater) {
     return {
       notFound: true,
@@ -38,8 +37,10 @@ export const getServerSideProps: GetServerSideProps<Theater> = async (
 
   return {
     props: {
+      id: theater.id,
       name: theater.name,
       screens: theater.screens.map((screen) => ({
+        id: screen.id,
         name: screen.name,
       })),
     } as Theater,
@@ -52,6 +53,7 @@ export default function TheaterPage(theater: Theater) {
 
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
+      <h1 className="text-2xl font-bold mb-4">{theater.name}</h1>
       <div className="grid lg:grid-cols-2 gap-8">
         <div className="space-y-6">
           <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
@@ -119,11 +121,13 @@ interface TheaterLayoutProps {
 }
 
 function TheaterLayout({
-  // theater,
+  theater,
   selectedSeat,
   onSeatSelect,
 }: TheaterLayoutProps) {
+  const params = useParams();
   const searchParams = useSearchParams();
+  const router = useRouter();
   const rows = ["A", "B", "C", "D", "E", "F", "G", "H"];
   const seatsPerRow = 12;
   const [selectScreen, setSelectScreen] = useState<string | undefined>(
@@ -131,8 +135,9 @@ function TheaterLayout({
   );
   const [screen, setScreen] = useState<Screen | undefined>();
 
+  console.log(theater.screens);
+
   useEffect(() => {
-    console.log("useEffect");
     const screenId = searchParams.get("screen");
     if (screenId) {
       setSelectScreen(screenId);
@@ -140,7 +145,6 @@ function TheaterLayout({
   }, []);
 
   useEffect(() => {
-    console.log("screen");
     // スクリーンの座席情報・レビューを取得
     if (selectScreen) {
       fetchScreenData(parseInt(selectScreen));
@@ -148,6 +152,11 @@ function TheaterLayout({
   }, [selectScreen]);
 
   useEffect(() => {}, [screen]);
+
+  const handleScreenChange = (screenId: string) => {
+    setSelectScreen(screenId);
+    router.push(`/theaters/${params.id}?screen=${screenId}`, { scroll: false });
+  };
 
   const fetchScreenData = async (screenId: number) => {
     try {
@@ -187,6 +196,20 @@ function TheaterLayout({
 
   return (
     <div className="space-y-8">
+      <div className="mb-4">
+        <select
+          className="bg-black/30 text-white rounded-md p-2 w-full"
+          value={selectScreen || ""}
+          onChange={(e) => handleScreenChange(e.target.value)}
+        >
+          <option value="">スクリーンを選択してください</option>
+          {theater.screens?.map((screen) => (
+            <option key={screen.id} value={screen.id}>
+              {screen.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <div className="space-y-2">
         {rows.map((row) => (
           <div key={row} className="flex justify-center gap-1">

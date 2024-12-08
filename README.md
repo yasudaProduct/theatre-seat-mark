@@ -53,3 +53,7 @@ POSTGRES_PRISMA_URL="postgresql://postgres:postgres@postgres:5432/postgres?schem
 ```bash
 ./node_modules/.bin/dotenv -e .env.local -- npx prisma db seed
 ```
+
+```bash
+POSTGRES_PRISMA_URL="postgresql://postgres:postgres@postgres:5432/postgres?schema=public" npx ts-node scripts/batch.ts createSeats
+```
