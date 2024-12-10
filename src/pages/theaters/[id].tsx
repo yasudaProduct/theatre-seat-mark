@@ -7,6 +7,7 @@ import TheaterLayout, {
   Theater,
 } from "@/components/theaters/TheaterLayout";
 import { ReviewForm } from "@/components/theaters/ReviewForm";
+import { useSession } from "next-auth/react";
 
 export const getServerSideProps: GetServerSideProps<Theater> = async (
   context
@@ -39,9 +40,11 @@ export const getServerSideProps: GetServerSideProps<Theater> = async (
 };
 
 export default function TheaterPage(theater: Theater) {
+  const { data: session } = useSession();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
   const [selectedSeatId, setSelectedSeatId] = useState<number | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const handleSeatSelect = (seatName: string, seatId: number) => {
     setSelectedSeat(seatName);
@@ -51,6 +54,7 @@ export default function TheaterPage(theater: Theater) {
   const handleReviewSubmit = (review: Review) => {
     setReviews([...reviews, review]);
     setSelectedSeat(null);
+    setRefreshKey((prevKey) => prevKey + 1);
   };
 
   return (
@@ -66,6 +70,7 @@ export default function TheaterPage(theater: Theater) {
               onSeatSelect={handleSeatSelect}
               selectedSeat={selectedSeat}
               theater={theater}
+              refreshKey={refreshKey}
             />
           </div>
 
@@ -83,7 +88,18 @@ export default function TheaterPage(theater: Theater) {
             <Star className="w-5 h-5 text-yellow-400" />
             座席レビューを投稿
           </h2>
-          {!selectedSeat ? (
+          {!session ? (
+            <div className="text-center text-white py-8">
+              レビューを投稿するには
+              <a
+                href={`/auth/login?callbackUrl=${encodeURIComponent(window.location.href)}`}
+                className="text-blue-400 hover:underline"
+              >
+                ログイン
+              </a>
+              してください。
+            </div>
+          ) : !selectedSeat ? (
             <div className="text-center text-white py-8">
               座席を選択して下さい。
             </div>

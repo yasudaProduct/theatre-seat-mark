@@ -39,12 +39,14 @@ interface TheaterLayoutProps {
   theater: Theater;
   selectedSeat: string | null;
   onSeatSelect: (seatName: string, seatId: number) => void;
+  refreshKey?: number;
 }
 
 export default function TheaterLayout({
   theater,
   selectedSeat,
   onSeatSelect,
+  refreshKey = 0,
 }: TheaterLayoutProps) {
   const params = useParams();
   const searchParams = useSearchParams();
@@ -70,7 +72,7 @@ export default function TheaterLayout({
       setIsLoading(true);
       fetchScreenData(parseInt(selectScreen));
     }
-  }, [selectScreen]);
+  }, [selectScreen, refreshKey]);
 
   useEffect(() => {
     if (screen?.seats) {
