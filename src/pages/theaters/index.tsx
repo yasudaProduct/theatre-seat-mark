@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import getLogger from "@/lib/logger";
@@ -5,10 +6,10 @@ import prisma from "@/lib/prisma";
 import { Prefecture } from "@/types/Prefecture";
 import { Region } from "@/types/Region";
 import { Theater } from "@prisma/client";
-import { ChevronDown, ChevronUp, Search } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { GetStaticProps } from "next";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const logger = getLogger("theaters");
 
@@ -21,36 +22,30 @@ const Theaters = (props: TheatersPageProps) => {
   // const [location, setLocation] = useState({ lat: null, lng: null });
   const [searchResults, setSearchResults] = useState<Theater[] | undefined>([]);
   const [isRegionsExpanded, setIsRegionsExpanded] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const searchResultsRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   useEffect(() => {}, []);
 
-  // const handleLocationSearch = () => {
-  //   if ("geolocation" in navigator) {
-  //     navigator.geolocation.getCurrentPosition(
-  //       (position) => {
-  //         setLocation({
-  //           lat: position.coords.latitude,
-  //           lng: position.coords.longitude,
-  //         });
-  //       },
-  //       (error) => {
-  //         console.error("Error getting location:", error);
-  //       }
-  //     );
-  //   } else {
-  //     console.error("Geolocation is not supported by this browser.");
-  //   }
-  // };
-
   const handleSearch = async (prefecture: number) => {
-    const results = await searchTheaters(
-      // theaterName,
-      prefecture
-      // location.lat,
-      // location.lng
-    );
-    setSearchResults(results);
+    setIsLoading(true);
+    setSelectedPrefecture(prefecture);
+
+    try {
+      const results = await searchTheaters(
+        // theaterName,
+        prefecture
+        // location.lat,
+        // location.lng
+      );
+      setSearchResults(results);
+      setTimeout(() => {
+        searchResultsRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 100);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const searchTheaters = async (
@@ -79,7 +74,7 @@ const Theaters = (props: TheatersPageProps) => {
           value={theaterName}
           onChange={(e) => setTheaterName(e.target.value)}
         /> */}
-        <div className="space-y-4">
+        <div className="grid gap-4">
           <button
             className="w-full duration-200 flex"
             onClick={toggleRegions}
@@ -140,8 +135,10 @@ const Theaters = (props: TheatersPageProps) => {
           <Search className="mr-2 h-4 w-4" /> 検索
         </Button> */}
       </div>
-      <div className="grid gap-4">
-        {searchResults &&
+      <div className="grid gap-4" ref={searchResultsRef}>
+        {isLoading ? (
+          <Loading />
+        ) : searchResults && searchResults.length > 0 ? (
           searchResults.map((theater) => (
             <Card
               key={theater.id}
@@ -155,7 +152,14 @@ const Theaters = (props: TheatersPageProps) => {
                 <p>{theater.address}</p>
               </CardContent>
             </Card>
-          ))}
+          ))
+        ) : (
+          selectedPrefecture !== 0 && (
+            <div className="text-center py-8 text-gray-500">
+              登録された映画館は見つかりません
+            </div>
+          )
+        )}
       </div>
     </div>
   );
@@ -194,8 +198,6 @@ export const getStaticProps: GetStaticProps = async () => {
       }),
     } as Region;
   });
-
-  console.log(result);
 
   return {
     props: { regions: result } as TheatersPageProps,
