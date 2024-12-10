@@ -2,6 +2,7 @@ import React from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import Loading from "../Loading";
 
 export interface Theater {
   id: number;
@@ -54,6 +55,7 @@ export default function TheaterLayout({
   const [screen, setScreen] = useState<Screen | undefined>();
   const [rows, setRows] = useState<string[]>([]);
   const [seatsPerRow, setSeatsPerRow] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const screenId = searchParams.get("screen");
@@ -65,6 +67,7 @@ export default function TheaterLayout({
   useEffect(() => {
     // スクリーンの座席情報・レビューを取得
     if (selectScreen) {
+      setIsLoading(true);
       fetchScreenData(parseInt(selectScreen));
     }
   }, [selectScreen]);
@@ -97,6 +100,8 @@ export default function TheaterLayout({
       }
     } catch {
       toast.error("スクリーン情報の取得に失敗しました。");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -139,34 +144,38 @@ export default function TheaterLayout({
         </select>
       </div>
       <div className="space-y-2">
-        {rows.map((row) => (
-          <div key={row} className="flex justify-center gap-1">
-            <div className="w-6 flex items-center justify-center text-sm">
-              {row}
-            </div>
-            {[...Array(seatsPerRow)].map((_, index) => {
-              const seatName = `${row}${index + 1}`;
-              const seat = screen?.seats.find(
-                (s) => s.row === row && s.column === index + 1
-              );
-              const rating = getSeatRating(seat!.id);
+        {isLoading ? (
+          <Loading />
+        ) : (
+          rows.map((row) => (
+            <div key={row} className="flex justify-center gap-1">
+              <div className="w-6 flex items-center justify-center text-sm">
+                {row}
+              </div>
+              {[...Array(seatsPerRow)].map((_, index) => {
+                const seatName = `${row}${index + 1}`;
+                const seat = screen?.seats.find(
+                  (s) => s.row === row && s.column === index + 1
+                );
+                const rating = getSeatRating(seat!.id);
 
-              return (
-                <button
-                  key={seatName}
-                  className={`
+                return (
+                  <button
+                    key={seatName}
+                    className={`
                 w-8 h-8 rounded-t-lg text-xs font-medium transition-all
                 ${getSeatColor(rating)}
                 ${selectedSeat === seatName ? "ring-2 ring-white" : "hover:ring-2 hover:ring-white/50"}
               `}
-                  onClick={() => seat && onSeatSelect(seatName, seat.id)}
-                >
-                  {index + 1}
-                </button>
-              );
-            })}
-          </div>
-        ))}
+                    onClick={() => seat && onSeatSelect(seatName, seat.id)}
+                  >
+                    {index + 1}
+                  </button>
+                );
+              })}
+            </div>
+          ))
+        )}
       </div>
 
       <div className="flex justify-center gap-4 text-sm">
