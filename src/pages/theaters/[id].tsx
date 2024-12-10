@@ -76,40 +76,40 @@ export default function TheaterPage(theater: Theater) {
 
           <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
             <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-              <ThumbsUp className="w-5 h-5 text-green-400" />
-              最新レビュー
+              <Star className="w-5 h-5 text-yellow-400" />
+              座席レビューを投稿
             </h2>
-            <ReviewList seatId={selectedSeatId} />
+            {!session ? (
+              <div className="text-center text-white py-8">
+                レビューを投稿するには
+                <a
+                  href={`/auth/login?callbackUrl=${encodeURIComponent(window.location.href)}`}
+                  className="text-blue-400 hover:underline"
+                >
+                  ログイン
+                </a>
+                してください。
+              </div>
+            ) : !selectedSeat ? (
+              <div className="text-center text-white py-8">
+                座席を選択して下さい。
+              </div>
+            ) : (
+              <ReviewForm
+                selectedSeat={selectedSeat}
+                selectedSeatId={selectedSeatId!}
+                onSubmit={handleReviewSubmit}
+              />
+            )}
           </div>
         </div>
 
-        <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
+        <div className="bg-black/30 h-[700px] p-6 rounded-xl backdrop-blur-sm">
           <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-            <Star className="w-5 h-5 text-yellow-400" />
-            座席レビューを投稿
+            <ThumbsUp className="w-5 h-5 text-green-400" />
+            最新レビュー
           </h2>
-          {!session ? (
-            <div className="text-center text-white py-8">
-              レビューを投稿するには
-              <a
-                href={`/auth/login?callbackUrl=${encodeURIComponent(window.location.href)}`}
-                className="text-blue-400 hover:underline"
-              >
-                ログイン
-              </a>
-              してください。
-            </div>
-          ) : !selectedSeat ? (
-            <div className="text-center text-white py-8">
-              座席を選択して下さい。
-            </div>
-          ) : (
-            <ReviewForm
-              selectedSeat={selectedSeat}
-              selectedSeatId={selectedSeatId!}
-              onSubmit={handleReviewSubmit}
-            />
-          )}
+          <ReviewList seatId={selectedSeatId} />
         </div>
       </div>
     </main>
@@ -157,7 +157,7 @@ const ReviewList = ({ seatId }: ReviewListProps) => {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-4 max-h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
       {reviews.map((review) => (
         <div
           key={review.id}
