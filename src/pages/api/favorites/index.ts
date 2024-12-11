@@ -8,10 +8,6 @@ export default async function handler(
     res: NextApiResponse
 ) {
 
-    // if (req.method !== 'POST' && req.method !== 'GET') {
-    //     return res.status(405).json({ message: 'Method not allowed' });
-    // }
-
     switch (req.method) {
         case 'POST':
             return handlePost(req, res);
@@ -72,34 +68,41 @@ async function handlePost(req: NextApiRequest, res: NextApiResponse) {
 }
 
 async function handleGet(req: NextApiRequest, res: NextApiResponse) {
-    const session = await getServerSession(req, res, authOptions);
-    if (!session || !session.user?.email) {
-        return res.status(401).json({ message: 'Unauthorized' });
-    }
 
     try {
-        const { theaterId } = req.query;
+        const { userId } = req.query;
 
-        if (!theaterId) {
-            return res.status(400).json({ message: 'Theater ID is required' });
+        if (!userId) {
+            return res.status(400).json({ message: 'UserId ID is required' });
         }
 
         const user = await prisma.user.findUnique({
-            where: { email: session.user.email },
+            where: { aliasId: userId as string },
         });
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        const favorite = await prisma.favorite.findFirst({
+        const favorites = await prisma.favorite.findMany({
             where: {
                 user_id: user.id,
-                theater_id: parseInt(theaterId as string),
             },
+            include: {
+                theater: true
+            }
         });
 
-        return res.status(200).json({ isFavorite: !!favorite });
+        return res.status(200).json(
+            favorites.map((favorite) => ({
+                id: favorite.id,
+                theater: {
+                    id: favorite.theater.id,
+                    name: favorite.theater.name,
+                    address: favorite.theater.address,
+                }
+            }))
+        );
     } catch (error) {
         console.error('Favorite check failed:', error);
         return res.status(500).json({ message: 'Internal server error' });

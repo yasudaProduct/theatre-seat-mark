@@ -33,6 +33,15 @@ interface Review {
   screenName: string;
 }
 
+interface Favorite {
+  id: number;
+  theater: {
+    id: number;
+    name: string;
+    address: string;
+  };
+}
+
 export const getServerSideProps: GetServerSideProps<UserProfileProps> = async (
   context
 ) => {
@@ -75,10 +84,12 @@ export const getServerSideProps: GetServerSideProps<UserProfileProps> = async (
 export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
   const [myReviews, setMyReviews] = useState<Review[]>([]);
   const [bookmarkedReviews, setBookmarkedReviews] = useState<Review[]>([]);
+  const [favoriteTheaters, setFavoriteTheaters] = useState<Favorite[]>([]);
 
   useEffect(() => {
     fetchMyReviews();
     fetchBookmarkedReviews();
+    fetchFavoriteTheaters();
   }, []);
 
   if (!user) {
@@ -123,6 +134,18 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
     }
   };
 
+  const fetchFavoriteTheaters = async () => {
+    try {
+      const response = await fetch("/api/favorites?userId=" + user.aliasId);
+      if (response.ok) {
+        const data: Favorite[] = await response.json();
+        setFavoriteTheaters(data);
+      }
+    } catch {
+      toast.error("お気に入りの映画の取得に失敗しました");
+    }
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <div className="w-full bg-white mb-2 px-4 py-8">
@@ -160,9 +183,10 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
         </div>
       </div>
       <Tabs defaultValue="my-reviews">
-        <TabsList className="grid w-full grid-cols-2">
-          <TabsTrigger value="my-reviews">投稿</TabsTrigger>
+        <TabsList className="grid w-full grid-cols-3">
+          <TabsTrigger value="my-reviews">レビュー</TabsTrigger>
           <TabsTrigger value="bookmarked">ブックマーク</TabsTrigger>
+          <TabsTrigger value="favorites">お気に入り</TabsTrigger>
         </TabsList>
         <TabsContent value="my-reviews">
           <Card>
@@ -191,6 +215,42 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
               ) : (
                 <p className="text-center text-gray-500">
                   ブックマークしたレビューはありません。
+                </p>
+              )}
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="favorites">
+          <Card>
+            <CardHeader>
+              <CardTitle></CardTitle>
+            </CardHeader>
+            <CardContent>
+              {favoriteTheaters.length > 0 ? (
+                <div className="space-y-4">
+                  {favoriteTheaters.map((favorite) => (
+                    <div
+                      key={favorite.theater.id}
+                      className="flex items-center justify-between p-4 border rounded-lg"
+                    >
+                      <div>
+                        <h3 className="font-medium">{favorite.theater.name}</h3>
+                        <p className="text-sm text-muted-foreground">
+                          {favorite.theater.address}
+                        </p>
+                      </div>
+                      <Link
+                        href={`/theaters/${favorite.theater.id}`}
+                        className="text-sm text-blue-500 hover:underline"
+                      >
+                        詳細を見る
+                      </Link>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-center text-gray-500">
+                  お気に入りの映画館はありません。
                 </p>
               )}
             </CardContent>
