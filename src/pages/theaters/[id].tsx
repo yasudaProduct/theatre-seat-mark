@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Star, ThumbsUp } from "lucide-react";
+import { Heart, Star, ThumbsUp } from "lucide-react";
 import { GetServerSideProps } from "next";
 import prisma from "@/lib/prisma";
 import TheaterLayout, {
@@ -45,6 +45,25 @@ export default function TheaterPage(theater: Theater) {
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
   const [selectedSeatId, setSelectedSeatId] = useState<number | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [isFavorite, setIsFavorite] = useState(false);
+
+  useEffect(() => {
+    const checkFavoriteStatus = async () => {
+      if (!session) return;
+
+      try {
+        const response = await fetch(`/api/favorites?theaterId=${theater.id}`);
+        if (response.ok) {
+          const data = await response.json();
+          setIsFavorite(data.isFavorite);
+        }
+      } catch (error) {
+        console.error("Error checking favorite status:", error);
+      }
+    };
+
+    checkFavoriteStatus();
+  }, [session, theater.id]);
 
   const handleSeatSelect = (seatName: string, seatId: number) => {
     setSelectedSeat(seatName);
@@ -57,9 +76,50 @@ export default function TheaterPage(theater: Theater) {
     setRefreshKey((prevKey) => prevKey + 1);
   };
 
+  const handleFavoriteClick = async () => {
+    if (!session) {
+      window.location.href = `/auth/login?callbackUrl=${encodeURIComponent(
+        window.location.href
+      )}`;
+      return;
+    }
+
+    try {
+      const response = await fetch("/api/favorites", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          theaterId: theater.id,
+          action: isFavorite ? "remove" : "add",
+        }),
+      });
+
+      if (response.ok) {
+        setIsFavorite(!isFavorite);
+      }
+    } catch (error) {
+      console.error("Error toggling favorite:", error);
+    }
+  };
+
   return (
     <main className="max-w-7xl mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-4">{theater.name}</h1>
+      <div className="flex items-center gap-4 mb-4">
+        <h1 className="text-2xl font-bold">{theater.name}</h1>
+        <button
+          onClick={handleFavoriteClick}
+          className="flex items-center gap-2 px-4 py-2 rounded-full bg-white hover:bg-white/20 transition-colors"
+        >
+          <Heart
+            className={`w-5 h-5 ${
+              isFavorite ? "fill-red-500 text-red-500" : "text-white"
+            }`}
+          />
+          <span>{isFavorite ? "お気に入り解除" : "お気に入り登録"}</span>
+        </button>
+      </div>
       <div className="grid lg:grid-cols-2 gap-8">
         <div className="space-y-6">
           <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
