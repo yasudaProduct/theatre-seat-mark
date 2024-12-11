@@ -52,7 +52,9 @@ export default function TheaterPage(theater: Theater) {
       if (!session) return;
 
       try {
-        const response = await fetch(`/api/favorites?theaterId=${theater.id}`);
+        const response = await fetch(
+          `/api/favorites/cheak?theaterId=${theater.id}`
+        );
         if (response.ok) {
           const data = await response.json();
           setIsFavorite(data.isFavorite);
