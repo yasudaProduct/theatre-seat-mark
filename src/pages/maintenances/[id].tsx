@@ -80,6 +80,15 @@ export const ScreenMaintenance = () => {
     }
   };
 
+  const handleCancel = () => {
+    setEditingId(null);
+    setEditForm({
+      id: 0,
+      name: "",
+      theater_id: 0,
+    });
+  };
+
   const handleDelete = async (id: number) => {
     if (!confirm("本当に削除しますか？")) return;
 
@@ -223,7 +232,10 @@ export const ScreenMaintenance = () => {
                 </TableCell>
                 <TableCell>
                   {editingId === screen.id ? (
-                    <Button onClick={handleSave}>保存</Button>
+                    <div className="flex gap-2">
+                      <Button onClick={handleSave}>保存</Button>
+                      <Button onClick={handleCancel}>キャンセル</Button>
+                    </div>
                   ) : (
                     <div className="flex gap-2">
                       <Button onClick={() => handleEdit(screen)}>編集</Button>
