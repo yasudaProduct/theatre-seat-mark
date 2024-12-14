@@ -37,7 +37,38 @@ export default async function handler(
         console.log(screens);
         res.status(200).json(screens);
       } catch (error) {
-        logger.error("スクリーン取得エラー:", error);
+        logger.error("スクリーン取得エラー:" + error);
+        res.status(500).json({
+          code: ApiResponseCode.INTERNAL_SERVER_ERROR,
+          message: "エラーが発生しました",
+        } as ApiErrorResponse);
+      }
+      break;
+    }
+    case "DELETE": {
+      try {
+        // 関連する座席レビューを削除
+        await prisma.seatReview.deleteMany({
+          where: {
+            seat: {
+              screen_id: screenId,
+            },
+          },
+        });
+
+        // 関連する座席を削除
+        await prisma.seats.deleteMany({
+          where: {
+            screen_id: screenId,
+          },
+        });
+
+        await prisma.screen.delete({
+          where: { id: screenId },
+        });
+        res.status(204).json({ message: "スクリーン削除成功" });
+      } catch (error) {
+        logger.error("スクリーン削除エラー:" + error);
         res.status(500).json({
           code: ApiResponseCode.INTERNAL_SERVER_ERROR,
           message: "エラーが発生しました",
@@ -46,7 +77,7 @@ export default async function handler(
       break;
     }
     default:
-      res.setHeader("Allow", ["GET"]);
+      res.setHeader("Allow", ["GET", "DELETE"]);
       res.status(405).json({
         code: ApiResponseCode.METHOD_NOT_ALLOWED,
         message: `Method ${req.method} Not Allowed`,
