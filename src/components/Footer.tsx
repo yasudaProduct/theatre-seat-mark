@@ -20,8 +20,10 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="#"
+                  href="/docs"
                   className="hover:text-gray-900 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
                   お知らせ
                 </Link>
@@ -36,54 +38,13 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  href="#"
+                  href="/docs"
                   className="hover:text-gray-900 transition-colors"
                 >
                   利用規約
                 </Link>
               </li>
             </ul>
-          </div>
-          <div>
-            {/* <h3 className="text-lg font-semibold mb-4">フォローする</h3>
-            <div className="flex space-x-4">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-gray-900 transition-colors"
-              >
-                <Facebook size={24} />
-                <span className="sr-only">Facebook</span>
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-gray-900 transition-colors"
-              >
-                <Twitter size={24} />
-                <span className="sr-only">Twitter</span>
-              </a>
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-gray-900 transition-colors"
-              >
-                <Instagram size={24} />
-                <span className="sr-only">Instagram</span>
-              </a>
-              <a
-                href="https://youtube.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="hover:text-gray-900 transition-colors"
-              >
-                <Youtube size={24} />
-                <span className="sr-only">YouTube</span>
-              </a>
-            </div> */}
           </div>
         </div>
       </div>

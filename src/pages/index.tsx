@@ -42,7 +42,7 @@ export default function Home() {
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6">人気のレビュー</h1>
+      <h1 className="">人気のレビュー</h1>
       <ScrollArea className="w-full whitespace-nowrap rounded-md border">
         <div className="flex w-max space-x-4 p-4">
           {isLoading ? (
