@@ -41,81 +41,69 @@ export default function Home() {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">人気のレビュー</h1>
-        <div className="flex space-x-4 overflow-x-auto pb-4">
-          {[...Array(5)].map((_, index) => (
-            <Card key={index} className="w-80 flex-shrink-0">
-              <CardContent className="p-4">
-                <Skeleton className="h-4 w-3/4 mb-2" />
-                <Skeleton className="h-4 w-1/2 mb-2" />
-                <Skeleton className="h-4 w-full" />
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-6">人気のレビュー</h1>
       <ScrollArea className="w-full whitespace-nowrap rounded-md border">
         <div className="flex w-max space-x-4 p-4">
-          {reviews.map((review) => (
-            <Card key={review.id} className="w-80 flex-shrink-0">
-              <CardContent className="p-4">
-                <div className="flex flex-col justify-between h-full">
-                  <div>
-                    <h2 className="font-semibold truncate">
-                      {review.theaterName} - {review.screenName}
-                    </h2>
-                    <p className="text-sm text-gray-500 truncate">
-                      座席: {review.seatNumber}
-                    </p>
-                    <p className="text-sm text-gray-500 truncate">
-                      投稿者: {review.user.name}
-                    </p>
-                    <div className="flex items-center mt-2">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`h-4 w-4 ${
-                            i < review.rating
-                              ? "text-yellow-400 fill-current"
-                              : "text-gray-300"
-                          }`}
-                        />
-                      ))}
+          {isLoading ? (
+            <>
+              {[...Array(5)].map((_, index) => (
+                <Card key={index} className="w-80 flex-shrink-0">
+                  <CardContent className="p-4">
+                    <Skeleton className="h-4 w-3/4 mb-2" />
+                    <Skeleton className="h-4 w-1/2 mb-2" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                    <Skeleton className="h-4 w-full" />
+                  </CardContent>
+                </Card>
+              ))}
+            </>
+          ) : (
+            reviews.map((review) => (
+              <Card key={review.id} className="w-80 flex-shrink-0">
+                <CardContent className="p-4">
+                  <div className="flex flex-col justify-between h-full">
+                    <div>
+                      <h2 className="font-semibold truncate">
+                        {review.theaterName}
+                      </h2>
+                      <h2 className="font-semibold truncate">
+                        {review.screenName}
+                      </h2>
+                      <p className="text-sm text-gray-500 truncate">
+                        座席: {review.seatNumber}
+                      </p>
+                      <p className="text-sm text-gray-500 truncate">
+                        投稿者: {review.user.name}
+                      </p>
+                      <div className="flex items-center mt-2">
+                        {[...Array(5)].map((_, i) => (
+                          <Star
+                            key={i}
+                            className={`h-4 w-4 ${
+                              i < review.rating
+                                ? "text-yellow-400 fill-current"
+                                : "text-gray-300"
+                            }`}
+                          />
+                        ))}
+                      </div>
+                      <p className="mt-2 text-sm line-clamp-3">
+                        {review.review}
+                      </p>
                     </div>
-                    <p className="mt-2 text-sm line-clamp-3">{review.review}</p>
+                    <div className="flex items-center justify-between mt-4"></div>
                   </div>
-                  <div className="flex items-center justify-between mt-4">
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      // onClick={() => handleBookmark(review.id)}
-                      // aria-label={review.isBookmarked ? "ブックマークを解除" : "ブックマークに追加"}
-                    >
-                      <Bookmark
-                        className={
-                          review.isBookmarked
-                            ? "text-blue-500 fill-current"
-                            : "text-gray-500"
-                        }
-                      />
-                    </Button>
-                    <span className="text-sm text-gray-500">
-                      {review.bookmarkCount} ブックマーク
-                    </span>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+                </CardContent>
+              </Card>
+            ))
+          )}
         </div>
         <ScrollBar orientation="horizontal" />
       </ScrollArea>
