@@ -4,7 +4,6 @@
 
 ## 環境構築
 
-
 > [!WARNING]
 > 作成中
 
@@ -24,6 +23,10 @@ GOOGLE_CLIENT_SECRET=
 
 GITHUB_ID=
 GITHUB_SECRET=
+
+# Notion
+NOTION_API_KEY=
+NOTION_DATABASE_ID=
 ```
 
 ## prisma

@@ -20,7 +20,7 @@ const Footer = () => {
             <ul className="space-y-2">
               <li>
                 <Link
-                  href="/docs"
+                  href="/news"
                   className="hover:text-gray-900 transition-colors"
                   target="_blank"
                   rel="noopener noreferrer"
