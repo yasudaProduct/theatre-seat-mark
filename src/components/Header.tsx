@@ -15,7 +15,8 @@ const Header = () => {
               <Link legacyBehavior href="/">
                 <a className="text-2xl text-gray-900 no-underline hover:text-gray-900 hover:no-underline flex items-center">
                   <Film className="w-6 h-6 mr-2 text-gray-200" />
-                  <span className=" text-gray-200">シネポジ</span>
+                  <span className="text-gray-200">シネポジ</span>
+                  <span className="text-gray-200 text-sm">ver.beta</span>
                 </a>
               </Link>
             </div>
