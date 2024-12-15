@@ -1,14 +1,14 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🎬シネポジ cineposi
 
-## Getting Started
+映画館の座席レビューを共有できるサービスです。
 
-First, run the development server:
+## 環境構築
 
-```bash
-npm run dev
-```
 
-## secret env
+> [!WARNING]
+> 作成中
+
+### secret env
 
 ```
 # Postgres
