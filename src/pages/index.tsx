@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Bookmark, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Star } from "lucide-react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 interface Review {
@@ -27,7 +26,7 @@ export default function Home() {
 
   const fetchReviews = async () => {
     try {
-      const response = await fetch("/api/reviews/popular");
+      const response = await fetch("/api/reviews/popular?limit=5");
       if (response.ok) {
         const data = await response.json();
         setReviews(data);

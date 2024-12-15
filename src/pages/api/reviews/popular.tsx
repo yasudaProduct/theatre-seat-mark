@@ -25,6 +25,8 @@ export default async function handler(
   const session = await getSession({ req });
   const userId = session?.user?.id ? parseInt(session.user.id, 10) : null;
 
+  const limit = req.query.limit ? parseInt(req.query.limit as string, 10) : 20;
+
   try {
     const reviews = await prisma.seatReview.findMany({
       include: {
@@ -47,7 +49,7 @@ export default async function handler(
           _count: "desc",
         },
       },
-      take: 20, // Limit to top 20 reviews
+      take: limit,
     });
 
     const formattedReviews: PopularReview[] = reviews.map((review) => ({
