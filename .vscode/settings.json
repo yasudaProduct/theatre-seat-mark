@@ -37,13 +37,13 @@
       "description": "テストを追加、更新、または合格します。"
     },
     {
-      "emoji": "⚰️",
-      "code": ":coffin:",
-      "description": "デッドコードを削除します。"
-    },
-    {
       "emoji": "🔥",
       "code": ":fire:",
+      "description": "コードまたはファイルを削除します。"
+    },
+    {
+      "emoji": "⚰️",
+      "code": ":coffin:",
       "description": "デッドコードを削除します。"
     },
     {
