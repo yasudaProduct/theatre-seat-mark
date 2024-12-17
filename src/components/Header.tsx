@@ -27,16 +27,6 @@ const Header = () => {
                     <a>映画館検索</a>
                   </Link>
                 </li>
-                <li className="py-1 px-4 text-white no-underline">
-                  <Link legacyBehavior href="/reviews/search-reviews">
-                    <a>レビュー検索</a>
-                  </Link>
-                </li>
-                <li className="py-1 px-4 text-white no-underline">
-                  <Link legacyBehavior href="/reviews/register-review">
-                    <a>レビュー登録</a>
-                  </Link>
-                </li>
                 {status !== "loading" && session && (
                   <li className="py-1 px-4 text-white no-underline">
                     <DropdownMenu
