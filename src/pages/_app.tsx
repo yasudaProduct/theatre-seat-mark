@@ -11,7 +11,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <AuthWrapper>
-        <div className="min-h-screen bg-gray-100 flex flex-col">
+        <div className="min-h-screen bg-[#F6EBFF]] flex flex-col">
           <Header />
           <Toaster richColors />
           <main className="flex-grow">

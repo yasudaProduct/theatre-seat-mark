@@ -103,7 +103,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
       <button
         type="submit"
         disabled={rating === 0}
-        className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed py-2 px-4 rounded-lg font-medium transition-colors"
+        className="w-full bg-[#68BAA5] hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed py-2 px-4 rounded-lg font-medium transition-colors"
       >
         {isSubmitting ? "投稿中..." : "レビューを投稿"}
       </button>

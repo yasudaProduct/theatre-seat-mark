@@ -124,7 +124,7 @@ export default function TheaterPage(theater: Theater) {
       </div>
       <div className="grid lg:grid-cols-2 gap-8">
         <div className="space-y-6">
-          <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
+          <div className="bg-[#A496CB] p-6 rounded-xl backdrop-blur-sm">
             <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
               スクリーン座席マップ
             </h2>
@@ -136,7 +136,7 @@ export default function TheaterPage(theater: Theater) {
             />
           </div>
 
-          <div className="bg-black/30 p-6 rounded-xl backdrop-blur-sm">
+          <div className="bg-[#A496CB] p-6 rounded-xl backdrop-blur-sm">
             <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
               <Star className="w-5 h-5 text-yellow-400" />
               座席レビューを投稿
@@ -166,7 +166,7 @@ export default function TheaterPage(theater: Theater) {
           </div>
         </div>
 
-        <div className="bg-black/30 h-[700px] p-6 rounded-xl backdrop-blur-sm">
+        <div className="bg-[#A496CB] h-[700px] p-6 rounded-xl backdrop-blur-sm">
           <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
             <ThumbsUp className="w-5 h-5 text-green-400" />
             最新レビュー
@@ -212,7 +212,7 @@ const ReviewList = ({ seatId }: ReviewListProps) => {
 
   if (reviews.length === 0) {
     return (
-      <div className="text-center text-gray-400 py-8">
+      <div className="text-center text-white py-8">
         まだレビューがありません。最初のレビューを投稿してください！
       </div>
     );
@@ -223,7 +223,7 @@ const ReviewList = ({ seatId }: ReviewListProps) => {
       {reviews.map((review) => (
         <div
           key={review.id}
-          className="bg-white/5 p-4 rounded-lg hover:bg-white/10 transition-colors"
+          className="bg-[#F6EBFF] p-4 rounded-lg hover:bg-[#F6EBFF]/90 transition-colors"
         >
           <div className="flex justify-between items-start mb-2">
             <div>
