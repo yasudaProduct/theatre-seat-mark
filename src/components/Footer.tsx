@@ -8,7 +8,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="md:col-span-2">
-            <h2 className="text-lg font-semibold mb-4">Cinepoti</h2>
+            <h2 className="text-lg font-semibold mb-4">cineposi</h2>
             <p className="mb-4">
               {/* 最新の映画情報と快適な映画館体験をお届けします。 */}
             </p>

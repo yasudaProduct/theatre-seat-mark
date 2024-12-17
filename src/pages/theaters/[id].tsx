@@ -107,7 +107,7 @@ export default function TheaterPage(theater: Theater) {
   };
 
   return (
-    <main className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="flex items-center gap-4 mb-4">
         <h1 className="text-2xl font-bold">{theater.name}</h1>
         <button
@@ -174,7 +174,7 @@ export default function TheaterPage(theater: Theater) {
           <ReviewList seatId={selectedSeatId} />
         </div>
       </div>
-    </main>
+    </div>
   );
 }
 interface ReviewListProps {
