@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Bookmark, Star } from "lucide-react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 interface Review {
   id: number;
@@ -12,13 +12,19 @@ interface Review {
   rating: number;
   review: string;
   bookmarkCount: number;
-  theaterName: string;
-  screenName: string;
+  theater: {
+    id: number;
+    name: string;
+  };
+  screen: {
+    id: number;
+    name: string;
+  };
   isBookmarked: boolean;
 }
 
 export default function Home() {
-  // const router = useRouter();
+  const router = useRouter();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -70,7 +76,11 @@ export default function Home() {
               <Card
                 key={review.id}
                 className="w-80 flex-shrink-0 cursor-pointer hover:bg-gray-50 transition-colors"
-                // onClick={() => router.push(`/theaters/${review.theaterId}`)}
+                onClick={() =>
+                  router.push(
+                    `/theaters/${review.theater.id}?screen=${review.screen.id}`
+                  )
+                }
               >
                 <CardContent className="p-4">
                   <div className="flex flex-col justify-between h-full">
@@ -88,10 +98,10 @@ export default function Home() {
                         ))}
                       </div>
                       <h2 className="font-semibold truncate">
-                        {review.theaterName}
+                        {review.theater.name}
                       </h2>
                       <h2 className="font-semibold truncate">
-                        {review.screenName} {review.seatNumber}
+                        {review.screen.name} {review.seatNumber}
                       </h2>
                       <p className="mt-2 text-sm line-clamp-3 h-24">
                         {review.review}

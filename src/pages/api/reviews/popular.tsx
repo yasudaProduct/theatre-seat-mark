@@ -8,9 +8,15 @@ interface PopularReview {
   seatNumber: string;
   rating: number;
   review: string;
+  theater: {
+    id: number;
+    name: string;
+  };
+  screen: {
+    id: number;
+    name: string;
+  };
   bookmarkCount: number;
-  theaterName: string;
-  screenName: string;
   isBookmarked: boolean;
 }
 
@@ -58,9 +64,15 @@ export default async function handler(
       seatNumber: review.seat_name ?? "",
       rating: review.rating,
       review: review.review,
+      theater: {
+        id: review.seat.screen.theaters.id,
+        name: review.seat.screen.theaters.name,
+      },
+      screen: {
+        id: review.seat.screen.id,
+        name: review.seat.screen.name,
+      },
       bookmarkCount: review.bookmarks.length,
-      theaterName: review.seat.screen.theaters.name,
-      screenName: review.seat.screen.name,
       isBookmarked: userId
         ? review.bookmarks.some((b) => b.user_id === userId)
         : false,
