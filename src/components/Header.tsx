@@ -31,7 +31,7 @@ const Header = () => {
                   </Link>
                 </li>
                 {status !== "loading" && session && (
-                  <li className="py-1 px-4 text-white no-underline">
+                  <li className="py-1 px-4 text-white no-underline z-50">
                     <DropdownMenu
                       userImage={session.user?.image || ""}
                       aliasId={session.user?.aliasId || ""}
