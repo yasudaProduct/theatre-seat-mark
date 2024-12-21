@@ -5,6 +5,12 @@ import type { NextApiRequest, NextApiResponse } from "next";
 
 const logger = getLogger("seats-generate");
 
+type SeatData = {
+    row: string;
+    column: number;
+    screen_id: number;
+};
+
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
@@ -27,64 +33,63 @@ export default async function handler(
     }
 
     try {
-        // アルファベットの配列を生成 (A-Z)
-        const rowLetters = Array.from({ length: rows }, (_, i) =>
-            String.fromCharCode(65 + i)
-        );
-        // 既存の座席を確認
-        const existingSeats = await prisma.seats.findMany({
-            where: {
-                screen_id: screenId,
-            },
-            select: {
-                row: true,
-                column: true,
-            },
+
+        // 1. 現在の座席データを取得
+        const currentSeats = await prisma.seats.findMany({
+            where: { screen_id: screenId },
+            include: { seat_reviews: true },
         });
 
-        // 既存の座席の位置を文字列のセットとして保持
-        const existingSeatPositions = new Set(
-            existingSeats.map(seat => `${seat.row}-${seat.column}`)
-        );
-
-        // 重複しない座席データのみをフィルタリング
-        const filteredSeatData = rowLetters.flatMap(row =>
-            Array.from({ length: columns }, (_, i) => {
-                const position = `${row}-${i + 1}`;
-                // 既存の座席位置と重複する場合はスキップ
-                if (existingSeatPositions.has(position)) {
-                    return null;
-                }
-                return {
-                    screen_id: screenId,
-                    row: row,
-                    column: i + 1,
-                };
-            }).filter(Boolean)
-        );
-
-        // 新規に追加する座席がない場合は早期リターン
-        if (filteredSeatData.length === 0) {
-            return res.status(200).json({ message: "新規に追加する座席はありません" });
+        // 2. 新しい座席の配列を生成
+        const newSeatsData: SeatData[] = [];
+        for (let r = 0; r < rows; r++) {
+            const rowChar = String.fromCharCode(65 + r); // (A-Z)
+            for (let c = 1; c <= columns; c++) {
+                newSeatsData.push({
+                    row: rowChar,
+                    column: c,
+                    screen_id: screenId
+                });
+            }
         }
 
-        // 座席データを生成
-        const seatData = rowLetters.flatMap(row =>
-            Array.from({ length: columns }, (_, i) => ({
-                screen_id: screenId,
-                row: row,
-                column: i + 1,
-            }))
-        );
+        // 3. 削除される座席のIDを特定
+        //  行番号が新しい行数を超える座席
+        //  列番号が新しい列数を超える座席
+        const seatsToDelete = currentSeats.filter(seat => {
+            const rowIndex = seat.row.charCodeAt(0) - 65
+            return rowIndex >= rows || seat.column > columns
+        })
 
-        // 一括で座席を作成
-        const createdSeats = await prisma.seats.createMany({
-            data: seatData,
-        });
+        await prisma.$transaction(async (tx) => {
+            // 4.1 削除対象の座席に関連するレビューを削除
+            if (seatsToDelete.length > 0) {
+                const seatIds = seatsToDelete.map(seat => seat.id)
+                await tx.seatReview.deleteMany({
+                    where: { seat_id: { in: seatIds } }
+                })
 
-        res.status(201).json(createdSeats);
+                // 4.2 座席を削除
+                await tx.seats.deleteMany({
+                    where: { id: { in: seatIds } }
+                })
+            }
+
+            // 4.3 新しい座席を追加
+            for (const seatData of newSeatsData) {
+                // 既存の座席でない場合のみ追加
+                const exists = currentSeats.some(
+                    seat => seat.row === seatData.row && seat.column === seatData.column
+                )
+                if (!exists) {
+                    await tx.seats.create({ data: seatData })
+                }
+            }
+        })
+
+        res.status(201).json({ message: "座席生成が完了しました" });
     } catch (error) {
-        logger.error("座席生成エラー:", error);
+        logger.error("座席生成エラー:" + error);
         res.status(500).json({
             code: ApiResponseCode.INTERNAL_SERVER_ERROR,
             message: "エラーが発生しました",
