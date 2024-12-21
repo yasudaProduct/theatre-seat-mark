@@ -3,6 +3,7 @@ import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { House, LogOut, Wrench } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
+import { useRouter } from "next/navigation";
 
 const Header = () => {
   const { data: session, status } = useSession();
@@ -68,6 +69,8 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   aliasId,
   userName,
 }) => {
+  const router = useRouter();
+  const { data: session } = useSession();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -142,6 +145,20 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
                 設定
               </a>
             </Link>
+            {session?.user?.role === "admin" && (
+              <Link legacyBehavior href={"/maintenances"}>
+                <a
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 flex items-center"
+                  role="menuitem"
+                  onClick={() => {
+                    router.push("/maintenances");
+                  }}
+                >
+                  <Wrench className="w-6 h-6 mr-2" />
+                  メンテナンス
+                </a>
+              </Link>
+            )}
             <button
               onClick={() => {
                 signOut();
