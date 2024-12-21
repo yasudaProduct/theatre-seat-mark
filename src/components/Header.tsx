@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { Film, House, LogOut, Wrench } from "lucide-react";
+import { House, LogOut, Wrench } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 
 const Header = () => {
@@ -14,8 +14,11 @@ const Header = () => {
             <div className="flex w-full justify-center font-extrabold text-white lg:w-1/2 lg:justify-start">
               <Link legacyBehavior href="/">
                 <a className="text-2xl text-gray-900 no-underline hover:text-gray-900 hover:no-underline flex items-center">
-                  <Film className="w-6 h-6 mr-2 text-gray-200" />
-                  <span className="text-gray-200">シネポジ</span>
+                  <img
+                    src="/images/icon-sineposi.svg"
+                    alt="シネポジ"
+                    className="h-8 mr-2"
+                  />
                   <span className="text-gray-200 text-sm">ver.beta</span>
                 </a>
               </Link>
