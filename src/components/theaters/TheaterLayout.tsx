@@ -20,6 +20,7 @@ export interface Review {
   seatName: string;
   rating: number;
   comment: string;
+  isBookmarked: boolean;
 }
 
 interface Seat {

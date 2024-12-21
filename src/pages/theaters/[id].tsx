@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Heart, Star, ThumbsUp } from "lucide-react";
+import { Bookmark, Heart, Star, ThumbsUp } from "lucide-react";
 import { GetServerSideProps } from "next";
 import prisma from "@/lib/prisma";
 import TheaterLayout, {
@@ -8,6 +8,7 @@ import TheaterLayout, {
 } from "@/components/theaters/TheaterLayout";
 import { ReviewForm } from "@/components/theaters/ReviewForm";
 import { useSession } from "next-auth/react";
+import { toast } from "sonner";
 
 export const getServerSideProps: GetServerSideProps<Theater> = async (
   context
@@ -193,7 +194,6 @@ const ReviewList = ({ seatId }: ReviewListProps) => {
 
   useEffect(() => {
     if (!seatId) return;
-    // レビューを取得
     fetchReviews(seatId);
   }, [seatId]);
 
@@ -201,6 +201,37 @@ const ReviewList = ({ seatId }: ReviewListProps) => {
     const response = await fetch(`/api/reviews?seatId=${seatId}`);
     const data = await response.json();
     setReviews(data);
+  };
+
+  const handleBookmarkClick = async (
+    reviewId: number,
+    isBookmarked: boolean
+  ) => {
+    const method = isBookmarked ? "DELETE" : "POST";
+    const url = isBookmarked
+      ? `/api/bookmarks?reviewId=${reviewId}`
+      : "/api/bookmarks";
+    try {
+      const response = await fetch(url, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body:
+          method === "POST"
+            ? JSON.stringify({ reviewId: reviewId })
+            : undefined,
+      });
+
+      if (response.ok) {
+        toast.success(
+          isBookmarked ? "ブックマークを解除しました" : "ブックマークしました"
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("ブックマークの更新に失敗しました");
+    }
   };
 
   if (!seatId)
@@ -241,11 +272,19 @@ const ReviewList = ({ seatId }: ReviewListProps) => {
                 ))}
               </div>
             </div>
-            <div className="text-sm text-gray-400">
-              {/* {formatDate(review.date)} */}
-            </div>
+            <div className="text-sm">{/* {formatDate(review.date)} */}</div>
+            <button
+              onClick={() =>
+                handleBookmarkClick(review.id, review.isBookmarked)
+              }
+              className={`flex items-center gap-1 ${
+                review.isBookmarked ? "text-red-500" : "text-gray-400"
+              }`}
+            >
+              <Bookmark className="w-5 h-5" />
+            </button>
           </div>
-          <p className="text-gray-300">{review.comment}</p>
+          <p className="">{review.comment}</p>
         </div>
       ))}
     </div>
