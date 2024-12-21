@@ -9,6 +9,12 @@ interface ReviewListProps {
 
 export default function ReviewList({ seatId }: ReviewListProps) {
   const [reviews, setReviews] = useState<Review[]>([]);
+  const [isBookmarked, setIsBookmarked] = useState([
+    {
+      id: 0,
+      isBookmarked: false,
+    },
+  ]);
   //   const formatDate = (dateString: string) => {
   //     return new Date(dateString).toLocaleDateString("ja-JP", {
   //       year: "numeric",
@@ -26,12 +32,26 @@ export default function ReviewList({ seatId }: ReviewListProps) {
     const response = await fetch(`/api/reviews?seatId=${seatId}`);
     const data = await response.json();
     setReviews(data);
+    setIsBookmarked(
+      data.map((review: Review) => ({
+        id: review.id,
+        isBookmarked: review.isBookmarked,
+      }))
+    );
   };
 
   const handleBookmarkClick = async (
     reviewId: number,
     isBookmarked: boolean
   ) => {
+    setIsBookmarked((prev) =>
+      prev.map((bookmark) =>
+        bookmark.id === reviewId
+          ? { ...bookmark, isBookmarked: !bookmark.isBookmarked }
+          : bookmark
+      )
+    );
+
     const method = isBookmarked ? "DELETE" : "POST";
     const url = isBookmarked
       ? `/api/bookmarks?reviewId=${reviewId}`
@@ -102,13 +122,12 @@ export default function ReviewList({ seatId }: ReviewListProps) {
               onClick={() =>
                 handleBookmarkClick(review.id, review.isBookmarked)
               }
-              className={`flex items-center gap-1 ${
-                review.isBookmarked ? "text-red-500" : "text-gray-400"
-              }`}
+              className="flex items-center gap-1"
             >
               <Bookmark
                 className={`w-5 h-5 ${
-                  review.isBookmarked
+                  isBookmarked.find((bookmark) => bookmark.id === review.id)
+                    ?.isBookmarked
                     ? "text-blue-500 fill-current"
                     : "text-gray-500"
                 }`}
