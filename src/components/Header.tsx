@@ -9,7 +9,7 @@ const Header = () => {
   return (
     <>
       <div className="bg-[#524FFF]">
-        <div className="container mx-auto flex max-w-4xl items-center px-2 py-3">
+        <div className="container mx-auto flex items-center px-2 py-3">
           <div className="mx-auto flex w-full flex-wrap items-center">
             <div className="flex w-full justify-center font-extrabold text-white lg:w-1/2 lg:justify-start">
               <Link legacyBehavior href="/">

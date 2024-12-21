@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Star } from "lucide-react";
+import { Bookmark, Star } from "lucide-react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+// import { useRouter } from "next/navigation";
 
 interface Review {
   id: number;
@@ -17,6 +18,7 @@ interface Review {
 }
 
 export default function Home() {
+  // const router = useRouter();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -65,23 +67,15 @@ export default function Home() {
             </>
           ) : (
             reviews.map((review) => (
-              <Card key={review.id} className="w-80 flex-shrink-0">
+              <Card
+                key={review.id}
+                className="w-80 flex-shrink-0 cursor-pointer hover:bg-gray-50 transition-colors"
+                // onClick={() => router.push(`/theaters/${review.theaterId}`)}
+              >
                 <CardContent className="p-4">
                   <div className="flex flex-col justify-between h-full">
                     <div>
-                      <h2 className="font-semibold truncate">
-                        {review.theaterName}
-                      </h2>
-                      <h2 className="font-semibold truncate">
-                        {review.screenName}
-                      </h2>
-                      <p className="text-sm text-gray-500 truncate">
-                        座席: {review.seatNumber}
-                      </p>
-                      <p className="text-sm text-gray-500 truncate">
-                        投稿者: {review.user.name}
-                      </p>
-                      <div className="flex items-center mt-2">
+                      <div className="flex items-center mt-2 justify-end">
                         {[...Array(5)].map((_, i) => (
                           <Star
                             key={i}
@@ -93,13 +87,29 @@ export default function Home() {
                           />
                         ))}
                       </div>
-                      <p className="mt-2 text-sm line-clamp-3">
+                      <h2 className="font-semibold truncate">
+                        {review.theaterName}
+                      </h2>
+                      <h2 className="font-semibold truncate">
+                        {review.screenName} {review.seatNumber}
+                      </h2>
+                      <p className="mt-2 text-sm line-clamp-3 h-24">
                         {review.review}
                       </p>
                     </div>
-                    <div className="flex items-center justify-between mt-4"></div>
                   </div>
                 </CardContent>
+                <CardFooter className="flex justify-between items-center">
+                  <p className="text-sm text-gray-500 truncate">
+                    投稿名: {review.user.name}
+                  </p>
+                  <div className="flex items-center gap-1">
+                    <Bookmark className="text-blue-500 fill-current" />
+                    <span className="text-sm text-gray-500">
+                      {review.bookmarkCount}
+                    </span>
+                  </div>
+                </CardFooter>
               </Card>
             ))
           )}
