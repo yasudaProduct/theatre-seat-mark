@@ -14,7 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <div className="min-h-screen bg-[#F6EBFF]] flex flex-col">
           <Header />
           <Toaster richColors />
-          <main className="flex-grow">
+          <main className="flex-grow bg-gray-100">
             <Component {...pageProps} />
           </main>
           <Footer />

@@ -281,7 +281,13 @@ const ReviewList = ({ seatId }: ReviewListProps) => {
                 review.isBookmarked ? "text-red-500" : "text-gray-400"
               }`}
             >
-              <Bookmark className="w-5 h-5" />
+              <Bookmark
+                className={`w-5 h-5 ${
+                  review.isBookmarked
+                    ? "text-blue-500 fill-current"
+                    : "text-gray-500"
+                }`}
+              />
             </button>
           </div>
           <p className="">{review.comment}</p>
