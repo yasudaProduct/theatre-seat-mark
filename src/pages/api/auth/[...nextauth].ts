@@ -20,10 +20,14 @@ export const authOptions: AuthOptions = {
   ],
   callbacks: {
     async session({ session, user }) {
+      console.log("callbacks");
+      console.log("session:", session);
+      console.log("user:", user);
       if (session?.user) {
         session.user.id = user.id;
         session.user.aliasId = user.aliasId;
         session.user.image = user.image;
+        session.user.role = user.role;
       }
       return session;
     },
@@ -34,6 +38,7 @@ export const authOptions: AuthOptions = {
         where: { id: Number(message.user.id) },
         data: {
           aliasId: generateRandomString(7),
+          role: "general",
         }
       })
 

@@ -6,11 +6,13 @@ declare module 'next-auth' {
       id: string;
       aliasId: string;
       image: string | null | undefined;
+      role: "admin" | "general";
     };
   }
 
   interface User {
     id: string;
     aliasId: string;
+    role: "admin" | "general";
   }
 }

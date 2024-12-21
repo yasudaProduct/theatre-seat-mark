@@ -10,12 +10,20 @@ const authRoutes = [
   "/reviews/register-review",
 ];
 
+const adminRoutes = ["/maintenances"];
+
 const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const session = useSession();
   const pathname = usePathname();
 
   // 認証中は表示しない
   if (session.status === "loading") return null;
+
+  // admin権限チェック
+  console.log("session.data?.user?.role:", session.data?.user?.role);
+  if (adminRoutes.includes(pathname) && session.data?.user?.role !== "admin") {
+    return <div>404 - Not Found</div>; // または適切な404コンポーネントを表示
+  }
 
   return (
     <>
