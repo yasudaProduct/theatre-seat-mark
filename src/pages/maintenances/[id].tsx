@@ -17,6 +17,15 @@ interface Screen {
   id: number;
   name: string;
   theater_id: number;
+  columnsCnt: number;
+  rowsCnt: number;
+  seats: Seat[];
+}
+
+interface Seat {
+  id: number;
+  row: number;
+  column: number;
 }
 
 export const ScreenMaintenance = () => {
@@ -28,10 +37,16 @@ export const ScreenMaintenance = () => {
     id: 0,
     name: "",
     theater_id: 0,
+    columnsCnt: 0,
+    rowsCnt: 0,
+    seats: [],
   });
   const [newScreen, setNewScreen] = useState<Omit<Screen, "id">>({
     name: "",
     theater_id: Number(theaterId),
+    columnsCnt: 0,
+    rowsCnt: 0,
+    seats: [],
   });
   const [screenSeats, setScreenSeats] = useState<{
     [key: number]: { rows: number; columns: number };
@@ -48,7 +63,21 @@ export const ScreenMaintenance = () => {
       const response = await fetch(`/api/screens?theaterId=${theaterId}`);
       if (response.ok) {
         const data = await response.json();
-        setScreens(data);
+
+        const screens = data.map((screen: Screen) => {
+          const uniqueRows = new Set(
+            screen.seats.map((seat: Seat) => seat.row)
+          );
+          const uniqueColumns = new Set(
+            screen.seats.map((seat: Seat) => seat.column)
+          );
+          return {
+            ...screen,
+            rowsCnt: uniqueRows.size,
+            columnsCnt: uniqueColumns.size,
+          };
+        });
+        setScreens(screens);
       }
     } catch {
       toast.error("スクリーン情報の取得に失敗しました");
@@ -86,6 +115,9 @@ export const ScreenMaintenance = () => {
       id: 0,
       name: "",
       theater_id: 0,
+      columnsCnt: 0,
+      rowsCnt: 0,
+      seats: [],
     });
   };
 
@@ -151,6 +183,8 @@ export const ScreenMaintenance = () => {
             <TableRow>
               <TableHead>ID</TableHead>
               <TableHead>スクリーン名</TableHead>
+              <TableHead>行数</TableHead>
+              <TableHead>列数</TableHead>
               <TableHead>座席設定</TableHead>
               <TableHead>操作</TableHead>
             </TableRow>
@@ -171,6 +205,8 @@ export const ScreenMaintenance = () => {
                     screen.name
                   )}
                 </TableCell>
+                <TableCell>{screen.rowsCnt}</TableCell>
+                <TableCell>{screen.columnsCnt}</TableCell>
                 <TableCell>
                   <div className="flex gap-2">
                     <Input
