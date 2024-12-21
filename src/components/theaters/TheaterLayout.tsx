@@ -130,8 +130,8 @@ export default function TheaterLayout({
   };
 
   return (
-    <div className="space-y-8">
-      <div className="w-full h-8 bg-white/10 flex items-center justify-center text-sm">
+    <div className="max-w-full px-4 sm:px-6">
+      <div className="w-full max-w-md mx-auto h-8 bg-white/10 flex items-center justify-center text-sm">
         <select
           className="bg-black/30 text-white rounded-md p-2 w-full"
           value={selectScreen || ""}
@@ -145,42 +145,47 @@ export default function TheaterLayout({
           ))}
         </select>
       </div>
-      <div className="space-y-2">
-        {isLoading ? (
-          <Loading />
-        ) : (
-          rows.map((row) => (
-            <div key={row} className="flex justify-center gap-1">
-              <div className="w-6 flex items-center justify-center text-sm">
-                {row}
-              </div>
-              {[...Array(seatsPerRow)].map((_, index) => {
-                const seatName = `${row}${index + 1}`;
-                const seat = screen?.seats.find(
-                  (s) => s.row === row && s.column === index + 1
-                );
-                const rating = getSeatRating(seat!.id);
 
-                return (
-                  <button
-                    key={seatName}
-                    className={`
+      <div className="mt-8 -mx-4 sm:-mx-6">
+        <div className="space-y-2 overflow-x-auto">
+          <div className="min-w-fit mx-auto">
+            {isLoading ? (
+              <Loading />
+            ) : (
+              rows.map((row) => (
+                <div key={row} className="flex justify-center gap-1 mb-1">
+                  <div className="w-6 flex-shrink-0 flex items-center justify-center text-sm">
+                    {row}
+                  </div>
+                  {[...Array(seatsPerRow)].map((_, index) => {
+                    const seatName = `${row}${index + 1}`;
+                    const seat = screen?.seats.find(
+                      (s) => s.row === row && s.column === index + 1
+                    );
+                    const rating = getSeatRating(seat!.id);
+
+                    return (
+                      <button
+                        key={seatName}
+                        className={`
                 w-8 h-8 rounded-t-lg text-xs font-medium transition-all
                 ${getSeatColor(rating)}
                 ${selectedSeat === seatName ? "ring-2 ring-white" : "hover:ring-2 hover:ring-white/50"}
               `}
-                    onClick={() => seat && onSeatSelect(seatName, seat.id)}
-                  >
-                    {index + 1}
-                  </button>
-                );
-              })}
-            </div>
-          ))
-        )}
+                        onClick={() => seat && onSeatSelect(seatName, seat.id)}
+                      >
+                        {index + 1}
+                      </button>
+                    );
+                  })}
+                </div>
+              ))
+            )}
+          </div>
+        </div>
       </div>
 
-      <div className="flex justify-center gap-4 text-sm">
+      <div className="flex flex-wrap justify-center gap-4 text-sm">
         <div className="flex items-center gap-2">
           <div className="w-4 h-4 bg-green-500 rounded"></div>
           <span>最高</span>

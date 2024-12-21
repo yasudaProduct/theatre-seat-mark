@@ -122,7 +122,7 @@ export default function TheaterPage(theater: Theater) {
           <span>{isFavorite ? "お気に入り解除" : "お気に入り登録"}</span>
         </button>
       </div>
-      <div className="grid lg:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-6">
           <div className="bg-[#A496CB] p-6 rounded-xl backdrop-blur-sm">
             <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
