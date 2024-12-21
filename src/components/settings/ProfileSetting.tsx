@@ -90,22 +90,6 @@ export default function ProfileSettings({ user }: UserProfileProps) {
                 return (
                   <FormItem>
                     <div className="flex">
-                      <div className="flex-none w-8"></div>
-                      <div className="flex-none w-80">
-                        <label className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
-                          メールアドレス
-                        </label>
-                        <p className="text-sm text-muted-foreground">
-                          ご登録されているメールアドレスです。
-                        </p>
-                      </div>
-                      <div className="flex-initial w-100">
-                        <p>{user.aliasId}</p>
-                      </div>
-                    </div>
-                    <div className="flex-none w-64"></div>
-                    <div className="flex">
-                      <div className="flex-none w-8"></div>
                       <div className="flex-initial w-80">
                         <FormLabel>ユーザー名</FormLabel>
                         <FormDescription>公開表示名です。</FormDescription>
