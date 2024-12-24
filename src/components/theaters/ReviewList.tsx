@@ -5,9 +5,13 @@ import { toast } from "sonner";
 
 interface ReviewListProps {
   seatId: number | null;
+  refreshKey?: number;
 }
 
-export default function ReviewList({ seatId }: ReviewListProps) {
+export default function ReviewList({
+  seatId,
+  refreshKey = 0,
+}: ReviewListProps) {
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isBookmarked, setIsBookmarked] = useState([
     {
@@ -26,7 +30,7 @@ export default function ReviewList({ seatId }: ReviewListProps) {
   useEffect(() => {
     if (!seatId) return;
     fetchReviews(seatId);
-  }, [seatId]);
+  }, [seatId, refreshKey]);
 
   const fetchReviews = async (seatId: number) => {
     const response = await fetch(`/api/reviews?seatId=${seatId}`);
