@@ -78,7 +78,7 @@ export default function Home() {
                 className="w-80 flex-shrink-0 cursor-pointer hover:bg-gray-50 transition-colors"
                 onClick={() =>
                   router.push(
-                    `/theaters/${review.theater.id}?screen=${review.screen.id}`
+                    `/theaters/${review.theater.id}?screen=${review.screen.id}&seat=${review.seatNumber}`
                   )
                 }
               >
