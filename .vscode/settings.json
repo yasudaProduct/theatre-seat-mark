@@ -32,6 +32,11 @@
       "description": "UI/UX デザインの変更"
     },
     {
+      "emoji": "🩹",
+      "code": ":adhesive_bandage:",
+      "description": "機能改善"
+    },
+    {
       "emoji": "✅",
       "code": ":white_check_mark:",
       "description": "テストを追加、更新、または合格します。"
