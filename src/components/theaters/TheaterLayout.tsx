@@ -91,7 +91,14 @@ export default function TheaterLayout({
 
   const handleScreenChange = (screenId: string) => {
     setSelectScreen(screenId);
-    router.push(`/theaters/${params.id}?screen=${screenId}`, { scroll: false });
+    router.push(`/theaters/${params.id}?screen=${screenId}`, { scroll: true });
+  };
+
+  const handleSeatSelect = (seatName: string) => {
+    router.push(
+      `/theaters/${params.id}?screen=${selectScreen}&seat=${seatName}`,
+      { scroll: true }
+    );
   };
 
   const fetchScreenData = async (screenId: number) => {
@@ -173,7 +180,12 @@ export default function TheaterLayout({
                 ${getSeatColor(rating)}
                 ${selectedSeat === seatName ? "ring-2 ring-white" : "hover:ring-2 hover:ring-white/50"}
               `}
-                        onClick={() => seat && onSeatSelect(seatName, seat.id)}
+                        onClick={() => {
+                          if (seat) {
+                            onSeatSelect(seatName, seat.id);
+                          }
+                          handleSeatSelect(seatName);
+                        }}
                       >
                         {index + 1}
                       </button>

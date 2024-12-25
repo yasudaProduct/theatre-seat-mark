@@ -9,6 +9,7 @@ import TheaterLayout, {
 import { ReviewForm } from "@/components/theaters/ReviewForm";
 import { useSession } from "next-auth/react";
 import ReviewList from "@/components/theaters/ReviewList";
+import { useSearchParams } from "next/navigation";
 
 export const getServerSideProps: GetServerSideProps<Theater> = async (
   context
@@ -42,6 +43,7 @@ export const getServerSideProps: GetServerSideProps<Theater> = async (
 
 export default function TheaterPage(theater: Theater) {
   const { data: session } = useSession();
+  const searchParams = useSearchParams();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [selectedSeat, setSelectedSeat] = useState<string | null>(null);
   const [selectedSeatId, setSelectedSeatId] = useState<number | null>(null);
@@ -49,6 +51,12 @@ export default function TheaterPage(theater: Theater) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
+    const seatName = searchParams.get("seat");
+    if (seatName) {
+      setSelectedSeat(seatName);
+    }
+
+    // お気に入り確認
     const checkFavoriteStatus = async () => {
       if (!session) return;
 
@@ -75,7 +83,6 @@ export default function TheaterPage(theater: Theater) {
 
   const handleReviewSubmit = (review: Review) => {
     setReviews([...reviews, review]);
-    setSelectedSeat(null);
     setRefreshKey((prevKey) => prevKey + 1);
   };
 
@@ -172,7 +179,7 @@ export default function TheaterPage(theater: Theater) {
             <ThumbsUp className="w-5 h-5 text-green-400" />
             最新レビュー
           </h2>
-          <ReviewList seatId={selectedSeatId} />
+          <ReviewList seatId={selectedSeatId} refreshKey={refreshKey} />
         </div>
       </div>
     </div>
