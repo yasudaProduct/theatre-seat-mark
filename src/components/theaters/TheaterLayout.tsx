@@ -170,7 +170,7 @@ export default function TheaterLayout({
                     const seat = screen?.seats.find(
                       (s) => s.row === row && s.column === index + 1
                     );
-                    const rating = getSeatRating(seat!.id);
+                    const rating = seat ? getSeatRating(seat.id) : 0;
 
                     return (
                       <button
