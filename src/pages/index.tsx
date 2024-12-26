@@ -8,7 +8,6 @@ import { useRouter } from "next/navigation";
 interface Review {
   id: number;
   user: { name: string };
-  seatNumber: string;
   rating: number;
   review: string;
   bookmarkCount: number;
@@ -17,6 +16,10 @@ interface Review {
     name: string;
   };
   screen: {
+    id: number;
+    name: string;
+  };
+  seat: {
     id: number;
     name: string;
   };
@@ -78,7 +81,7 @@ export default function Home() {
                 className="w-80 flex-shrink-0 cursor-pointer hover:bg-gray-50 transition-colors"
                 onClick={() =>
                   router.push(
-                    `/theaters/${review.theater.id}?screen=${review.screen.id}&seat=${review.seatNumber}`
+                    `/theaters/${review.theater.id}?screen=${review.screen.id}&seat=${review.seat.id}`
                   )
                 }
               >
@@ -101,7 +104,7 @@ export default function Home() {
                         {review.theater.name}
                       </h2>
                       <h2 className="font-semibold truncate">
-                        {review.screen.name} {review.seatNumber}
+                        {review.screen.name} {review.seat.name}
                       </h2>
                       <p className="mt-2 text-sm line-clamp-3 h-24">
                         {review.review}

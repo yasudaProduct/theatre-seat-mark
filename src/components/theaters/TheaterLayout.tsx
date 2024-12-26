@@ -38,7 +38,7 @@ interface Screen {
 
 interface TheaterLayoutProps {
   theater: Theater;
-  selectedSeat: string | null;
+  selectedSeat: number | null;
   onSeatSelect: (seatName: string, seatId: number) => void;
   refreshKey?: number;
 }
@@ -94,9 +94,9 @@ export default function TheaterLayout({
     router.push(`/theaters/${params.id}?screen=${screenId}`, { scroll: true });
   };
 
-  const handleSeatSelect = (seatName: string) => {
+  const handleSeatSelect = (seatId: number) => {
     router.push(
-      `/theaters/${params.id}?screen=${selectScreen}&seat=${seatName}`,
+      `/theaters/${params.id}?screen=${selectScreen}&seat=${seatId}`,
       { scroll: true }
     );
   };
@@ -178,13 +178,13 @@ export default function TheaterLayout({
                         className={`
                 w-8 h-8 rounded-t-lg text-xs font-medium transition-all
                 ${getSeatColor(rating)}
-                ${selectedSeat === seatName ? "ring-2 ring-white" : "hover:ring-2 hover:ring-white/50"}
+                ${selectedSeat === (seat && seat.id) ? "ring-2 ring-white" : "hover:ring-2 hover:ring-white/50"}
               `}
                         onClick={() => {
                           if (seat) {
                             onSeatSelect(seatName, seat.id);
+                            handleSeatSelect(seat.id);
                           }
-                          handleSeatSelect(seatName);
                         }}
                       >
                         {index + 1}

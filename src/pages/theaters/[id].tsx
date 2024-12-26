@@ -51,9 +51,12 @@ export default function TheaterPage(theater: Theater) {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    const seatName = searchParams.get("seat");
-    if (seatName) {
-      setSelectedSeat(seatName);
+    const seatId = searchParams.get("seat")
+      ? Number(searchParams.get("seat"))
+      : null;
+
+    if (seatId) {
+      setSelectedSeatId(seatId);
     }
 
     // お気に入り確認
@@ -138,7 +141,7 @@ export default function TheaterPage(theater: Theater) {
             </h2>
             <TheaterLayout
               onSeatSelect={handleSeatSelect}
-              selectedSeat={selectedSeat}
+              selectedSeat={selectedSeatId}
               theater={theater}
               refreshKey={refreshKey}
             />

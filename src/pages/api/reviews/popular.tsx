@@ -5,7 +5,6 @@ import prisma from "../../../lib/prisma";
 interface PopularReview {
   id: number;
   user: { name: string };
-  seatNumber: string;
   rating: number;
   review: string;
   theater: {
@@ -13,6 +12,10 @@ interface PopularReview {
     name: string;
   };
   screen: {
+    id: number;
+    name: string;
+  };
+  seat: {
     id: number;
     name: string;
   };
@@ -61,7 +64,6 @@ export default async function handler(
     const formattedReviews: PopularReview[] = reviews.map((review) => ({
       id: review.id,
       user: { name: review.users.name ?? "" },
-      seatNumber: review.seat_name ?? "",
       rating: review.rating,
       review: review.review,
       theater: {
@@ -71,6 +73,10 @@ export default async function handler(
       screen: {
         id: review.seat.screen.id,
         name: review.seat.screen.name,
+      },
+      seat: {
+        id: review.seat.id,
+        name: review.seat.row + review.seat.column,
       },
       bookmarkCount: review.bookmarks.length,
       isBookmarked: userId
