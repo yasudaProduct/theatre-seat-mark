@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
@@ -60,6 +60,9 @@ export default function TheaterLayout({
   const [seatsPerRow, setSeatsPerRow] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
+  const containerRef = useRef<HTMLDivElement>(null);
+  const seatRefs = useRef<{ [key: string]: HTMLButtonElement | null }>({});
+
   useEffect(() => {
     const screenId = searchParams.get("screen");
     if (screenId) {
@@ -89,6 +92,32 @@ export default function TheaterLayout({
     }
   }, [screen]);
 
+  useEffect(() => {
+    if (selectedSeat && seatRefs.current[selectedSeat]) {
+      const seatElement = seatRefs.current[selectedSeat];
+      const container = containerRef.current;
+      if (seatElement && container) {
+        const seatRect = seatElement.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        const offsetX =
+          seatRect.left -
+          containerRect.left -
+          containerRect.width / 2 +
+          seatRect.width / 2;
+        const offsetY =
+          seatRect.top -
+          containerRect.top -
+          containerRect.height / 2 +
+          seatRect.height / 2;
+        container.scrollBy({
+          left: offsetX,
+          top: offsetY,
+          behavior: "smooth",
+        });
+      }
+    }
+  }, [selectedSeat]);
+
   const handleScreenChange = (screenId: string) => {
     setSelectScreen(screenId);
     router.push(`/theaters/${params.id}?screen=${screenId}`, { scroll: true });
@@ -97,7 +126,7 @@ export default function TheaterLayout({
   const handleSeatSelect = (seatId: number) => {
     router.push(
       `/theaters/${params.id}?screen=${selectScreen}&seat=${seatId}`,
-      { scroll: true }
+      { scroll: false }
     );
   };
 
@@ -155,7 +184,10 @@ export default function TheaterLayout({
       </div>
 
       <div className="mt-8 -mx-4 sm:-mx-6">
-        <div className="space-y-2 h-[600px] overflow-x-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+        <div
+          ref={containerRef}
+          className="space-y-2 h-[600px] overflow-x-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent"
+        >
           <div className="min-w-fit mx-auto">
             {isLoading ? (
               <Loading />
@@ -175,6 +207,11 @@ export default function TheaterLayout({
                     return (
                       <button
                         key={seatName}
+                        ref={(el) => {
+                          if (seat) {
+                            seatRefs.current[seat.id] = el;
+                          }
+                        }}
                         className={`
                 w-8 h-8 rounded-t-lg text-xs font-medium transition-all
                 ${getSeatColor(rating)}

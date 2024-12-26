@@ -87,6 +87,7 @@ export default function TheaterPage(theater: Theater) {
   const handleReviewSubmit = (review: Review) => {
     setReviews([...reviews, review]);
     setRefreshKey((prevKey) => prevKey + 1);
+    window.scrollTo(0, 0);
   };
 
   const handleFavoriteClick = async () => {
