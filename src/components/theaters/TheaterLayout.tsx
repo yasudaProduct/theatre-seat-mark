@@ -20,6 +20,11 @@ export interface Review {
   seatName: string;
   rating: number;
   comment: string;
+  createdAt: string;
+  user: {
+    id: number;
+    name: string;
+  };
   isBookmarked: boolean;
 }
 

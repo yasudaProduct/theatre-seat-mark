@@ -91,6 +91,7 @@ async function handleGetRequest(
       include: {
         users: {
           select: {
+            id: true,
             name: true,
           },
         },
@@ -113,6 +114,11 @@ async function handleGetRequest(
         seatName: review.seat_name,
         rating: review.rating,
         comment: review.review,
+        createdAt: review.createdAt,
+        user: {
+          id: review.users.id,
+          name: review.users.name,
+        },
         isBookmarked,
       };
     });

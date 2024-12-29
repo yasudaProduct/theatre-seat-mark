@@ -19,13 +19,13 @@ export default function ReviewList({
       isBookmarked: false,
     },
   ]);
-  //   const formatDate = (dateString: string) => {
-  //     return new Date(dateString).toLocaleDateString("ja-JP", {
-  //       year: "numeric",
-  //       month: "long",
-  //       day: "numeric",
-  //     });
-  //   };
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("ja-JP", {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    });
+  };
 
   useEffect(() => {
     if (!seatId) return;
@@ -121,7 +121,13 @@ export default function ReviewList({
                 ))}
               </div>
             </div>
-            <div className="text-sm">{/* {formatDate(review.date)} */}</div>
+            <div className="text-sm">
+              <p className="text-sm text-gray-500">
+                {review.user.name}
+                {"    "}
+                {formatDate(review.createdAt)}
+              </p>
+            </div>
             <button
               onClick={() =>
                 handleBookmarkClick(review.id, review.isBookmarked)
