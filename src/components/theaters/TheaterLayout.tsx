@@ -191,7 +191,7 @@ export default function TheaterLayout({
       <div className="mt-8 -mx-4 sm:-mx-6">
         <div
           ref={containerRef}
-          className="space-y-2 h-[600px] overflow-x-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent"
+          className="space-y-2 max-h-[600px] overflow-x-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent"
         >
           <div className="min-w-fit mx-auto">
             {isLoading ? (
