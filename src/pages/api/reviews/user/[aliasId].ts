@@ -53,7 +53,7 @@ export default async function handler(
             },
             bookmarks: {
               where: {
-                user_id: loginUserId,
+                user_id: loginUserId ?? 0, // undefinedの場合外部キーで結合される？
               },
             },
             users: true,
