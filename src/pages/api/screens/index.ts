@@ -65,7 +65,10 @@ async function getRequest(
             seat_reviews: true,
           }
         },
-      }
+      },
+      orderBy: {
+        name: "asc",
+      },
     });
 
     if (fields) {

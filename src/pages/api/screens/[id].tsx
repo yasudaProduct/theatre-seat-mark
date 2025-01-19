@@ -45,6 +45,25 @@ export default async function handler(
       }
       break;
     }
+    case "PUT": {
+      try {
+        const { screenId, screenName } = req.body;
+        const screen = await prisma.screen.update({
+          where: { id: screenId },
+          data: {
+            name: screenName,
+          },
+        });
+        res.status(200).json(screen);
+      } catch (error) {
+        logger.error("スクリーン更新エラー:" + error);
+        res.status(500).json({
+          code: ApiResponseCode.INTERNAL_SERVER_ERROR,
+          message: "エラーが発生しました",
+        } as ApiErrorResponse);
+      }
+      break;
+    }
     case "DELETE": {
       try {
         // 関連する座席レビューを削除

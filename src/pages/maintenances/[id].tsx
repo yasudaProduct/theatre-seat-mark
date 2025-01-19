@@ -96,7 +96,10 @@ export const ScreenMaintenance = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(editForm),
+        body: JSON.stringify({
+          screenId: editForm.id,
+          screenName: editForm.name,
+        }),
       });
 
       if (response.ok) {
