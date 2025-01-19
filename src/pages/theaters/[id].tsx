@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Heart, Star, ThumbsUp } from "lucide-react";
+import { Heart, Info, Star, ThumbsUp } from "lucide-react";
 import { GetServerSideProps } from "next";
 import prisma from "@/lib/prisma";
 import TheaterLayout, {
@@ -10,6 +10,12 @@ import { ReviewForm } from "@/components/theaters/ReviewForm";
 import { useSession } from "next-auth/react";
 import ReviewList from "@/components/theaters/ReviewList";
 import { useSearchParams } from "next/navigation";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import Link from "next/link";
 
 export const getServerSideProps: GetServerSideProps<Theater> = async (
   context
@@ -133,6 +139,22 @@ export default function TheaterPage(theater: Theater) {
           />
           <span>{isFavorite ? "お気に入り解除" : "お気に入り登録"}</span>
         </button>
+        <HoverCard>
+          <HoverCardTrigger asChild>
+            <Info className="w-5 h-5 " />
+          </HoverCardTrigger>
+          <HoverCardContent className="w-80" align="start">
+            <div className="">
+              スクリーン・座席の情報は運営によりメンテナンスされています。
+              <br />
+              実際と異なる場合は
+              <Link href="/contact" className="text-blue-500 underline">
+                こちら
+              </Link>
+              からリクエストください。
+            </div>
+          </HoverCardContent>
+        </HoverCard>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div className="space-y-6">
