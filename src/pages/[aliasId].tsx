@@ -195,7 +195,7 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
             </CardHeader>
             <CardContent>
               {myReviews.length > 0 ? (
-                <ReviewList reviews={myReviews} isEdit={true} />
+                <ReviewList reviews={myReviews} isEdit={isOwnProfile} />
               ) : (
                 <p className="text-center text-gray-500">
                   まだレビューを投稿していません。

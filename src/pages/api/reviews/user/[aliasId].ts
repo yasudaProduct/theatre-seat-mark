@@ -1,6 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/lib/prisma";
 import { ApiErrorResponse, ApiResponseCode } from "@/types/ApiResponse";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../../auth/[...nextauth]";
 
 export default async function handler(
   req: NextApiRequest,
@@ -14,6 +16,12 @@ export default async function handler(
       message: "ユーザーIDが必要です",
     } as ApiErrorResponse);
   }
+
+  // ログインユーザーのIDを取得
+  const session = await getServerSession(req, res, authOptions);
+  const loginUserId = (session && session.user)
+    ? parseInt(session.user.id as string, 10)
+    : undefined;
 
   switch (req.method) {
     case "GET":
@@ -45,7 +53,7 @@ export default async function handler(
             },
             bookmarks: {
               where: {
-                user_id: user.id,
+                user_id: loginUserId,
               },
             },
             users: true,
