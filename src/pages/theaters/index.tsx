@@ -8,6 +8,7 @@ import { Region } from "@/types/Region";
 import { Theater } from "@prisma/client";
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { GetStaticProps } from "next";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -66,7 +67,7 @@ const Theaters = (props: TheatersPageProps) => {
   };
 
   return (
-    <div className="container mx-auto">
+    <div className="container mx-auto mt-4">
       <h1 className="text-2xl font-bold mb-4">映画館検索</h1>
       <div className="grid gap-4 mb-4">
         {/* <Input
@@ -99,9 +100,9 @@ const Theaters = (props: TheatersPageProps) => {
             {props.regions.map((region) => (
               <div
                 key={region.id}
-                className="grid grid-cols-1 ml-10 md:grid-cols-[100px_1fr] gap-4"
+                className="grid grid-cols-1 ml-10 md:grid-cols-[100px_1fr] gap-4 mb-2"
               >
-                <h3 className="font-semibold mb-2 md:mb-0 md:self-start">
+                <h3 className="font-semibold md:mb-0 md:self-start">
                   {region.name}
                 </h3>
                 <div
@@ -135,7 +136,7 @@ const Theaters = (props: TheatersPageProps) => {
           <Search className="mr-2 h-4 w-4" /> 検索
         </Button> */}
       </div>
-      <div className="grid gap-4" ref={searchResultsRef}>
+      <div className="grid gap-4 mb-4" ref={searchResultsRef}>
         {isLoading ? (
           <Loading />
         ) : searchResults && searchResults.length > 0 ? (
@@ -157,6 +158,11 @@ const Theaters = (props: TheatersPageProps) => {
           selectedPrefecture !== 0 && (
             <div className="text-center py-8 text-gray-500">
               登録された映画館は見つかりません
+              <br />
+              <Link href="/contact" className="text-blue-500 underline">
+                こちら
+              </Link>
+              からリクエストして下さい。
             </div>
           )
         )}
