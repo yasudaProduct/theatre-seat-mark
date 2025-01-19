@@ -118,7 +118,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         </Avatar>
       </button>
       {isOpen && (
-        <div className="absolute left-1/2 transform -translate-x-1/2 mt-2 w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="absolute left-1/2 transform -translate-x-[90%] mt-2 w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
           <div
             className="py-1"
             role="menu"
