@@ -177,7 +177,7 @@ export default function Home() {
           </ScrollArea>
         </section>
       </div>
-      <div className="w-full">
+      {/* <div className="w-full">
         <img
           src="/images/about.svg"
           alt="about"
@@ -198,7 +198,7 @@ export default function Home() {
           alt="about"
           className="w-[60%] h-[451px] bg-cover bg-top mx-auto"
         ></img>
-      </div>
+      </div> */}
     </div>
   );
 }
