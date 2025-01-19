@@ -7,6 +7,7 @@ interface PopularReview {
   user: { name: string };
   rating: number;
   review: string;
+  createdAt: string;
   theater: {
     id: number;
     name: string;
@@ -66,6 +67,7 @@ export default async function handler(
       user: { name: review.users.name ?? "" },
       rating: review.rating,
       review: review.review,
+      createdAt: review.createdAt.toISOString(),
       theater: {
         id: review.seat.screen.theaters.id,
         name: review.seat.screen.theaters.name,
