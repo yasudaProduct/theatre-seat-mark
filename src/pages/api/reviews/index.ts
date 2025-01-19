@@ -97,7 +97,7 @@ async function handleGetRequest(
         },
         bookmarks: {
           where: {
-            user_id: userId ? parseInt(userId!, 10) : undefined,
+            user_id: userId ? parseInt(userId!, 10) : 0, // undefinedにすると外部キーでjoinされる？
           },
         },
       },

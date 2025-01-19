@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Bookmark, Star } from "lucide-react";
 import { Review } from "@/components/theaters/TheaterLayout";
 import { toast } from "sonner";
+import { useSession } from "next-auth/react";
 
 interface ReviewListProps {
   seatId: number | null;
@@ -12,6 +13,7 @@ export default function ReviewList({
   seatId,
   refreshKey = 0,
 }: ReviewListProps) {
+  const { data: session } = useSession();
   const [reviews, setReviews] = useState<Review[]>([]);
   const [isBookmarked, setIsBookmarked] = useState([
     {
@@ -134,14 +136,16 @@ export default function ReviewList({
               }
               className="flex items-center gap-1"
             >
-              <Bookmark
-                className={`w-5 h-5 ${
-                  isBookmarked.find((bookmark) => bookmark.id === review.id)
-                    ?.isBookmarked
-                    ? "text-blue-500 fill-current"
-                    : "text-gray-500"
-                }`}
-              />
+              {session && (
+                <Bookmark
+                  className={`w-5 h-5 ${
+                    isBookmarked.find((bookmark) => bookmark.id === review.id)
+                      ?.isBookmarked
+                      ? "text-blue-500 fill-current"
+                      : "text-gray-500"
+                  }`}
+                />
+              )}
             </button>
           </div>
           <p className="">{review.comment}</p>
