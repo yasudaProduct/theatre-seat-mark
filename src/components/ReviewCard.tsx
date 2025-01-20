@@ -10,7 +10,7 @@ const logger = getLogger("ReviewCard");
 
 export interface ReviewCardProps {
   id: number;
-  user: { name: string };
+  user: { name: string; aliasId: string };
   seatNumber: string;
   rating: number;
   review: string;
@@ -22,11 +22,17 @@ export interface ReviewCardProps {
 export function ReviewCard({
   review,
   isEdit,
+  aliasId,
 }: {
   review: ReviewCardProps;
   isEdit?: boolean;
+  aliasId: string | undefined;
 }) {
   const [isBookmarked, setIsBookmarked] = useState(review.isBookmarked);
+
+  console.log("aliasId", aliasId);
+  console.log("review.user.aliasId", review.user.aliasId);
+  console.log("review.user.name", review.user.name);
 
   const handleBookmark = async () => {
     const method = isBookmarked ? "DELETE" : "POST";
@@ -66,10 +72,14 @@ export function ReviewCard({
       <CardContent className="p-4">
         <div className="flex justify-between items-start">
           <div>
-            <p className="font-semibold">{review.user.name}</p>
             <p className="text-sm text-gray-500">{review.theaterName}</p>
             <p className="text-sm text-gray-500">{review.screenName}</p>
             <p className="text-sm text-gray-500">座席: {review.seatNumber}</p>
+            {aliasId !== review.user.aliasId && (
+              <p className="text-sm text-gray-500">
+                投稿者: {review.user.name}
+              </p>
+            )}
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex">
