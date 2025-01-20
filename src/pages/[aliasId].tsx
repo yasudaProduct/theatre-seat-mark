@@ -183,7 +183,7 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
             )}
           </div>
         </div>
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 mt-4">
           <div className="text-center">
             <p className="text-2xl font-bold">{user._count.reviews}</p>
             <p className="text-sm text-muted-foreground">レビュー</p>
