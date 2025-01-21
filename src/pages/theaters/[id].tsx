@@ -16,6 +16,7 @@ import {
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export const getServerSideProps: GetServerSideProps<Theater> = async (
   context
@@ -141,7 +142,9 @@ export default function TheaterPage(theater: Theater) {
         </button>
         <HoverCard>
           <HoverCardTrigger asChild>
-            <Info className="w-5 h-5 " />
+            <button className="hover:text-blue-500">
+              <Info className="w-6 h-6"/>
+            </button>
           </HoverCardTrigger>
           <HoverCardContent className="w-80" align="start">
             <div className="">
