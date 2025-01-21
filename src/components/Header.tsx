@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { House, LogOut, Wrench } from "lucide-react";
+import { House, LogIn, LogOut, Wrench } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useRouter } from "next/navigation";
 
@@ -41,9 +41,13 @@ const Header = () => {
                   </li>
                 )}
                 {status !== "loading" && !session && (
-                  <li className="py-1 px-4 text-white no-underline">
-                    <button onClick={() => signIn()}>
-                      <a>ログイン</a>
+                  <li className="py-1 px-4 text-black no-underline">
+                    <button
+                      className="flex items-center bg-white rounded-md p-2 hover:bg-gray-100"
+                      onClick={() => signIn()}
+                    >
+                      <LogIn className="w-6 h-6 mr-2" />
+                      ログイン
                     </button>
                   </li>
                 )}
