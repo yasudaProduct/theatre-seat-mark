@@ -35,6 +35,7 @@ export const authOptions: AuthOptions = {
         where: { id: Number(message.user.id) },
         data: {
           aliasId: generateRandomString(7),
+          image: "images/profile-default.png",
           role: "general",
         }
       })

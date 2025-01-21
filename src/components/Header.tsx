@@ -9,7 +9,7 @@ const Header = () => {
   const { data: session, status } = useSession();
   return (
     <>
-      <div className="bg-[#524FFF]">
+      <div className="bg-[#524FFF] max-h-20">
         <div className="container mx-auto flex items-center px-2 py-3">
           <div className="mx-auto flex w-full flex-wrap items-center">
             <div className="flex w-full justify-center font-extrabold text-white lg:w-1/2 lg:justify-start">
@@ -116,8 +116,12 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <Avatar className="w-8 h-8">
-          <AvatarImage src={userImage || undefined} alt={userName || "User"} />
+        <Avatar className="">
+          <AvatarImage
+            src={userImage || undefined}
+            alt={userName || "User"}
+            className="bg-white"
+          />
           <AvatarFallback>{userName.charAt(0) || "U"}</AvatarFallback>
         </Avatar>
       </button>
