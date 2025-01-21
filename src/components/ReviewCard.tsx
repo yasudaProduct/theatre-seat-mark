@@ -30,10 +30,6 @@ export function ReviewCard({
 }) {
   const [isBookmarked, setIsBookmarked] = useState(review.isBookmarked);
 
-  console.log("aliasId", aliasId);
-  console.log("review.user.aliasId", review.user.aliasId);
-  console.log("review.user.name", review.user.name);
-
   const handleBookmark = async () => {
     const method = isBookmarked ? "DELETE" : "POST";
     const url = isBookmarked
