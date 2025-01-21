@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getSession } from "next-auth/react";
+import { getSession, useSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import prisma from "@/lib/prisma";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -24,7 +24,7 @@ interface UserProfileProps {
 
 interface Review {
   id: number;
-  user: { name: string };
+  user: { name: string; aliasId: string };
   seatNumber: string;
   rating: number;
   review: string;
@@ -85,6 +85,7 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
   const [myReviews, setMyReviews] = useState<Review[]>([]);
   const [bookmarkedReviews, setBookmarkedReviews] = useState<Review[]>([]);
   const [favoriteTheaters, setFavoriteTheaters] = useState<Favorite[]>([]);
+  const { data: session } = useSession();
 
   useEffect(() => {
     fetchMyReviews();
@@ -99,13 +100,20 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
   const ReviewList = ({
     reviews,
     isEdit,
+    aliasId,
   }: {
     reviews: Review[];
     isEdit: boolean;
+    aliasId: string | undefined;
   }) => (
     <div className="space-y-4">
       {reviews.map((review) => (
-        <ReviewCard key={review.id} review={review} isEdit={isEdit} />
+        <ReviewCard
+          key={review.id}
+          review={review}
+          isEdit={isEdit}
+          aliasId={aliasId}
+        />
       ))}
     </div>
   );
@@ -175,7 +183,7 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
             )}
           </div>
         </div>
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 mt-4">
           <div className="text-center">
             <p className="text-2xl font-bold">{user._count.reviews}</p>
             <p className="text-sm text-muted-foreground">レビュー</p>
@@ -199,7 +207,11 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
             </CardHeader>
             <CardContent>
               {myReviews.length > 0 ? (
-                <ReviewList reviews={myReviews} isEdit={isOwnProfile} />
+                <ReviewList
+                  reviews={myReviews}
+                  isEdit={isOwnProfile}
+                  aliasId={session?.user?.aliasId ?? undefined}
+                />
               ) : (
                 <p className="text-center text-gray-500">
                   まだレビューを投稿していません。
@@ -215,7 +227,11 @@ export default function UserProfile({ user, isOwnProfile }: UserProfileProps) {
             </CardHeader>
             <CardContent>
               {bookmarkedReviews.length > 0 ? (
-                <ReviewList reviews={bookmarkedReviews} isEdit={false} />
+                <ReviewList
+                  reviews={bookmarkedReviews}
+                  isEdit={false}
+                  aliasId={session?.user?.aliasId ?? undefined}
+                />
               ) : (
                 <p className="text-center text-gray-500">
                   ブックマークしたレビューはありません。

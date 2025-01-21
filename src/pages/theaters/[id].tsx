@@ -141,7 +141,9 @@ export default function TheaterPage(theater: Theater) {
         </button>
         <HoverCard>
           <HoverCardTrigger asChild>
-            <Info className="w-5 h-5 " />
+            <button className="hover:text-blue-500">
+              <Info className="w-6 h-6" />
+            </button>
           </HoverCardTrigger>
           <HoverCardContent className="w-80" align="start">
             <div className="">
@@ -200,7 +202,7 @@ export default function TheaterPage(theater: Theater) {
           </div>
         </div>
 
-        <div className="bg-[#A496CB] h-[700px] p-6 rounded-xl backdrop-blur-sm">
+        <div className="bg-[#A496CB] p-6 rounded-xl backdrop-blur-sm">
           <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
             <ThumbsUp className="w-5 h-5 text-green-400" />
             最新レビュー

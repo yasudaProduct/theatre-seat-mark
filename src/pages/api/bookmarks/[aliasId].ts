@@ -30,6 +30,7 @@ export default async function handler(
                 users: {
                   select: {
                     name: true,
+                    aliasId: true,
                   },
                 },
                 seat: {
@@ -54,7 +55,10 @@ export default async function handler(
           rating: bookmark.review.rating,
           theaterName: bookmark.review.seat.screen.theaters.name,
           screenName: bookmark.review.seat.screen.name,
-          user: { name: bookmark.review.users.name },
+          user: {
+            name: bookmark.review.users.name,
+            aliasId: bookmark.review.users.aliasId,
+          },
           isBookmarked: true,
         }));
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Github, Mail } from "lucide-react";
+import { FaGithub } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { Alert, AlertDescription } from "@/components/ui/alert";
@@ -13,9 +14,7 @@ export default function Login() {
   useEffect(() => {
     const errorParam = searchParams.get("error");
     if (errorParam) {
-      setError(
-        "エラーが発生しました。"
-      );
+      setError("エラーが発生しました。");
     } else {
       setError("");
     }
@@ -40,7 +39,7 @@ export default function Login() {
               className="w-full"
               onClick={() => handleOAuthSignIn("google")}
             >
-              <Mail className="mr-2 h-4 w-4" />
+              <FcGoogle className="mr-2 h-4 w-4" />
               Googleでログイン
             </Button>
             <Button
@@ -48,7 +47,7 @@ export default function Login() {
               className="w-full"
               onClick={() => handleOAuthSignIn("github")}
             >
-              <Github className="mr-2 h-4 w-4" />
+              <FaGithub className="mr-2 h-4 w-4" />
               GitHubでログイン
             </Button>
             {error && (

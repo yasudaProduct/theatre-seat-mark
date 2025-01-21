@@ -56,7 +56,12 @@ export default async function handler(
                 user_id: loginUserId ?? 0, // undefinedの場合外部キーで結合される？
               },
             },
-            users: true,
+            users: {
+              select: {
+                name: true,
+                aliasId: true,
+              },
+            },
           },
           orderBy: {
             createdAt: "desc",
@@ -70,7 +75,10 @@ export default async function handler(
           seatNumber: review.seat_name ?? "",
           rating: review.rating,
           review: review.review,
-          user: { username: review.users.name ?? "" },
+          user: {
+            name: review.users.name ?? "",
+            aliasId: review.users.aliasId ?? "",
+          },
           createdAt: review.createdAt.toISOString(),
           isBookmarked: review.bookmarks.length > 0,
         }));

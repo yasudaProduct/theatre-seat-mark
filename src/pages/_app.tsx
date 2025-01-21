@@ -6,6 +6,7 @@ import Header from "@/components/Header";
 import AuthWrapper from "@/components/AuthWrapper";
 import Footer from "@/components/Footer";
 import { Toaster } from "sonner";
+import { PagesProgressBar as ProgressBar } from "next-nprogress-bar";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
@@ -16,6 +17,12 @@ export default function App({ Component, pageProps }: AppProps) {
           <Toaster richColors />
           <main className="flex-grow bg-gray-100">
             <Component {...pageProps} />
+            <ProgressBar
+              height="2px"
+              color="#ffff00"
+              options={{ showSpinner: false }}
+              shallowRouting
+            />
           </main>
           <Footer />
         </div>

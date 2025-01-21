@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { House, LogOut, Wrench } from "lucide-react";
+import { House, LogIn, LogOut, Wrench } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { useRouter } from "next/navigation";
 
@@ -9,7 +9,7 @@ const Header = () => {
   const { data: session, status } = useSession();
   return (
     <>
-      <div className="bg-[#524FFF]">
+      <div className="bg-[#524FFF] max-h-20">
         <div className="container mx-auto flex items-center px-2 py-3">
           <div className="mx-auto flex w-full flex-wrap items-center">
             <div className="flex w-full justify-center font-extrabold text-white lg:w-1/2 lg:justify-start">
@@ -41,9 +41,13 @@ const Header = () => {
                   </li>
                 )}
                 {status !== "loading" && !session && (
-                  <li className="py-1 px-4 text-white no-underline">
-                    <button onClick={() => signIn()}>
-                      <a>ログイン</a>
+                  <li className="py-1 px-4 text-black no-underline">
+                    <button
+                      className="flex items-center bg-white rounded-md p-2 hover:bg-gray-100"
+                      onClick={() => signIn()}
+                    >
+                      <LogIn className="w-6 h-6 mr-2" />
+                      ログイン
                     </button>
                   </li>
                 )}
@@ -112,8 +116,12 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         aria-haspopup="true"
         aria-expanded={isOpen}
       >
-        <Avatar className="w-8 h-8">
-          <AvatarImage src={userImage || undefined} alt={userName || "User"} />
+        <Avatar className="">
+          <AvatarImage
+            src={userImage || undefined}
+            alt={userName || "User"}
+            className="bg-white"
+          />
           <AvatarFallback>{userName.charAt(0) || "U"}</AvatarFallback>
         </Avatar>
       </button>

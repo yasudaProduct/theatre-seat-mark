@@ -35,7 +35,7 @@ export default function ReviewList({
   }, [seatId, refreshKey]);
 
   const fetchReviews = async (seatId: number) => {
-    const response = await fetch(`/api/reviews?seatId=${seatId}`);
+    const response = await fetch(`/api/reviews?seatId=${seatId}&limit=5`);
     const data = await response.json();
     setReviews(data);
     setIsBookmarked(
@@ -101,7 +101,7 @@ export default function ReviewList({
   }
 
   return (
-    <div className="space-y-4 max-h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
+    <div className="space-y-4 h-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-600 scrollbar-track-transparent">
       {reviews.map((review) => (
         <div
           key={review.id}

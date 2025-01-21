@@ -41,8 +41,6 @@ async function handlePostRequest(
 ) {
   const { seatId, seatName, review, rating } = req.body;
 
-  console.log(seatId, seatName, review, rating, userId);
-
   if (!seatId || !seatName || !review || !rating || !userId) {
     return res.status(400).json(
       { code: ApiResponseCode.ARGUMENT_PARAMETER_ERROR, message: "引数が不足しています" } as ApiErrorResponse
@@ -76,7 +74,7 @@ async function handleGetRequest(
   userId: string | undefined
 ) {
   try {
-    const { seatId } = req.query;
+    const { seatId, limit } = req.query;
 
     if (!seatId || typeof seatId !== "string") {
       return res.status(400).json(
@@ -104,6 +102,7 @@ async function handleGetRequest(
       orderBy: {
         createdAt: "desc",
       },
+      take: limit ? parseInt(limit as string, 10) : undefined,
     });
 
     // ブックマークされているかどうかを判定

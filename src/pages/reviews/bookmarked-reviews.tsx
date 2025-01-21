@@ -4,7 +4,7 @@ import { ReviewCard } from "@/components/ReviewCard";
 
 interface BookmarkedReview {
   id: number;
-  user: { name: string };
+  user: { name: string; aliasId: string };
   seatNumber: string;
   rating: number;
   review: string;
@@ -39,7 +39,11 @@ export default function BookmarkedReviews() {
       <h1 className="text-2xl font-bold mb-6">ブックマークしたレビュー</h1>
       <div className="space-y-4">
         {bookmarkedReviews.map((review) => (
-          <ReviewCard key={review.id} review={review} />
+          <ReviewCard
+            key={review.id}
+            review={review}
+            aliasId={review.user.aliasId}
+          />
         ))}
       </div>
       {bookmarkedReviews.length === 0 && (

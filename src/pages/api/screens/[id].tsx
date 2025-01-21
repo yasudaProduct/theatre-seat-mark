@@ -34,7 +34,6 @@ export default async function handler(
             },
           },
         });
-        console.log(screens);
         res.status(200).json(screens);
       } catch (error) {
         logger.error("スクリーン取得エラー:" + error);
