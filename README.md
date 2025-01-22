@@ -1,6 +1,34 @@
+<p align="center">
+  <a href="https://cineposi.com">
+    <img src="https://github.com/user-attachments/assets/80f4be1f-c20f-4502-bae2-975e2a6eef27" alt="Logo">
+  </a>
+</p>
+
 # 🎬シネポジ cineposi
 
 映画館の座席レビューを共有できるサービスです。
+
+## 技術
+### Web
+- Next.js 14.2.5
+- React 18
+- NextAuth
+- prisma
+
+### Design
+- tailwindcss
+- shadcn/ui
+
+### Database
+- postgres
+
+## ER図
+> [!WARNING]
+> 作成中
+
+## ネットワーク構成
+> [!WARNING]
+> 作成中
 
 ## 環境構築
 
