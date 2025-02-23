@@ -25,7 +25,11 @@ export const getServerSideProps: GetServerSideProps<Theater> = async (
   const theater = await prisma.theater.findUnique({
     where: { id: parseInt(theaterId) },
     include: {
-      screens: true,
+      screens: {
+        orderBy: {
+          id: "asc",
+        },
+      },
     },
   });
 
