@@ -3,6 +3,13 @@ import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import Loading from "../Loading";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 export interface Theater {
   id: number;
@@ -174,18 +181,21 @@ export default function TheaterLayout({
   return (
     <div className="max-w-full px-4 sm:px-6">
       <div className="w-full max-w-md mx-auto h-8 bg-white/10 flex items-center justify-center text-sm">
-        <select
-          className="bg-black/30 text-white rounded-md p-2 w-full"
+        <Select
           value={selectScreen || ""}
-          onChange={(e) => handleScreenChange(e.target.value)}
+          onValueChange={(value) => handleScreenChange(value)}
         >
-          <option value="">スクリーンを選択してください</option>
-          {theater.screens?.map((screen) => (
-            <option key={screen.id} value={screen.id}>
-              {screen.name}
-            </option>
-          ))}
-        </select>
+          <SelectTrigger>
+            <SelectValue placeholder="スクリーンを選択してください" />
+          </SelectTrigger>
+          <SelectContent className="bg-white text-gray rounded-md p-2 w-full">
+            {theater.screens?.map((screen) => (
+              <SelectItem key={screen.id} value={screen.id.toString()}>
+                {screen.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
       </div>
 
       <div className="mt-8 -mx-4 sm:-mx-6">
