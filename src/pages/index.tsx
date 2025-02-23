@@ -80,8 +80,15 @@ export default function Home() {
               href="/theaters"
               className="inline-block rounded-2xl bg-[#524FFF] font-bold text-white px-12 py-4 hover:bg-blue-600 transition-colors"
             >
-              レビューを登録する
+              映画館を検索する
             </Link>
+            <div className="mt-8 mb-8 mx-auto border-2 border-gray-200 rounded-lg shadow-lg">
+              <img
+                src="/images/demonstration.gif"
+                alt="シネポジの説明"
+                className="mx-auto"
+              />
+            </div>
           </div>
         </section>
         <section className="mt-4">
