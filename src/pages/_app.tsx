@@ -12,10 +12,10 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <SessionProvider session={pageProps.session}>
       <AuthWrapper>
-        <div className="min-h-screen bg-[#F6EBFF]] flex flex-col">
+        <div className="min-h-screen bg-[#F6EBFF] flex flex-col">
           <Header />
           <Toaster richColors />
-          <main className="flex-grow bg-gray-100">
+          <main className="flex-grow bg-white">
             <Component {...pageProps} />
             <ProgressBar
               height="2px"

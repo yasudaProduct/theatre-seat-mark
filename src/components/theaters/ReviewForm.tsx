@@ -21,7 +21,15 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (rating === 0) return;
+    if (rating === 0) {
+      toast.error("評価を選択してください");
+      return;
+    }
+
+    if (comment.length === 0) {
+      toast.error("コメントを入力してください");
+      return;
+    }
 
     setIsSubmitting(true);
 
@@ -93,7 +101,7 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
         <textarea
           id="comment"
           rows={3}
-          className="w-full px-3 py-2 bg-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          className="w-full px-3 py-2 bg-white rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="座席の感想を書いてください..."
@@ -102,8 +110,8 @@ export const ReviewForm: React.FC<ReviewFormProps> = ({
 
       <button
         type="submit"
-        disabled={rating === 0}
-        className="w-full bg-[#68BAA5] hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed py-2 px-4 rounded-lg font-medium transition-colors"
+        // disabled={rating === 0}
+        className="w-full bg-[#524FFF] hover:opacity-50 disabled:bg-gray-100 disabled:cursor-not-allowed text-white py-2 px-4 rounded-lg font-medium transition-colors"
       >
         {isSubmitting ? "投稿中..." : "レビューを投稿"}
       </button>

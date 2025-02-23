@@ -158,9 +158,9 @@ export default function TheaterPage(theater: Theater) {
           </HoverCardContent>
         </HoverCard>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="w-full">
         <div className="space-y-6">
-          <div className="bg-[#A496CB] p-6 rounded-xl backdrop-blur-sm">
+          <div className="bg-gray-200 p-6 rounded-xl backdrop-blur-sm">
             <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
               スクリーン座席マップ
             </h2>
@@ -171,38 +171,40 @@ export default function TheaterPage(theater: Theater) {
               refreshKey={refreshKey}
             />
           </div>
+        </div>
+      </div>
 
-          <div className="bg-[#A496CB] p-6 rounded-xl backdrop-blur-sm">
-            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
-              <Star className="w-5 h-5 text-yellow-400" />
-              座席レビューを投稿
-            </h2>
-            {!session ? (
-              <div className="text-center text-white py-8">
-                レビューを投稿するには
-                <a
-                  href={`/auth/login?callbackUrl=${encodeURIComponent(window.location.href)}`}
-                  className="text-blue-400 hover:underline"
-                >
-                  ログイン
-                </a>
-                してください。
-              </div>
-            ) : !selectedSeat ? (
-              <div className="text-center text-white py-8">
-                座席を選択して下さい。
-              </div>
-            ) : (
-              <ReviewForm
-                selectedSeat={selectedSeat}
-                selectedSeatId={selectedSeatId!}
-                onSubmit={handleReviewSubmit}
-              />
-            )}
-          </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+        <div className="bg-gray-200 p-6 rounded-xl backdrop-blur-sm">
+          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+            <Star className="w-5 h-5 text-yellow-400" />
+            座席レビューを投稿
+          </h2>
+          {!session ? (
+            <div className="text-center text-gray-800 py-8">
+              レビューを投稿するには
+              <a
+                href={`/auth/login?callbackUrl=${encodeURIComponent(window.location.href)}`}
+                className="text-blue-400 hover:underline"
+              >
+                ログイン
+              </a>
+              してください。
+            </div>
+          ) : !selectedSeat ? (
+            <div className="text-center text-gray-800 py-8">
+              座席を選択して下さい。
+            </div>
+          ) : (
+            <ReviewForm
+              selectedSeat={selectedSeat}
+              selectedSeatId={selectedSeatId!}
+              onSubmit={handleReviewSubmit}
+            />
+          )}
         </div>
 
-        <div className="bg-[#A496CB] p-6 rounded-xl backdrop-blur-sm">
+        <div className="bg-gray-200 p-6 rounded-xl backdrop-blur-sm">
           <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
             <ThumbsUp className="w-5 h-5 text-green-400" />
             最新レビュー

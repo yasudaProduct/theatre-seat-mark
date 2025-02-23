@@ -94,7 +94,7 @@ export default function ReviewList({
 
   if (reviews.length === 0) {
     return (
-      <div className="text-center text-white py-8">
+      <div className="text-center text-gray-400 py-8">
         まだレビューがありません。最初のレビューを投稿してください！
       </div>
     );
