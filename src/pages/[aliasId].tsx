@@ -47,11 +47,6 @@ export const getServerSideProps: GetServerSideProps<UserProfileProps> = async (
 ) => {
   const session = await getSession(context);
   const aliasId = context.params?.aliasId as string;
-  console.log("⇩[aliasId].tsx⇩");
-  console.log("session", session);
-  console.log("session?.user?.aliasId", session?.user?.aliasId);
-  console.log("context.params?.aliasId", context.params?.aliasId);
-  console.log("↑[aliasId].tsx↑");
 
   const user = await prisma.user.findUnique({
     where: { aliasId: aliasId },

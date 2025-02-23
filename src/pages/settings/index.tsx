@@ -18,11 +18,6 @@ export const getServerSideProps: GetServerSideProps<UserProfileProps> = async (
   context
 ) => {
   const session = await getSession(context);
-  console.log("⇩settings/index.tsx⇩");
-  console.log("session", session);
-  console.log("session?.user?.aliasId", session?.user?.aliasId);
-  console.log("context.params?.aliasId", context.params?.aliasId);
-  console.log("↑settings/index.tsx↑");
 
   const user = await prisma.user.findUnique({
     where: { aliasId: session?.user?.aliasId },
