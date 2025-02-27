@@ -5,7 +5,7 @@ import { Bookmark, Star } from "lucide-react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-
+import Image from "next/image";
 interface Review {
   id: number;
   user: { name: string };
@@ -61,7 +61,15 @@ export default function Home() {
             <div className="relative">
               <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-blue-200/30 to-indigo-200/30 -z-10 rounded-full"></div>
               <h2 className="text-5xl font-bold text-slate-800 mb-6 leading-tight">
-                <img
+                <Image
+                  src="/images/about2.svg"
+                  alt="logo"
+                  className="inline-block mr-2 mb-2"
+                  width={1000}
+                  height={1000}
+                />
+                <br />
+                {/* <img
                   src="/images/icon-sineposi.svg"
                   alt="logo"
                   className="inline-block mr-2 mb-2"
@@ -70,23 +78,61 @@ export default function Home() {
                 <br />
                 <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-500">
                   ベストな座席を記録しよう
-                </span>
+                </span> */}
               </h2>
             </div>
-            <p className="text-slate-600 text-lg mb-16 max-w-2xl mx-auto leading-relaxed">
-              映画館の座席レビューを登録し、あなたの好みの座席を記録しよう。
-            </p>
+            <div className="flex justify-center items-center">
+              <Image
+                src="/images/about4.svg"
+                alt="logo"
+                className="inline-block mr-2 mb-2"
+                width={500}
+                height={500}
+              />
+              <Image
+                src="/images/about3.svg"
+                alt="logo"
+                className="inline-block mr-2 mb-2"
+                width={500}
+                height={500}
+              />
+              <div>
+                {/* <p className="text-slate-600 text-lg mb-16 max-w-2xl mx-auto leading-relaxed">
+                  映画館の座席レビューを登録し、あなたの好みの座席を記録しよう。
+                </p> */}
+              </div>
+            </div>
+            <div className="mt-8 mb-8 flex justify-center">
+              <img
+                src="/images/about6.svg"
+                alt="シネポジの説明"
+                className="w-[60%] h-auto object-cover"
+              />
+            </div>
+            {/* <h2 className="text-5xl font-bold text-slate-800 mb-6 leading-tight">
+              <img
+                src="/images/icon-sineposi.svg"
+                alt="logo"
+                className="inline-block mr-2 mb-2"
+              />
+              で
+              <br />
+              <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-indigo-500">
+                ベストな座席を記録しよう
+              </span>
+            </h2> */}
             <Link
               href="/theaters"
               className="inline-block rounded-2xl bg-[#524FFF] font-bold text-white px-12 py-4 hover:bg-blue-600 transition-colors"
             >
               映画館を検索する
             </Link>
+
             <div className="mt-8 mb-8 mx-auto border-2 border-gray-200 rounded-lg shadow-lg">
               <img
                 src="/images/demonstration.gif"
                 alt="シネポジの説明"
-                className="mx-auto"
+                className="w-full h-full object-cover rounded-lg"
               />
             </div>
           </div>
