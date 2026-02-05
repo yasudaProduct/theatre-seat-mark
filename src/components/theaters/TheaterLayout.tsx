@@ -14,12 +14,10 @@ import {
 export interface Theater {
   id: number;
   name: string;
-  screens?: [
-    {
-      id: number;
-      name: string;
-    },
-  ];
+  screens?: {
+    id: number;
+    name: string;
+  }[];
 }
 
 export interface Review {
