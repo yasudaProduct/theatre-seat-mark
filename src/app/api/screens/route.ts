@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(screens);
   } catch (error) {
-    logger.error("スクリーン取得エラー:", error);
+    logger.error({ err: error }, "スクリーン取得エラー");
     return NextResponse.json(
       {
         code: ApiResponseCode.INTERNAL_SERVER_ERROR,
@@ -104,7 +104,7 @@ export async function POST(request: NextRequest) {
 
     return NextResponse.json(newScreen, { status: 201 });
   } catch (error) {
-    logger.error("スクリーン作成エラー:", error);
+    logger.error({ err: error }, "スクリーン作成エラー");
     return NextResponse.json(
       {
         code: ApiResponseCode.INTERNAL_SERVER_ERROR,

@@ -130,7 +130,7 @@ export async function PUT(
 
     return NextResponse.json(updatedReview);
   } catch (error) {
-    logger.error("レビュー更新エラー:", error);
+    logger.error({ err: error }, "レビュー更新エラー");
     return NextResponse.json(
       {
         code: ApiResponseCode.INTERNAL_SERVER_ERROR,
@@ -169,7 +169,7 @@ export async function DELETE(
 
     return new NextResponse(null, { status: 204 });
   } catch (error) {
-    logger.error("レビュー削除エラー:", error);
+    logger.error({ err: error }, "レビュー削除エラー");
     return NextResponse.json(
       {
         code: ApiResponseCode.INTERNAL_SERVER_ERROR,
