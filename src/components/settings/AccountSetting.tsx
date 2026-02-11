@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import {
   Card,
@@ -19,11 +21,9 @@ import {
 } from "../ui/alert-dialog";
 import { Button } from "../ui/button";
 import { toast } from "sonner";
-import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 
 export default function AccountSetting() {
-  const router = useRouter();
   const [isDeactivating, setIsDeactivating] = useState(false);
 
   async function onDeactivate() {

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://cdn.statically.io/gh/nguyenngoclongdev/cdn/main/schema/v11/terminal-keeper.json",
+  "theme": "tribe",
+  "active": "default",
+  "activateOnStartup": true,
+  "keepExistingTerminals": false,
+  "sessions": {
+    "default": [
+      [
+        {
+          "name": "next dev",
+          "commands": "npm run dev",
+          "icon": "terminal",
+          "color": "terminal.ansiGreen"
+        },
+        {
+          "name": "docker:compose up",
+          "commands": "docker compose up db",
+          "icon": "terminal",
+          "color": "terminal.ansiGreen"
+        }
+      ],
+      {
+        "name": "console",
+        "autoExecuteCommands": true,
+        "icon": "terminal",
+        "color": "terminal.ansiGreen"
+      }
+    ]
+  }
+}

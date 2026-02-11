@@ -9,24 +9,30 @@
 映画館の座席レビューを共有できるサービスです。
 
 ## 技術
+
 ### Web
+
 - Next.js 14.2.5
 - React 18
 - NextAuth
 - prisma
 
 ### Design
+
 - tailwindcss
 - shadcn/ui
 
 ### Database
+
 - postgres
 
 ## ER図
+
 > [!WARNING]
 > 作成中
 
 ## ネットワーク構成
+
 > [!WARNING]
 > 作成中
 

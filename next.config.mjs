@@ -4,7 +4,12 @@ import process from "process";
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ["lh3.googleusercontent.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+    ],
   },
   async redirects() {
     const maintenanceMode = process.env.MAINTENANCE_MODE;

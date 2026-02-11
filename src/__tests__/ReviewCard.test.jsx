@@ -26,7 +26,7 @@ describe('Page', () => {
     expect(reviewCardElement).toBeInTheDocument()
 
     expect(screen.getByText('yuta')).toBeInTheDocument();
-    expect(screen.getByText((content, element) => content.includes('D15'))).toBeInTheDocument();
+    expect(screen.getByText((content) => content.includes('D15'))).toBeInTheDocument();
     expect(screen.getByText('good')).toBeInTheDocument();
   });
 
