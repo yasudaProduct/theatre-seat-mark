@@ -8,24 +8,14 @@
     "default": [
       [
         {
-          "name": "next dev",
-          "commands": "npm run dev",
-          "icon": "terminal",
-          "color": "terminal.ansiGreen"
+          "name": "npm run dev",
+          "commands": ["npm run dev"]
         },
         {
-          "name": "docker:compose up",
-          "commands": "docker compose up db",
-          "icon": "terminal",
-          "color": "terminal.ansiGreen"
+          "name": "docker compose up db",
+          "commands": ["docker compose up db"]
         }
-      ],
-      {
-        "name": "console",
-        "autoExecuteCommands": true,
-        "icon": "terminal",
-        "color": "terminal.ansiGreen"
-      }
+      ]
     ]
   }
 }
