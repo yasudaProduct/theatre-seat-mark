@@ -91,12 +91,12 @@ export default function ProfileSettings({ user }: UserProfileProps) {
               render={({ field }) => {
                 return (
                   <FormItem>
-                    <div className="flex">
-                      <div className="flex-initial w-80">
+                    <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
+                      <div className="sm:w-80">
                         <FormLabel>ユーザー名</FormLabel>
                         <FormDescription>公開表示名です。</FormDescription>
                       </div>
-                      <div className="flex-initial w-100">
+                      <div className="w-full sm:flex-1">
                         <FormControl>
                           <Input placeholder="新しいユーザー名" {...field} />
                         </FormControl>

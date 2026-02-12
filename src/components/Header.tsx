@@ -11,10 +11,10 @@ const Header = () => {
   const { data: session, status } = useSession();
   return (
     <>
-      <div className="bg-[#524FFF] max-h-20">
-        <div className="container mx-auto flex items-center px-2 py-3">
-          <div className="mx-auto flex w-full flex-wrap items-center">
-            <div className="flex w-full justify-center font-extrabold text-white lg:w-1/2 lg:justify-start">
+      <div className="bg-[#524FFF]">
+        <div className="container mx-auto flex items-center px-4 py-3">
+          <div className="flex w-full items-center justify-between">
+            <div className="flex items-center font-extrabold text-white">
               <Link legacyBehavior href="/">
                 <a className="text-2xl text-gray-900 no-underline hover:text-gray-900 hover:no-underline flex items-center">
                   <img
@@ -26,15 +26,15 @@ const Header = () => {
                 </a>
               </Link>
             </div>
-            <div className="flex w-full content-center justify-between pt-2 lg:w-1/2 lg:justify-end lg:pt-0">
-              <ul className="list-reset flex flex-1 items-center justify-center lg:flex-none">
-                <li className="py-1 px-4 text-white no-underline">
+            <div className="flex items-center">
+              <ul className="list-reset flex items-center">
+                <li className="py-1 px-2 sm:px-4 text-white no-underline">
                   <Link legacyBehavior href="/theaters">
-                    <a>映画館検索</a>
+                    <a className="text-sm sm:text-base">映画館検索</a>
                   </Link>
                 </li>
                 {status !== "loading" && session && (
-                  <li className="py-1 px-4 text-white no-underline z-50">
+                  <li className="py-1 px-2 sm:px-4 text-white no-underline z-50">
                     <DropdownMenu
                       userImage={session.user?.image || ""}
                       aliasId={session.user?.aliasId || ""}
@@ -43,12 +43,12 @@ const Header = () => {
                   </li>
                 )}
                 {status !== "loading" && !session && (
-                  <li className="py-1 px-4 text-black no-underline">
+                  <li className="py-1 px-2 sm:px-4 text-black no-underline">
                     <button
-                      className="flex items-center bg-white rounded-md p-2 hover:bg-gray-100"
+                      className="flex items-center bg-white rounded-md p-2 hover:bg-gray-100 text-sm sm:text-base"
                       onClick={() => signIn()}
                     >
-                      <LogIn className="w-6 h-6 mr-2" />
+                      <LogIn className="w-5 h-5 sm:w-6 sm:h-6 mr-1 sm:mr-2" />
                       ログイン
                     </button>
                   </li>
@@ -128,7 +128,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
         </Avatar>
       </button>
       {isOpen && (
-        <div className="absolute left-1/2 transform -translate-x-[90%] mt-2 w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+        <div className="absolute right-0 mt-2 w-60 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50">
           <div
             className="py-1"
             role="menu"
@@ -177,7 +177,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
               className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
               role="menuitem"
             >
-              <span className=" flex items-center">
+              <span className="flex items-center">
                 <LogOut className="w-6 h-6 mr-2" />
                 ログアウト
               </span>

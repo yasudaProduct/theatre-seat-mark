@@ -105,11 +105,11 @@ export default function ReviewList({
       {reviews.map((review) => (
         <div
           key={review.id}
-          className="bg-[#F6EBFF] p-4 rounded-lg hover:bg-[#F6EBFF]/90 transition-colors"
+          className="bg-[#F6EBFF] p-3 sm:p-4 rounded-lg hover:bg-[#F6EBFF]/90 transition-colors"
         >
-          <div className="flex justify-between items-start mb-2">
-            <div>
-              <div className="font-bold text-lg mb-1">{review.seatName}</div>
+          <div className="flex flex-wrap sm:flex-nowrap justify-between items-start gap-2 mb-2">
+            <div className="min-w-0">
+              <div className="font-bold text-base sm:text-lg mb-1">{review.seatName}</div>
               <div className="flex gap-1">
                 {[...Array(5)].map((_, index) => (
                   <Star
@@ -123,8 +123,8 @@ export default function ReviewList({
                 ))}
               </div>
             </div>
-            <div className="text-sm">
-              <p className="text-sm text-gray-500">
+            <div className="text-xs sm:text-sm flex-shrink-0">
+              <p className="text-gray-500">
                 {review.user.name}
                 {"    "}
                 {formatDate(review.createdAt)}
@@ -134,7 +134,7 @@ export default function ReviewList({
               onClick={() =>
                 handleBookmarkClick(review.id, review.isBookmarked)
               }
-              className="flex items-center gap-1"
+              className="flex items-center gap-1 flex-shrink-0"
             >
               {session && (
                 <Bookmark
@@ -148,7 +148,7 @@ export default function ReviewList({
               )}
             </button>
           </div>
-          <p className="">{review.comment}</p>
+          <p className="text-sm sm:text-base break-words">{review.comment}</p>
         </div>
       ))}
     </div>
