@@ -1,10 +1,19 @@
 "use client";
 
-import React from "react";
+import React, { useMemo } from "react";
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import {
   Table,
   TableBody,
@@ -15,6 +24,7 @@ import {
 } from "@/components/ui/table";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
+import { regions } from "@/data/regions";
 
 interface Theater {
   id: number;
@@ -23,6 +33,13 @@ interface Theater {
   url: string | null;
   prefecture_id: number;
 }
+
+const prefectureMap = new Map<number, string>();
+regions.forEach((region) => {
+  region.prefecture.forEach((pref) => {
+    prefectureMap.set(pref.id, pref.name);
+  });
+});
 
 const TheaterMaintenance = () => {
   const router = useRouter();
@@ -81,9 +98,14 @@ const TheaterMaintenance = () => {
     setEditingId(null);
   };
 
+  const getPrefectureName = useMemo(() => {
+    return (id: number) => prefectureMap.get(id) || `ID: ${id}`;
+  }, []);
+
   return (
     <Card>
-      <CardContent>
+      <CardContent className="p-6">
+        <h2 className="text-2xl font-bold mb-4">映画館一覧</h2>
         <Table>
           <TableHeader>
             <TableRow>
@@ -91,7 +113,7 @@ const TheaterMaintenance = () => {
               <TableHead>劇場名</TableHead>
               <TableHead>住所</TableHead>
               <TableHead>URL</TableHead>
-              <TableHead>都道府県ID</TableHead>
+              <TableHead>都道府県</TableHead>
               <TableHead>操作</TableHead>
             </TableRow>
           </TableHeader>
@@ -137,18 +159,36 @@ const TheaterMaintenance = () => {
                 </TableCell>
                 <TableCell>
                   {editingId === theater.id ? (
-                    <Input
-                      type="number"
-                      value={editForm.prefecture_id}
-                      onChange={(e) =>
+                    <Select
+                      value={String(editForm.prefecture_id)}
+                      onValueChange={(value) =>
                         setEditForm({
                           ...editForm,
-                          prefecture_id: parseInt(e.target.value),
+                          prefecture_id: parseInt(value),
                         })
                       }
-                    />
+                    >
+                      <SelectTrigger className="w-36">
+                        <SelectValue />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {regions.map((region) => (
+                          <SelectGroup key={region.id}>
+                            <SelectLabel>{region.name}</SelectLabel>
+                            {region.prefecture.map((pref) => (
+                              <SelectItem
+                                key={pref.id}
+                                value={String(pref.id)}
+                              >
+                                {pref.name}
+                              </SelectItem>
+                            ))}
+                          </SelectGroup>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   ) : (
-                    theater.prefecture_id
+                    getPrefectureName(theater.prefecture_id)
                   )}
                 </TableCell>
                 <TableCell>

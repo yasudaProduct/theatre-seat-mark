@@ -13,8 +13,8 @@
     "batch": "ts-node scripts/batch.ts"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.1",
     "@auth/prisma-adapter": "^2.7.4",
+    "@hookform/resolvers": "^3.9.1",
     "@notionhq/client": "^2.2.15",
     "@prisma/client": "^5.18.0",
     "@radix-ui/react-alert-dialog": "^1.1.2",
@@ -29,6 +29,7 @@
     "@radix-ui/react-tabs": "^1.1.0",
     "@types/jest": "^29.5.13",
     "bcrypt": "^5.1.1",
+    "cheerio": "^1.2.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.441.0",
