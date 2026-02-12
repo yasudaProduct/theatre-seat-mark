@@ -66,10 +66,10 @@ export function ReviewCard({
   return (
     <Card data-testid="review-card">
       <CardContent className="p-4">
-        <div className="flex justify-between items-start">
-          <div>
-            <p className="text-sm text-gray-500">{review.theaterName}</p>
-            <p className="text-sm text-gray-500">{review.screenName}</p>
+        <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
+          <div className="min-w-0">
+            <p className="text-sm text-gray-500 truncate">{review.theaterName}</p>
+            <p className="text-sm text-gray-500 truncate">{review.screenName}</p>
             <p className="text-sm text-gray-500">座席: {review.seatNumber}</p>
             {aliasId !== review.user.aliasId && (
               <p className="text-sm text-gray-500">
@@ -77,12 +77,12 @@ export function ReviewCard({
               </p>
             )}
           </div>
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 flex-shrink-0">
             <div className="flex">
               {[...Array(5)].map((_, i) => (
                 <Star
                   key={i}
-                  className={`h-5 w-5 ${
+                  className={`h-4 w-4 sm:h-5 sm:w-5 ${
                     i < review.rating
                       ? "text-yellow-400 fill-current"
                       : "text-gray-300"

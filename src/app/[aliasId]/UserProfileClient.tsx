@@ -121,20 +121,20 @@ export default function UserProfileClient({
 
   return (
     <div className="container mx-auto px-4 py-8">
-      <div className="w-full bg-white mb-2 px-4 py-8">
+      <div className="w-full bg-white mb-2 px-3 sm:px-4 py-4 sm:py-8 rounded-lg">
         <div className="flex items-center space-x-3">
-          <Avatar className="w-24 h-24">
+          <Avatar className="w-16 h-16 sm:w-24 sm:h-24 flex-shrink-0">
             <AvatarImage
               src={user.image || undefined}
               alt={user.name || "User"}
             />
             <AvatarFallback>{user.name?.charAt(0) || "U"}</AvatarFallback>
           </Avatar>
-          <div>
+          <div className="min-w-0">
             <div className="space-y-1">
-              <div>
-                <span className="text-2xl">{user.name}</span>
-                <span className="text-xs text-gray-500 ml-5">
+              <div className="flex flex-col sm:flex-row sm:items-baseline gap-1">
+                <span className="text-xl sm:text-2xl truncate">{user.name}</span>
+                <span className="text-xs text-gray-500">
                   {user.aliasId}
                 </span>
               </div>
@@ -142,7 +142,7 @@ export default function UserProfileClient({
             {isOwnProfile && (
               <Link
                 href="/settings"
-                className="my-3 block w-40 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+                className="my-3 inline-block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 sm:px-5 py-2 sm:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
                 プロフィール設定
               </Link>
@@ -151,20 +151,20 @@ export default function UserProfileClient({
         </div>
         <div className="flex space-x-4 mt-4">
           <div className="text-center">
-            <p className="text-2xl font-bold">{user._count.reviews}</p>
-            <p className="text-sm text-muted-foreground">レビュー</p>
+            <p className="text-xl sm:text-2xl font-bold">{user._count.reviews}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">レビュー</p>
           </div>
           <div className="text-center">
-            <p className="text-2xl font-bold">{user._count.bookmarks}</p>
-            <p className="text-sm text-muted-foreground">ブックマーク</p>
+            <p className="text-xl sm:text-2xl font-bold">{user._count.bookmarks}</p>
+            <p className="text-xs sm:text-sm text-muted-foreground">ブックマーク</p>
           </div>
         </div>
       </div>
       <Tabs defaultValue="my-reviews">
         <TabsList className="grid w-full grid-cols-3">
-          <TabsTrigger value="my-reviews">レビュー</TabsTrigger>
-          <TabsTrigger value="bookmarked">ブックマーク</TabsTrigger>
-          <TabsTrigger value="favorites">お気に入り</TabsTrigger>
+          <TabsTrigger value="my-reviews" className="text-xs sm:text-sm">レビュー</TabsTrigger>
+          <TabsTrigger value="bookmarked" className="text-xs sm:text-sm">ブックマーク</TabsTrigger>
+          <TabsTrigger value="favorites" className="text-xs sm:text-sm">お気に入り</TabsTrigger>
         </TabsList>
         <TabsContent value="my-reviews">
           <Card>
@@ -217,17 +217,17 @@ export default function UserProfileClient({
                   {favoriteTheaters.map((favorite) => (
                     <div
                       key={favorite.theater.id}
-                      className="flex items-center justify-between p-4 border rounded-lg"
+                      className="flex flex-col sm:flex-row sm:items-center justify-between p-3 sm:p-4 border rounded-lg gap-2"
                     >
-                      <div>
-                        <h3 className="font-medium">{favorite.theater.name}</h3>
-                        <p className="text-sm text-muted-foreground">
+                      <div className="min-w-0">
+                        <h3 className="font-medium truncate">{favorite.theater.name}</h3>
+                        <p className="text-sm text-muted-foreground truncate">
                           {favorite.theater.address}
                         </p>
                       </div>
                       <Link
                         href={`/theaters/${favorite.theater.id}`}
-                        className="text-sm text-blue-500 hover:underline"
+                        className="text-sm text-blue-500 hover:underline flex-shrink-0"
                       >
                         詳細を見る
                       </Link>
