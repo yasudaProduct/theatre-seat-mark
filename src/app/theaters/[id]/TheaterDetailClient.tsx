@@ -101,42 +101,44 @@ export default function TheaterDetailClient({
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
-      <div className="flex items-center gap-4 mb-4">
-        <h1 className="text-2xl font-bold">{theater.name}</h1>
-        <button
-          onClick={handleFavoriteClick}
-          className="flex items-center gap-2 px-4 py-2 rounded-full bg-white hover:bg-white/20 transition-colors"
-        >
-          <Heart
-            className={`w-5 h-5 ${
-              isFavorite ? "fill-red-500 text-red-500" : "text-white"
-            }`}
-          />
-          <span>{isFavorite ? "お気に入り解除" : "お気に入り登録"}</span>
-        </button>
-        <HoverCard>
-          <HoverCardTrigger asChild>
-            <button className="hover:text-blue-500">
-              <Info className="w-6 h-6" />
-            </button>
-          </HoverCardTrigger>
-          <HoverCardContent className="w-80" align="start">
-            <div className="">
-              スクリーン・座席の情報は運営によりメンテナンスされています。
-              <br />
-              実際と異なる場合は
-              <Link href="/contact" className="text-blue-500 underline">
-                こちら
-              </Link>
-              からリクエストください。
-            </div>
-          </HoverCardContent>
-        </HoverCard>
+      <div className="flex flex-wrap items-center gap-2 sm:gap-4 mb-4">
+        <h1 className="text-xl sm:text-2xl font-bold">{theater.name}</h1>
+        <div className="flex items-center gap-2">
+          <button
+            onClick={handleFavoriteClick}
+            className="flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full bg-white hover:bg-white/20 transition-colors text-sm sm:text-base"
+          >
+            <Heart
+              className={`w-4 h-4 sm:w-5 sm:h-5 ${
+                isFavorite ? "fill-red-500 text-red-500" : "text-gray-400"
+              }`}
+            />
+            <span>{isFavorite ? "お気に入り解除" : "お気に入り登録"}</span>
+          </button>
+          <HoverCard>
+            <HoverCardTrigger asChild>
+              <button className="hover:text-blue-500">
+                <Info className="w-5 h-5 sm:w-6 sm:h-6" />
+              </button>
+            </HoverCardTrigger>
+            <HoverCardContent className="w-64 sm:w-80" align="start">
+              <div>
+                スクリーン・座席の情報は運営によりメンテナンスされています。
+                <br />
+                実際と異なる場合は
+                <Link href="/contact" className="text-blue-500 underline">
+                  こちら
+                </Link>
+                からリクエストください。
+              </div>
+            </HoverCardContent>
+          </HoverCard>
+        </div>
       </div>
       <div className="w-full">
         <div className="space-y-6">
-          <div className="bg-gray-200 p-6 rounded-xl backdrop-blur-sm">
-            <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+          <div className="bg-gray-200 p-3 sm:p-6 rounded-xl backdrop-blur-sm">
+            <h2 className="text-lg sm:text-xl font-bold mb-4 flex items-center gap-2">
               スクリーン座席マップ
             </h2>
             <TheaterLayout
@@ -149,9 +151,9 @@ export default function TheaterDetailClient({
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-        <div className="bg-gray-200 p-6 rounded-xl backdrop-blur-sm">
-          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-8 mt-4 sm:mt-8">
+        <div className="bg-gray-200 p-3 sm:p-6 rounded-xl backdrop-blur-sm">
+          <h2 className="text-lg sm:text-xl font-bold mb-4 flex items-center gap-2">
             <Star className="w-5 h-5 text-yellow-400" />
             座席レビューを投稿
           </h2>
@@ -179,8 +181,8 @@ export default function TheaterDetailClient({
           )}
         </div>
 
-        <div className="bg-gray-200 p-6 rounded-xl backdrop-blur-sm">
-          <h2 className="text-xl font-bold mb-4 flex items-center gap-2">
+        <div className="bg-gray-200 p-3 sm:p-6 rounded-xl backdrop-blur-sm">
+          <h2 className="text-lg sm:text-xl font-bold mb-4 flex items-center gap-2">
             <ThumbsUp className="w-5 h-5 text-green-400" />
             最新レビュー
           </h2>
