@@ -50,8 +50,8 @@ export default function TheatersClient({ regions }: TheatersClientProps) {
   };
 
   return (
-    <div className="container mx-auto mt-4">
-      <h1 className="text-2xl font-bold mb-4">映画館検索</h1>
+    <div className="container mx-auto mt-4 px-4">
+      <h1 className="text-xl sm:text-2xl font-bold mb-4">映画館検索</h1>
       <div className="grid gap-4 mb-4">
         <div className="grid gap-4">
           <button
@@ -78,7 +78,7 @@ export default function TheatersClient({ regions }: TheatersClientProps) {
             {regions.map((region) => (
               <div
                 key={region.id}
-                className="grid grid-cols-1 ml-10 md:grid-cols-[100px_1fr] gap-4 mb-2"
+                className="grid grid-cols-1 ml-2 sm:ml-10 md:grid-cols-[100px_1fr] gap-2 sm:gap-4 mb-2"
               >
                 <h3 className="font-semibold md:mb-0 md:self-start">
                   {region.name}

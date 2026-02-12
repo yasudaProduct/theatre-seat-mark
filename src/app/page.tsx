@@ -63,44 +63,43 @@ export default function Home() {
           <div className="max-w-7xl mx-auto text-center">
             <div className="relative">
               <div className="absolute inset-0 blur-3xl bg-gradient-to-r from-blue-200/30 to-indigo-200/30 -z-10 rounded-full"></div>
-              <h2 className="text-5xl font-bold text-slate-800 mb-6 leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-800 mb-6 leading-tight">
                 <Image
                   src="/images/about2.svg"
                   alt="logo"
-                  className="inline-block mr-2 mb-2"
+                  className="inline-block mr-2 mb-2 w-full h-auto"
                   width={1000}
                   height={1000}
                 />
                 <br />
               </h2>
             </div>
-            <div className="flex justify-center items-center">
+            <div className="flex flex-col sm:flex-row justify-center items-center gap-2 sm:gap-4">
               <Image
                 src="/images/about4.svg"
                 alt="logo"
-                className="inline-block mr-2 mb-2"
+                className="inline-block w-full sm:w-1/2 h-auto"
                 width={500}
                 height={500}
               />
               <Image
                 src="/images/about3.svg"
                 alt="logo"
-                className="inline-block mr-2 mb-2"
+                className="inline-block w-full sm:w-1/2 h-auto"
                 width={500}
                 height={500}
               />
-              <div></div>
             </div>
             <div className="mt-8 mb-8 flex justify-center">
               <img
                 src="/images/about6.svg"
                 alt="シネポジの説明"
-                className="w-[60%] h-auto object-cover"
+                className="w-[90%] sm:w-[75%] md:w-[60%] h-auto object-cover"
               />
             </div>
             <Link
               href="/theaters"
-              className="inline-block rounded-2xl bg-[#524FFF] font-bold text-white px-12 py-4 hover:bg-blue-600 transition-colors"
+              className="inline-block rounded-2xl bg-[#524FFF] font-bold text-white px-8 sm:px-12 py-3 sm:py-4 text-sm sm:text-base hover:bg-blue-600 transition-colors"
             >
               映画館を検索する
             </Link>
@@ -115,7 +114,7 @@ export default function Home() {
           </div>
         </section>
         <section className="mt-4">
-          <h1 className="text-3xl font-bold text-slate-800 mb-4">
+          <h1 className="text-2xl sm:text-3xl font-bold text-slate-800 mb-4">
             最新のレビュー
           </h1>
 
@@ -143,7 +142,7 @@ export default function Home() {
                 reviews.map((review) => (
                   <Card
                     key={review.id}
-                    className="min-w-[30%] flex-shrink-0 cursor-pointer hover:bg-gray-50 transition-colors"
+                    className="min-w-[280px] sm:min-w-[300px] md:min-w-[30%] flex-shrink-0 cursor-pointer hover:bg-gray-50 transition-colors"
                     onClick={() =>
                       router.push(
                         `/theaters/${review.theater.id}?screen=${review.screen.id}&seat=${review.seat.id}`
